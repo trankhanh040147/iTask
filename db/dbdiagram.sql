@@ -110,6 +110,8 @@
 --> We can use it to determine who can view the project
 -- ? How can we use the status of a project ?  
 --> We can use it to determine the status of a project (draft, published, archived)
+-- ? How can we store reply comments ?
+--> We can add a column called parent_comment_id to store the parent comment of a reply comment 
 
 
 -- type User struct {
@@ -164,6 +166,7 @@ Table Projects {
 
 Table Tasks {
     id int [pk, increment] // auto-increment
+    parent_task_id int
     project_id int
     status int
     owner_id int
@@ -180,6 +183,7 @@ Table Tasks {
 -- Comments may on Tasks, or Projects
 Table Comments {
     id int [pk, increment] // auto-increment
+    parent_comment_id int
     task_id int
     project_id int
     user_id int
@@ -202,6 +206,40 @@ Table Attachments {
 }
 
 -- table Tags
-
+Table Tags {
+    id int [pk, increment] -- auto-increment
+    tag_type int -- 1: task, 2: project
+    title varchar
+    description varchar
+    created_at timestamp
+    updated_at timestamp
+}
 
 -- [Activities]
+-- table Activity
+-- Activities are actions of users on a project: create, update, delete, assign, comment, attach, tag, etc.
+Table Activities {
+    id int [pk, increment] // auto-increment
+    project_id int
+    task_id int
+    user_id int
+    -- activity_type int -- ?dont know how can use this field
+    -- activiy_status int -- ?dont know how can use this field
+    content varchar
+    created_at timestamp
+    updated_at timestamp
+}
+
+-- [Permissions]
+-- table Permissions
+-- Permissions schema
+-- The permissions facility is used to grant users access to projects that they don't own. A project may be associated with any number of keywords, and a user may have permissions to any number of keywords. The permission mechanism permits fairly fine-grained control over who can do what, as this part of the application is really aimed at granting my own customers varying degrees of access to my own to-do list. So I want some of them to be able to modify the priorities of their own category of tasks, for instance, but I don't want them to be able to rename tasks.
+-- The tables we need for this are pretty easy: just a keyword table which associates a keyword with a project, and a permission table which grants a user various privileges to a given keyword. If no permission is given to a user for a given keyword, projects using that keyword will be completely invisible to the user. (Unless the project has more than one keyword and the user has viewing privilege to another applicable keyword.)
+-- The permissions table has a "privilege" field which is a bitmask. The bits are defined in the "privileges" table. The privileges table also has a "description" field which is used to generate the text of the permission grant form. The privileges table is populated by the "privileges" method of the "permissions" class.
+-- Table Permissions {
+--     id int [pk, increment] // auto-increment
+--     privilege int
+--     created_at timestamp
+--     updated_at timestamp
+-- }
+
