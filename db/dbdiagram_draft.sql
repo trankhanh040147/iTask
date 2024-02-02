@@ -1,7 +1,3 @@
--- Project name: iTask
--- Description: A task management system application
--- Author: Tran Khanh
-
 -- *Functional Requirements:
 
 -- User
@@ -50,7 +46,8 @@
 -- 11.	Manage sub-tasks within a task (add, edit, delete)
 -- 12.	Manage tags within a task (add, edit, delete)
 
--- *Roles: User, Admin, Project Manager
+-- *Roles: User, Admin, Project Manager (v1)
+-- *Roles: Member, Admin, Owner, Observer (v2)
 
 -- *Features: 
 -- 1.	Login/Logout
@@ -332,9 +329,15 @@ type TaskWatcher struct {
 -- 	Email          string    `json:"email"`
 -- }
 
+-- ? Available features: Notification, Activities, Attachment, Comment (Task, Project), Project Management, Task Management
+    
 -- TODO: how to store attachment files ?
 
 -- TODO: how can resolve user confirmation by email ?    
 
--- TODO: add relationship tables
+-- TODO: add relationship tables 
+
+-- TODO: Delete cascade tables
+
+
 
