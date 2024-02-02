@@ -1,245 +1,164 @@
--- Project name: iTask
--- Description: A task management system application
--- Author: Tran Khanh
+/* dbdiagram.io Database Schema */
 
--- *Functional Requirements:
-
--- User
--- 1.	Register an account
--- 2.	Login to the system
--- 3.	Logout from the system
--- 4.	Reset password if forgotten
--- 5.	View the calendar
--- 6.	Use the chatbox
--- 7.	Access dashboard
--- 8.	View project details
--- 9.	Attach files to a project 
--- 10.	Remove own files from a project
--- 11.	View tasks within a project
--- 12.	Create sub-tasks within a task
--- 13.	Assign tags to tasks
--- 14.	Comment on tasks within a project
--- 15.	Edit own tasks
--- 16.	Delete own tasks
--- 17.	Change assignment for own tasks
--- 18.	Add comments to tasks
--- 19.	Edit own comments
--- Admin
--- 1.	All permissions of a User
--- 2.	Edit other users' tasks
--- 3.	Delete other users' tasks
--- 4.	Change assignment for other users' tasks
--- 5.	Manage users (add, edit, delete)
--- 6.	Manage projects (add, edit, delete)
--- 7.	Manage members of any project (add member, edit roles, delete member)
--- 8.	Manage tasks within a project (add, edit, delete)
--- 9.	Manage sub-tasks within a task (add, edit, delete)
--- 10.	Manage tags within a task (add, edit, delete)
--- 11.	Manage comments within a task (add, edit, delete)
--- Project Manager
--- 1.	All permissions of a User
--- 2.	Edit tasks within own projects
--- 3.	Delete tasks within own projects
--- 4.	Manage members of own projects (add member, change owners, delete member) 
--- 5.	Manage attachments within own projects (add, edit, delete)
--- 6.	Change assignment for tasks within own projects
--- 7.	Add comments to tasks within own projects
--- 8.	Edit own comments within own projects
--- 9.	Manage own projects (add, edit, delete)
--- 10.	Manage tasks within a project (add, edit, delete)
--- 11.	Manage sub-tasks within a task (add, edit, delete)
--- 12.	Manage tags within a task (add, edit, delete)
-
--- *Roles: User, Admin, Project Manager
-
--- *Features: 
--- 1.	Login/Logout
--- 2.	Reset password
--- 3.	Chatbox
--- 4.	Calendar
--- 5.	Dashboard
--- 6.	Project management
--- 7.	Task management
--- 8.	Sub-task management
--- 9.	Tag management
--- 10.	Comment management
--- 11.	Attachment management
--- 12.	User management
--- 13.	Role management
--- 14.	Project member management
--- 15.	Project owner management
-
--- *Entities: Accounts, Projects, Tasks, Tags, Comments, Attachments, Permissionsk, Project_Users
-
--- *Relationships:
--- 1.	User - Project: many-to-many
--- 2.	User - Task: many-to-many
--- 3.	User - Sub-task: many-to-many
--- 4.	User - Tag: many-to-many
--- 5.	User - Comment: many-to-many
--- 6.	User - Attachment: many-to-many
--- 7.	Project - Task: one-to-many
--- 8.	Project - Sub-task: one-to-many
--- 9.	Project - Tag: one-to-many
--- 10.	Project - Comment: one-to-many
--- 11.	Project - Attachment: one-to-many
--- 12.	Task - Sub-task: one-to-many
--- 13.	Task - Tag: one-to-many
--- 14.	Task - Comment: one-to-many
--- 15.	Task - Attachment: one-to-many
-
--- Database Schema (dbdiagram.io)
-
--- ? How can we save information of Project Memebers w/ roles. Task assignment, etc.?
---> Create a new table called ProjectMember, which contains project_id, user_id, role_id, created_at, updated_at
--- ? Project description, task description,... can save as bold, italic, inserted image, to do list,... 
---> Save as HTML format, datatype = text 
--- ? Should we add draft, published status for project ?
---> Column status in Project table
--- ? Should we allow a task to have multiple assginee, how can we save this information ?
---> Create a new table called TaskAssignment, which contains task_id, user_id, created_at, updated_at
--- ? Should we allow a task to have multiple tags, how can we save this information ?
---> Create a new table called TaskTag, which contains task_id, tag_id, created_at, updated_at
--- ? Can we store Tasks, Sub-tasks in the same table ?
---> Yes, we can. We can add a column called parent_task_id to store the parent task of a sub-task
--- ? How can we save permission for each role to perform Role-Based Access Control (RBAC) ?
---> Create a new table called RolePermission, which contains role_id, permission_id, created_at, updated_at
--- ? How can we use the priority of a task, a project ?
---> We can use it to sort tasks, projects in the dashboard
--- ? How can we use the privacy of a project ?
---> We can use it to determine who can view the project
--- ? How can we use the status of a project ?  
---> We can use it to determine the status of a project (draft, published, archived)
--- ? How can we store reply comments ?
---> We can add a column called parent_comment_id to store the parent comment of a reply comment 
-
-
--- type User struct {
--- 	common.SQLModel
--- 	Username        string `json:"username" gorm:"column:username"`
--- 	Email           string `json:"email" gorm:"column:email"`
--- 	FullName        string `json:"full_name" gorm:"column:full_name"`
--- 	Role            int    `json:"role" gorm:"role"`
--- 	Status          int    `json:"status" gorm:"column:status"`
--- 	Password        string `json:"password" gorm:"column:password"`
--- 	Address         string `json:"address" gorm:"column:address"`
--- 	Phone           string `json:"phone" gorm:"column:phone"`
--- 	Dob             string `json:"dob" gorm:"column:dob"`
--- 	Avatar          string `json:"avatar" gorm:"avatar"`
--- 	IsEmailVerified int    `json:"is_email_verified" gorm:"is_email_verified"`
--- 	Bio             string `json:"bio" gorm:"bio"`
--- }
-
-Table Accounts {
-    id int [pk, increment] // auto-increment
-    username varchar
-    email varchar
-    full_name varchar
-    role int
-    status int
-    password varchar
+Table Users {
+    id bigserial [pk] /* auto-increment */
+    username varchar [not null]
+    email varchar [not null]
+    full_name varchar [not null]
+    role int [not null, ref: > Roles.code]
+    status int [not null]
+    password_hash varchar [not null]
+    salt varchar [not null]
     address varchar
     phone varchar
     dob varchar
-    avatar varchar
+    profile_ava_url varchar
+    profile_cover_url varchar
     is_email_verified int
     bio varchar
-    created_at timestamp
-    updated_at timestamp
+    created_at timestampz [default: `now()`]
+    updated_at timestampz [default: `now()`]
 }
 
 Table Projects {
-    id int [pk, increment] // auto-increment
-    title varchar
+    id bigserial [pk] /* auto-increment */
+    name varchar [not null]
     description varchar
-    status int
-    priority int
-    privacy int
-    owner_id int
-    parent_project_id int
-    deadline timestamp
+    status int [not null]
+    priority int 
+    privacy int 
+    created_by int [not null, ref: > Users.id]
+    deadline timestamp  
     started_at timestamp
-    created_at timestamp
-    updated_at timestamp
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
     thumbnail varchar
 }
 
 Table Tasks {
-    id int [pk, increment] // auto-increment
-    parent_task_id int
-    project_id int
-    status int
-    owner_id int
-    title varchar
+    id bigserial [pk] /* auto-increment */
+    parent_task_id int 
+    project_id int [not null, ref: > Projects.id]
+    status int [not null]
+    created_by int [not null, ref: > Users.id]
+    name varchar [not null]
+    description varchar
+    position float
     priority int
+    completed bool [not null]
     due_date timestamp
-    started_at timestamp
+    started_at timestamp 
     completed_at timestamp
-    created_at timestamp
-    updated_at timestamp
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
 }
 
--- table Comments
--- Comments may on Tasks, or Projects
-Table Comments {
-    id int [pk, increment] // auto-increment
-    parent_comment_id int
-    task_id int
-    project_id int
-    user_id int
-    content varchar
-    created_at timestamp
-    updated_at timestamp
-}
-
--- table Attachments
--- Attachments will be on Tasks, or Projects
 Table Attachments {
-    id int [pk, increment] // auto-increment
-    task_id int
-    project_id int
-    user_id int
+    id bigserial [pk] /* auto-increment */
+    task_id int [ref: > Tasks.id]
+    project_id int [ref: > Projects.id]
+    user_id int [ref: > Users.id]
     file_name varchar
     file_path varchar
-    created_at timestamp
-    updated_at timestamp
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
 }
 
--- table Tags
 Table Tags {
-    id int [pk, increment] -- auto-increment
-    tag_type int -- 1: task, 2: project
-    title varchar
+    id bigserial [pk] /* auto-increment */
+    tag_type int /* 1: task, 2: project */
+    name varchar    
     description varchar
-    created_at timestamp
-    updated_at timestamp
+    position float
 }
 
--- [Activities]
--- table Activity
--- Activities are actions of users on a project: create, update, delete, assign, comment, attach, tag, etc.
-Table Activities {
-    id int [pk, increment] // auto-increment
-    project_id int
-    task_id int
-    user_id int
-    -- activity_type int -- ?dont know how can use this field
-    -- activiy_status int -- ?dont know how can use this field
-    content varchar
-    created_at timestamp
-    updated_at timestamp
+Table ProjectTags {
+    id bigserial [pk] /* auto-increment */
+    project_id int [ref: > Projects.id]
+    tag_id int [ref: > Tags.id]
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
 }
 
--- [Permissions]
--- table Permissions
--- Permissions schema
--- The permissions facility is used to grant users access to projects that they don't own. A project may be associated with any number of keywords, and a user may have permissions to any number of keywords. The permission mechanism permits fairly fine-grained control over who can do what, as this part of the application is really aimed at granting my own customers varying degrees of access to my own to-do list. So I want some of them to be able to modify the priorities of their own category of tasks, for instance, but I don't want them to be able to rename tasks.
--- The tables we need for this are pretty easy: just a keyword table which associates a keyword with a project, and a permission table which grants a user various privileges to a given keyword. If no permission is given to a user for a given keyword, projects using that keyword will be completely invisible to the user. (Unless the project has more than one keyword and the user has viewing privilege to another applicable keyword.)
--- The permissions table has a "privilege" field which is a bitmask. The bits are defined in the "privileges" table. The privileges table also has a "description" field which is used to generate the text of the permission grant form. The privileges table is populated by the "privileges" method of the "permissions" class.
--- Table Permissions {
---     id int [pk, increment] // auto-increment
---     privilege int
---     created_at timestamp
---     updated_at timestamp
+Table TaskTags {
+    id bigserial [pk] /* auto-increment */
+    task_id int [ref: > Tasks.id]
+    tag_id int [ref: > Tags.id]
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
+}
+
+-- Table Activities {
+--     id bigserial [pk] /* auto-increment */
+--     project_id int [ref: > Projects.id]
+--     task_id int [ref: > Tasks.id]
+--     user_id int [ref: > Users.id]
+--     content varchar
+--     created_at timestamp [default: `now()`]
+--     updated_at timestamp [default: `now()`]
 -- }
 
+Table Notifications {
+    id bigserial [pk] /* auto-increment */
+    caused_by int [ref: > Users.id]
+    action_type varchar
+    data json
+    created_on timestamp [default: `now()`]
+}
+
+Table NotificationNotified {
+    id bigserial [pk] /* auto-increment */
+    notification_id int [ref: > Notifications.id]
+    user_id int [ref: > Users.id]
+    read bool
+    read_at timestamp [default: `now()`]
+}
+
+Table ProjectMembers {
+    id bigserial [pk] /* auto-increment */
+    project_id int [ref: > Projects.id]
+    user_id int [ref: > Users.id]
+    added_at timestamp [default: `now()`]
+    role_code varchar
+}
+
+Table ProjectMemberInvited {
+    id bigserial [pk] /* auto-increment */
+    project_id int [ref: > Projects.id]
+    user_account_invited_id int [ref: > Users.id]
+}
+
+Table Roles {
+    code varchar [pk]
+    name varchar
+}
+
+Table TaskActivities {
+    id bigserial [pk] /* auto-increment */
+    active bool
+    task_id int [ref: > Tasks.id]
+    created_at timestamp [default: `now()`]
+    caused_by int [ref: > Users.id]
+    activity_type_id int
+    data json
+}
+
+Table TaskActivityTypes {
+    id bigserial [pk] /* auto-increment */
+    code varchar
+    template varchar
+}
+
+Table TaskAssigned {
+    id bigserial [pk] /* auto-increment */
+    task_id int [ref: > Tasks.id]
+    user_id int [ref: > Users.id]
+    assigned_date timestamp [default: `now()`]
+}
+
+Table TaskWatchers {
+    id bigserial [pk] /* auto-increment */
+    task_id int [ref: > Tasks.id]
+    user_id int [ref: > Users.id]
+    watched_at timestamp [default: `now()`]
+}
