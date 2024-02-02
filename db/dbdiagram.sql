@@ -4,8 +4,10 @@ Table Users {
     id bigserial [pk] 
     username varchar [not null]
     email varchar [not null]
-    full_name varchar [not null]
-    role bigint [not null, ref: > Roles.code]
+    full_name nvarchar [not null]
+    /* role bigint */ 
+    /* role enum [not null, default: 'user', values: 'user', 'admin', 'manager'] */
+    role_code varchar [not null, ref: > Roles.code]
     status int [not null]
     password_hash varchar [not null]
     salt varchar [not null]
@@ -22,8 +24,8 @@ Table Users {
 
 Table Projects {
     id bigserial [pk] 
-    name varchar [not null]
-    description varchar
+    name nvarchar [not null]
+    description nvarchar
     status int [not null]
     thumbnail_url varchar   
     priority int 
@@ -59,6 +61,7 @@ Table Attachments {
     task_id int [ref: > Tasks.id]
     project_id bigint [ref: > Projects.id]
     created_by bigint [ref: > Users.id]
+    downloads int
     file_name varchar
     file_path varchar
     created_at timestamp [default: `now()`]
@@ -110,7 +113,7 @@ Table ProjectMembers {
     project_id bigint [ref: > Projects.id]
     user_id bigint [ref: > Users.id]
     added_at timestamp [default: `now()`]
-    role_code varchar
+    role_code varchar [ref: > Roles.code]
 }
 
 Table ProjectMemberInvited {
@@ -123,6 +126,7 @@ Table Roles {
     code varchar [pk]
     name varchar
 }
+/* For examples: Roles */
 
 /*
 Table Activities {
@@ -164,4 +168,19 @@ Table TaskWatchers {
     task_id bigint [ref: > Tasks.id]
     user_id bigint [ref: > Users.id]
     watched_at timestamp [default: `now()`]
+}
+
+Table AuthTokens {
+    id bigserial [pk] 
+    token_id uuid [not null]
+    user_id bigint [not null, ref: > Users.id]
+    created_at timestamp [default: `now()`]
+    expires_at timestamp [not null]
+}
+
+Table user_account_invited {
+    user_account_invited_id bigserial [pk]
+    email text [not null]
+    invited_on timestamptz [not null, default: `now()`]
+    has_joined boolean [not null, default: false]
 }
