@@ -339,5 +339,5 @@ type TaskWatcher struct {
 
 -- TODO: Delete cascade tables
 
-
+-- TODO: Not Null conditions
 
