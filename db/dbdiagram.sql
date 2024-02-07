@@ -140,6 +140,7 @@ Table Activities {
 }
 */
 
+/*
 Table TaskActivities {
     id bigserial [pk] 
     active bool
@@ -155,6 +156,7 @@ Table TaskActivityTypes {
     code varchar
     template varchar
 }
+*/
 
 Table TaskAssigned {
     id bigserial [pk] 
