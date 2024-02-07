@@ -24,7 +24,7 @@ enum NotificationFilter {
   MENTIONED
 }
 
-enum RoleCode {
+enum RoleCode { 
   owner
   admin
   member

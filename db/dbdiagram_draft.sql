@@ -25,7 +25,7 @@
 -- 2.	Edit other users' tasks
 -- 3.	Delete other users' tasks
 -- 4.	Change assignment for other users' tasks
--- 5.	Manage users (add, edit, delete)
+-- 5.	Manage users (add, edit, del        ete)
 -- 6.	Manage projects (add, edit, delete)
 -- 7.	Manage members of any project (add member, edit roles, delete member)
 -- 8.	Manage tasks within a project (add, edit, delete)
@@ -40,7 +40,7 @@
 -- 5.	Manage attachments within own projects (add, edit, delete)
 -- 6.	Change assignment for tasks within own projects
 -- 7.	Add comments to tasks within own projects
--- 8.	Edit own comments within own projects
+-- 8.	Edit own comments within own projects   
 -- 9.	Manage own projects (add, edit, delete)
 -- 10.	Manage tasks within a project (add, edit, delete)
 -- 11.	Manage sub-tasks within a task (add, edit, delete)
@@ -332,6 +332,8 @@ type TaskWatcher struct {
 -- ? Available features: Notification, Activities, Attachment, Comment (Task, Project), Project Management, Task Management
     
 -- TODO: how to store attachment files ?
+--> Options:
+    + 
 
 -- TODO: how can resolve user confirmation by email ?    
 

@@ -19,8 +19,8 @@ Table Users {
     profile_cover_url varchar
     is_email_verified int
     bio varchar
-    created_at timestampz [default: `now()`]
-    updated_at timestampz [default: `now()`]
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
 }
 
 Table Projects {
@@ -57,7 +57,7 @@ Table Tasks {
     updated_at timestamp [default: `now()`]
 }
 
-Table Attachments {
+Table TaskAttachments {
     id bigserial [pk] 
     task_id int [ref: > Tasks.id]
     created_by bigint [ref: > Users.id]
@@ -74,6 +74,8 @@ Table Tags {
     name varchar    
     description varchar
     position float
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
 }
 
 Table ProjectTags {
@@ -119,7 +121,14 @@ Table ProjectMembers {
 Table ProjectMemberInvited {
     id bigserial [pk] 
     project_id bigint [ref: > Projects.id]
-    user_account_invited_id bigint [ref: > user_account_invited.user_account_invited_id]
+    user_account_invited_id bigint [ref: > UserAccountInvited.id]
+}
+
+Table UserAccountInvited {
+    id bigserial [pk]
+    email text [not null]
+    invited_on timestamptz [not null, default: `now()`]
+    has_joined boolean [not null, default: false]
 }
 
 Table Roles {
@@ -143,9 +152,13 @@ Table AuthTokens {
     expires_at timestamp [not null]
 }
 
-Table user_account_invited {
-    user_account_invited_id bigserial [pk]
-    email text [not null]
-    invited_on timestamptz [not null, default: `now()`]
-    has_joined boolean [not null, default: false]
+Table TaskComments {
+    id bigserial [pk] 
+    task_id bigint [ref: > Tasks.id]
+    parent_comment_id bigint [ref: > TaskComments.id]
+    created_by bigint [ref: > Users.id]
+    message varchar
+    pinned bool
+    created_at timestamp [default: `now()`]
+    updated_at timestamp [default: `now()`]
 }
