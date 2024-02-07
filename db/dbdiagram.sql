@@ -8,6 +8,7 @@ Table Users {
     /* role bigint */ 
     /* role enum [not null, default: 'user', values: 'user', 'admin', 'manager'] */
     role_code varchar [not null, ref: > Roles.code]
+    title varchar 
     status int [not null]
     password_hash varchar [not null]
     salt varchar [not null]
@@ -59,7 +60,6 @@ Table Tasks {
 Table Attachments {
     id bigserial [pk] 
     task_id int [ref: > Tasks.id]
-    project_id bigint [ref: > Projects.id]
     created_by bigint [ref: > Users.id]
     downloads int
     file_name varchar
@@ -119,7 +119,7 @@ Table ProjectMembers {
 Table ProjectMemberInvited {
     id bigserial [pk] 
     project_id bigint [ref: > Projects.id]
-    user_account_invited_id bigint [ref: > Users.id]
+    user_account_invited_id bigint [ref: > user_account_invited.user_account_invited_id]
 }
 
 Table Roles {
@@ -184,3 +184,10 @@ Table user_account_invited {
     invited_on timestamptz [not null, default: `now()`]
     has_joined boolean [not null, default: false]
 }
+
+/*
+Table user_account_confirm_token {
+    confirm_token_id uuid [pk, default: `uuid_generate_v4()`]
+    email text [not null, unique]
+}
+*/
