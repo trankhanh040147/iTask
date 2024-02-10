@@ -6,11 +6,12 @@ CREATE TABLE `Users` (
   `role_code` varchar(255) NOT NULL,
   `title` varchar(255),
   `status` int NOT NULL,
+  -- 1: active, 0: banned/deleted
   `password_hash` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
   `address` varchar(255),
   `phone` varchar(255),
-  `dob` varchar(255),
+  `dob` date,
   `profile_ava_url` varchar(255),
   `profile_cover_url` varchar(255),
   `is_email_verified` int,
@@ -24,9 +25,12 @@ CREATE TABLE `Projects` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255),
   `status` int NOT NULL,
+  -- 1: active, 2: archived
   `thumbnail_url` varchar(255),
   `priority` int,
+  -- 1: low, 2: medium, 3: high
   `privacy` int,
+  -- 1: public, 2: private
   `created_by` bigint NOT NULL,
   `deadline` timestamp,
   `started_at` timestamp,
@@ -40,12 +44,13 @@ CREATE TABLE `Tasks` (
   `parent_task_id` int,
   `project_id` bigint NOT NULL,
   `status` int NOT NULL,
+  -- 1: to do, 2: in progress, 3: done, 4: deleted
   `created_by` bigint NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255),
   `position` float,
   `priority` int,
-  `completed` bool NOT NULL,
+  `completed` bool DEFAULT false,
   `due_date` timestamp,
   `started_at` timestamp,
   `completed_at` timestamp,
@@ -67,6 +72,7 @@ CREATE TABLE `TaskAttachments` (
 CREATE TABLE `Tags` (
   `id` BIGINT PRIMARY KEY,
   `tag_type` int,
+  -- 1: project, 2: task
   `name` varchar(255),
   `description` varchar(255),
   `position` float,
@@ -158,64 +164,383 @@ CREATE TABLE `TaskComments` (
   `updated_at` timestamp DEFAULT (now())
 );
 
-ALTER TABLE `Users` ADD FOREIGN KEY (`role_code`) REFERENCES `Roles` (`code`);
+-- auto increment
+ALTER TABLE
+  `Users`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `Projects` ADD FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `Projects`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `Tasks` ADD FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
+ALTER TABLE
+  `Tasks`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `Tasks` ADD FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `TaskAttachments`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `TaskAttachments` ADD FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+ALTER TABLE
+  `Tags`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `TaskAttachments` ADD FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `ProjectTags`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `ProjectTags` ADD FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
+ALTER TABLE
+  `TaskTags`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `ProjectTags` ADD FOREIGN KEY (`tag_id`) REFERENCES `Tags` (`id`);
+ALTER TABLE
+  `Notifications`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `TaskTags` ADD FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+ALTER TABLE
+  `NotificationNotified`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `TaskTags` ADD FOREIGN KEY (`tag_id`) REFERENCES `Tags` (`id`);
+ALTER TABLE
+  `ProjectMembers`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `Notifications` ADD FOREIGN KEY (`caused_by`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `ProjectMemberInvited`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `NotificationNotified` ADD FOREIGN KEY (`notification_id`) REFERENCES `Notifications` (`id`);
+ALTER TABLE
+  `UserAccountInvited`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `NotificationNotified` ADD FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `Roles`
+MODIFY
+  COLUMN `code` varchar(255);
 
-ALTER TABLE `ProjectMembers` ADD FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
+ALTER TABLE
+  `TaskAssigned`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `ProjectMembers` ADD FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `AuthTokens`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `ProjectMembers` ADD FOREIGN KEY (`role_code`) REFERENCES `Roles` (`code`);
+ALTER TABLE
+  `TaskComments`
+MODIFY
+  COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE `ProjectMemberInvited` ADD FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
+-- FOREIGN KEY
+ALTER TABLE
+  `Users`
+ADD
+  FOREIGN KEY (`role_code`) REFERENCES `Roles` (`code`);
 
-ALTER TABLE `ProjectMemberInvited` ADD FOREIGN KEY (`user_account_invited_id`) REFERENCES `UserAccountInvited` (`id`);
+ALTER TABLE
+  `Projects`
+ADD
+  FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
 
-ALTER TABLE `TaskAssigned` ADD FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+ALTER TABLE
+  `Tasks`
+ADD
+  FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
 
-ALTER TABLE `TaskAssigned` ADD FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `Tasks`
+ADD
+  FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
 
-ALTER TABLE `AuthTokens` ADD FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `TaskAttachments`
+ADD
+  FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
 
-ALTER TABLE `TaskComments` ADD FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+ALTER TABLE
+  `TaskAttachments`
+ADD
+  FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
 
-ALTER TABLE `TaskComments` ADD FOREIGN KEY (`parent_comment_id`) REFERENCES `TaskComments` (`id`);
+ALTER TABLE
+  `ProjectTags`
+ADD
+  FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
 
-ALTER TABLE `TaskComments` ADD FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
+ALTER TABLE
+  `ProjectTags`
+ADD
+  FOREIGN KEY (`tag_id`) REFERENCES `Tags` (`id`);
 
+ALTER TABLE
+  `TaskTags`
+ADD
+  FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+
+ALTER TABLE
+  `TaskTags`
+ADD
+  FOREIGN KEY (`tag_id`) REFERENCES `Tags` (`id`);
+
+ALTER TABLE
+  `Notifications`
+ADD
+  FOREIGN KEY (`caused_by`) REFERENCES `Users` (`id`);
+
+ALTER TABLE
+  `NotificationNotified`
+ADD
+  FOREIGN KEY (`notification_id`) REFERENCES `Notifications` (`id`);
+
+ALTER TABLE
+  `NotificationNotified`
+ADD
+  FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+
+ALTER TABLE
+  `ProjectMembers`
+ADD
+  FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
+
+ALTER TABLE
+  `ProjectMembers`
+ADD
+  FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+
+ALTER TABLE
+  `ProjectMembers`
+ADD
+  FOREIGN KEY (`role_code`) REFERENCES `Roles` (`code`);
+
+ALTER TABLE
+  `ProjectMemberInvited`
+ADD
+  FOREIGN KEY (`project_id`) REFERENCES `Projects` (`id`);
+
+ALTER TABLE
+  `ProjectMemberInvited`
+ADD
+  FOREIGN KEY (`user_account_invited_id`) REFERENCES `UserAccountInvited` (`id`);
+
+ALTER TABLE
+  `TaskAssigned`
+ADD
+  FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+
+ALTER TABLE
+  `TaskAssigned`
+ADD
+  FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+
+ALTER TABLE
+  `AuthTokens`
+ADD
+  FOREIGN KEY (`user_id`) REFERENCES `Users` (`id`);
+
+ALTER TABLE
+  `TaskComments`
+ADD
+  FOREIGN KEY (`task_id`) REFERENCES `Tasks` (`id`);
+
+ALTER TABLE
+  `TaskComments`
+ADD
+  FOREIGN KEY (`parent_comment_id`) REFERENCES `TaskComments` (`id`);
+
+ALTER TABLE
+  `TaskComments`
+ADD
+  FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
 
 -- CREATE INDEX
-
--- INSERT SAMPLE DATA FOR ALL TABLES
+-- MYSQL
+-- INSERT SAMPLE DATA FOR ALL TABLES 
 -- 1. Roles
-INSERT INTO `Roles` (`code`, `name`) VALUES ('01', 'Admin');
-INSERT INTO `Roles` (`code`, `name`) VALUES ('02', 'Member');
-INSERT INTO `Roles` (`code`, `name`) VALUES ('03', 'Owner');
-INSERT INTO `Roles` (`code`, `name`) VALUES ('04', 'Observer');
+INSERT INTO
+  `Roles` (`code`, `name`)
+VALUES
+  ('01', 'Admin');
+
+INSERT INTO
+  `Roles` (`code`, `name`)
+VALUES
+  ('02', 'Member');
+
+INSERT INTO
+  `Roles` (`code`, `name`)
+VALUES
+  ('03', 'Owner');
+
+INSERT INTO
+  `Roles` (`code`, `name`)
+VALUES
+  ('04', 'Observer');
 
 -- 2. Users
-INSERT INTO `Users` (`username`, `email`, `full_name`, `role_code`, `status`, `password_hash`, `salt`) 
-VALUES ('peter01','peter01@yopmail.com','Peter','01',1,'$2a$10$','15151512');
+INSERT INTO
+  `Users` (
+    `id`,
+    `username`,
+    `email`,
+    `full_name`,
+    `role_code`,
+    `status`,
+    `password_hash`,
+    `salt`
+  )
+VALUES
+  (
+    1,
+    'peter01',
+    'peter01@yopmail.com',
+    'Peter',
+    '01',
+    1,
+    '20194891  02qwoioqw',
+    '15151512'
+  );
+
+INSERT INTO
+  `Users` (
+    `id`,
+    `username`,
+    `email`,
+    `full_name`,
+    `role_code`,
+    `status`,
+    `password_hash`,
+    `salt`
+  )
+VALUES
+  (
+    2,
+    'john01',
+    'john01@yopmail.com`,`John',
+    'Johnathan',
+    '02',
+    1,
+    '02914qwjiooq',
+    '2314u1241'
+  );
+
+INSERT INTO
+  `Users` (
+    `id`,
+    `username`,
+    `email`,
+    `full_name`,
+    `role_code`,
+    `status`,
+    `password_hash`,
+    `salt`
+  )
+VALUES
+  (
+    3,
+    'jane01',
+    'janefoster09@yopmail.com',
+    'Jane',
+    '02',
+    1,
+    '10941902qwiour',
+    '8720984eu'
+  );
+
+-- 3. Projects
+INSERT INTO
+  `Projects` (
+    `name`,
+    `description`,
+    `status`,
+    `thumbnail_url`,
+    `priority`,
+    `privacy`,
+    `created_by`,
+    `deadline`,
+    `started_at`,
+    `thumbnail`
+  )
+VALUES
+  (
+    'Project 1',
+    'This is project 1',
+    1,
+    'img1.url',
+    '1',
+    '1',
+    '01',
+    '12/05/2024',
+    '05/02/2024',
+    'img1.jpg'
+  );
+
+-- 4. ProjectMembers
+INSERT INTO
+  `ProjectMembers` (`project_id`, `user_id`, `role_code`)
+VALUES
+  (1, 1, '03');
+
+INSERT INTO
+  `ProjectMembers` (`project_id`, `user_id`, `role_code`)
+VALUES
+  (1, 2, '02');
+
+-- 5. Tasks
+INSERT INTO
+  `Tasks` (
+    `parent_task_id`,
+    `project_id`,
+    `status`,
+    `created_by`,
+    `name`,
+    `description`,
+    `due_date`,
+    `started_at`
+  )
+VALUES
+  (
+    NULL,
+    1,
+    1,
+    '01',
+    'Task 1',
+    'This is task 1',
+    '2024-02-12',
+    '2024-02-05'
+  )
+INSERT INTO
+  `Tasks` (
+    `parent_task_id`,
+    `project_id`,
+    `status`,
+    `created_by`,
+    `name`,
+    `description`,
+    `due_date`,
+    `started_at`
+  )
+VALUES
+  (
+    1,
+    2,
+    1,
+    '02',
+    'Task 2',
+    'This is task 2',
+    '2024-02-20',
+    '2024-02-10'
+  )

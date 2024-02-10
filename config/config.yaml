@@ -1,0 +1,72 @@
+app:
+  Version: 1.0.0
+  Port: 8080
+  Mode: development
+  Secret: 109339Lam
+  MigrationURL:  file://migrations
+
+mysql:
+  #Host: paradise-mysql
+  # Host: localhost
+  # ContainerName: paradise_mysql
+  # Port: 3306
+  # User: root
+  # Password: 109339Lam@
+  # DBName: paradise
+  # Host: roundhouse.proxy.rlwy.net
+  # Port: 30663
+  # User: root
+  # Password: aaCfeH12efF2-3Gfh-b6A--Aac1HH-4c
+  # DBName: railway
+  Host: paradise.cxs0mgue8763.ap-southeast-1.rds.amazonaws.com
+  Port: 3306
+  User: admin
+  Password: 109339Lam
+  DBName: paradise
+
+aws:
+  Region: ap-southeast-1
+  APIKey: AKIAYBVEGPXO3V3KAGWE
+  SecretKey: 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
+  S3Domain: d1c6814z4iseiw.cloudfront.net
+  S3Bucket: paradisebookings3
+  S3FolderImages: images
+  
+redis:
+  Host: roundhouse.proxy.rlwy.net
+  #Host: localhost
+  Port: 31002
+  #Port: 6379
+  Password: FLn5DhEbgfciBNIlK2Jp3PICeJo6cMHN
+  #Password: ""
+  DB: 0
+
+google:
+  ClientID: 701762046284-1o7u891fgp06kvi0f7344dikclpmjdmq.apps.googleusercontent.com
+  ClientSecret: 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
+  RedirectURL: http://localhost:3000/
+
+email:
+  EmailSenderName: LamNguyen
+  EmailSenderAddress: lamfan011@gmail.com
+  EmailSenderPassword: earzqfmxxcxorlxz
+
+cronspec:
+  UpdateStatusBooking: 0 0 * * *
+
+googlemap:
+  APIKey: AIzaSyA6_RpKmlsfdOrT2mfJ-nbpEO0jgSj_m38
+  BaseURL: https://maps.googleapis.com/maps/api/geocode
+
+momo:
+  EndPoint: https://test-payment.momo.vn/v2/gateway/api/create
+  AccessKey: F8BBA842ECF85
+  SecretKey: K951B6PE1waDMi640xX08PD3vg6EkVlz
+  PartnerCode: MOMO
+  RedirectURL: https://payment-success-minhtuongle.vercel.app/
+  IpURL: https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b
+  Lang: vi
+  PartnerName: MoMo Payment
+  StoreId: 109339ParadiseBooking
+  AutoCapture: true
+  RequestType: payWithMethod
