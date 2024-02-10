@@ -9,43 +9,24 @@ import (
 	accounthandler "paradise-booking/modules/account/handler"
 	accountstorage "paradise-booking/modules/account/storage"
 	accountusecase "paradise-booking/modules/account/usecase"
-	amenityhandler "paradise-booking/modules/amenity/handler"
-	amenitystorage "paradise-booking/modules/amenity/storage"
-	amenityusecase "paradise-booking/modules/amenity/usecase"
-	bookinghandler "paradise-booking/modules/booking/handler"
 	bookingstorage "paradise-booking/modules/booking/storage"
 	bookingusecase "paradise-booking/modules/booking/usecase"
 	bookingdetailstorage "paradise-booking/modules/booking_detail/storage"
-	bookingratinghandler "paradise-booking/modules/booking_rating/handler"
-	bookingratingstorage "paradise-booking/modules/booking_rating/storage"
-	bookingratingusecase "paradise-booking/modules/booking_rating/usecase"
 	"paradise-booking/modules/middleware"
-	paymenthandler "paradise-booking/modules/payment/handler"
 	paymentstorage "paradise-booking/modules/payment/store"
-	paymentusecase "paradise-booking/modules/payment/usecase"
-	placehandler "paradise-booking/modules/place/handler"
 	placestorage "paradise-booking/modules/place/storage"
-	placeusecase "paradise-booking/modules/place/usecase"
-	placewishlisthandler "paradise-booking/modules/place_wishlist/handler"
-	placewishliststorage "paradise-booking/modules/place_wishlist/storage"
-	placewishlistusecase "paradise-booking/modules/place_wishlist/usecase"
-	policieshandler "paradise-booking/modules/policy/handler"
-	policiesstorage "paradise-booking/modules/policy/storage"
-	policiesusecase "paradise-booking/modules/policy/usecase"
 	uploadhandler "paradise-booking/modules/upload/handler"
 	uploadusecase "paradise-booking/modules/upload/usecase"
 	verifyemailshanlder "paradise-booking/modules/verify_emails/handler"
 	verifyemailsstorage "paradise-booking/modules/verify_emails/storage"
 	verifyemailsusecase "paradise-booking/modules/verify_emails/usecase"
-	wishlisthandler "paradise-booking/modules/wishlist/handler"
-	wishliststorage "paradise-booking/modules/wishlist/storage"
-	wishlistusecase "paradise-booking/modules/wishlist/usecase"
 	"paradise-booking/provider/cache"
-	googlemapprovider "paradise-booking/provider/googlemap"
 	momoprovider "paradise-booking/provider/momo"
 	mysqlprovider "paradise-booking/provider/mysql"
 	redisprovider "paradise-booking/provider/redis"
 	s3provider "paradise-booking/provider/s3"
+
+	// s3provider "paradise-booking/provider/s3"
 	"paradise-booking/utils"
 	"paradise-booking/worker"
 	"sync"
@@ -89,7 +70,7 @@ func main() {
 	taskDistributor := worker.NewRedisTaskDistributor(&redisOpt)
 
 	// google map
-	googleMap := googlemapprovider.NewGoogleMap(cfg)
+	// googleMap := googlemapprovider.NewGoogleMap(cfg)
 
 	// momo
 	momo := momoprovider.NewMomo(cfg)
@@ -107,48 +88,48 @@ func main() {
 	accountHdl := accounthandler.NewAccountHandler(cfg, accountUseCase)
 
 	// prepare for placewishlist storeage
-	placeWishListSto := placewishliststorage.NewPlaceWishListStorage(db)
+	// placeWishListSto := placewishliststorage.NewPlaceWishListStorage(db)
 	// declare cache for place_wishlist
-	placeWishListCache := cache.NewPlaceWishListCache(placeWishListSto, cacheRedis)
+	// placeWishListCache := cache.NewPlaceWishListCache(placeWishListSto, cacheRedis)
 
 	// declare dependencies
 	// prepare for wish list
-	wishListSto := wishliststorage.NewWishListStorage(db)
-	wishListUseCase := wishlistusecase.NewWishListUseCase(wishListSto, placeWishListSto, cacheRedis)
-	wishListHdl := wishlisthandler.NewWishListHandler(wishListUseCase)
+	// wishListSto := wishliststorage.NewWishListStorage(db)
+	// wishListUseCase := wishlistusecase.NewWishListUseCase(wishListSto, placeWishListSto, cacheRedis)
+	// wishListHdl := wishlisthandler.NewWishListHandler(wishListUseCase)
 
 	// prepare for payment
 	paymentSto := paymentstorage.NewPaymentStorage(db)
-	paymentUC := paymentusecase.NewPaymentUseCase(paymentSto)
-	paymentHdl := paymenthandler.NewPaymentHandler(paymentUC)
+	// paymentUC := paymentusecase.NewPaymentUseCase(paymentSto)
+	// paymentHdl := paymenthandler.NewPaymentHandler(paymentUC)
 	// prepare for place
 	bookingSto := bookingstorage.NewBookingStorage(db)
 
 	placeSto := placestorage.NewPlaceStorage(db)
-	placeCache := cache.NewPlaceStoCache(placeSto, cacheRedis)
-	placeUseCase := placeusecase.NewPlaceUseCase(cfg, placeSto, accountCache, googleMap, placeWishListCache, placeCache, bookingSto)
-	placeHdl := placehandler.NewPlaceHandler(placeUseCase)
+	// placeCache := cache.NewPlaceStoCache(placeSto, cacheRedis)
+	// placeUseCase := placeusecase.NewPlaceUseCase(cfg, placeSto, accountCache, googleMap, placeWishListCache, placeCache, bookingSto)
+	// placeHdl := placehandler.NewPlaceHandler(placeUseCase)
 
 	// prepare for booking detail
 	bookingDetailSto := bookingdetailstorage.NewBookingDetailStorage(db)
 
 	// prepare for booking
 	bookingUseCase := bookingusecase.NewBookingUseCase(bookingSto, bookingDetailSto, cfg, taskDistributor, accountSto, placeSto, momo, paymentSto)
-	bookingHdl := bookinghandler.NewBookingHandler(bookingUseCase)
+	// bookingHdl := bookinghandler.NewBookingHandler(bookingUseCase)
 
 	// prepare place wish list
-	placeWishListUseCase := placewishlistusecase.NewPlaceWishListUseCase(placeWishListSto, placeSto, cacheRedis)
-	placeWishListHdl := placewishlisthandler.NewPlaceWishListHandler(placeWishListUseCase)
+	// placeWishListUseCase := placewishlistusecase.NewPlaceWishListUseCase(placeWishListSto, placeSto, cacheRedis)
+	// placeWishListHdl := placewishlisthandler.NewPlaceWishListHandler(placeWishListUseCase)
 
 	// prepare for place rating
-	bookingRatingSto := bookingratingstorage.Newbookingratingstorage(db)
-	bookingRatingUC := bookingratingusecase.Newbookingratingusecase(bookingRatingSto, accountSto, placeSto, cacheRedis)
-	bookingRatingHdl := bookingratinghandler.Newbookingratinghandler(bookingRatingUC)
+	// bookingRatingSto := bookingratingstorage.Newbookingratingstorage(db)
+	// bookingRatingUC := bookingratingusecase.Newbookingratingusecase(bookingRatingSto, accountSto, placeSto, cacheRedis)
+	// bookingRatingHdl := bookingratinghandler.Newbookingratinghandler(bookingRatingUC)
 
 	// prepare for amenities
-	amenitySto := amenitystorage.NewAmenityStorage(db)
-	amenityUC := amenityusecase.NewAmenityUseCase(amenitySto, cfg)
-	amenityHdl := amenityhandler.NewAmenityHandler(amenityUC)
+	// amenitySto := amenitystorage.NewAmenityStorage(db)
+	// amenityUC := amenityusecase.NewAmenityUseCase(amenitySto, cfg)
+	// amenityHdl := amenityhandler.NewAmenityHandler(amenityUC)
 
 	// upload file to s3
 	s3Provider := s3provider.NewS3Provider(cfg)
@@ -156,9 +137,9 @@ func main() {
 	uploadHdl := uploadhandler.NewUploadHandler(cfg, uploadUC)
 
 	// prepare for policy
-	policySto := policiesstorage.NewPolicyStorage(db)
-	policyUC := policiesusecase.NewPolicyUseCase(policySto)
-	policyHdl := policieshandler.NewPolicyHandler(policyUC)
+	// policySto := policiesstorage.NewPolicyStorage(db)
+	// policyUC := policiesusecase.NewPolicyUseCase(policySto)
+	// policyHdl := policieshandler.NewPolicyHandler(policyUC)
 
 	// run task processor
 	wg := new(sync.WaitGroup)
@@ -166,6 +147,7 @@ func main() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
+		// cmdworker.RunTaskProcessor(&redisOpt, accountSto, cfg, verifyEmailsUseCase, bookingSto, bookingUseCase)
 		cmdworker.RunTaskProcessor(&redisOpt, accountSto, cfg, verifyEmailsUseCase, bookingSto, bookingUseCase)
 	}()
 
@@ -258,19 +240,19 @@ func main() {
 	// upload file to s3
 	v1.POST("/upload", middlewares.RequiredAuth(), uploadHdl.UploadFile())
 
-	// amenities
-	v1.POST("/amenities", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), amenityHdl.CreateAmenity())
-	v1.DELETE("/amenities/:id", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), amenityHdl.DeleteAmenityByID())
-	v1.GET("/amenities/config", amenityHdl.GetAllConfigAmenity())
-	v1.GET("/amenities/place/:place_id", amenityHdl.ListAmenityByPlaceID())
-	v1.POST("/amenities/place/remove", amenityHdl.DeleteAmenityByListID())
+	// // amenities
+	// v1.POST("/amenities", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), amenityHdl.CreateAmenity())
+	// v1.DELETE("/amenities/:id", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), amenityHdl.DeleteAmenityByID())
+	// v1.GET("/amenities/config", amenityHdl.GetAllConfigAmenity())
+	// v1.GET("/amenities/place/:place_id", amenityHdl.ListAmenityByPlaceID())
+	// v1.POST("/amenities/place/remove", amenityHdl.DeleteAmenityByListID())
 
-	// policies
-	v1.POST("/policies", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), policyHdl.UpsertPolicy())
-	v1.GET("/policies/:place_id", policyHdl.GetPolicyByPlaceId())
+	// // policies
+	// v1.POST("/policies", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), policyHdl.UpsertPolicy())
+	// v1.GET("/policies/:place_id", policyHdl.GetPolicyByPlaceId())
 
-	// payment
-	v1.POST("/payments/list_by_vendor", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), paymentHdl.ListPaymentByVendorID())
+	// // payment
+	// v1.POST("/payments/list_by_vendor", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), paymentHdl.ListPaymentByVendorID())
 
 	// google login
 	//v1.GET("/google/login")
