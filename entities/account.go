@@ -37,9 +37,10 @@ func (a *Account) GetID() int {
 }
 
 var MapRole map[int]string = map[int]string{
-	1: "User",
-	2: "Vendor",
+	1: "Member",
+	2: "Owner",
 	3: "Admin",
+	4: "Observer",
 }
 
 var MapStatus map[int]string = map[int]string{

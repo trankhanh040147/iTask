@@ -3,7 +3,7 @@ CREATE TABLE `Users` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `role_code` varchar(255) NOT NULL,
+  `role_code` int NOT NULL,
   `title` varchar(255),
   `status` int NOT NULL,
   -- 1: active, 0: banned/deleted
@@ -117,7 +117,7 @@ CREATE TABLE `ProjectMembers` (
   `project_id` bigint,
   `user_id` bigint,
   `added_at` timestamp DEFAULT (now()),
-  `role_code` varchar(255)
+  `role_code` int
 );
 
 CREATE TABLE `ProjectMemberInvited` (
@@ -134,7 +134,7 @@ CREATE TABLE `UserAccountInvited` (
 );
 
 CREATE TABLE `Roles` (
-  `code` varchar(255) PRIMARY KEY,
+  `code` int PRIMARY KEY,
   `name` varchar(255)
 );
 
@@ -224,11 +224,6 @@ ALTER TABLE
   `UserAccountInvited`
 MODIFY
   COLUMN `id` BIGINT AUTO_INCREMENT;
-
-ALTER TABLE
-  `Roles`
-MODIFY
-  COLUMN `code` varchar(255);
 
 ALTER TABLE
   `TaskAssigned`
@@ -373,22 +368,22 @@ ADD
 INSERT INTO
   `Roles` (`code`, `name`)
 VALUES
-  ('01', 'Admin');
+  (1, 'Admin');
 
 INSERT INTO
   `Roles` (`code`, `name`)
 VALUES
-  ('02', 'Member');
+  (2, 'Member');
 
 INSERT INTO
   `Roles` (`code`, `name`)
 VALUES
-  ('03', 'Owner');
+  (3, 'Owner');
 
 INSERT INTO
   `Roles` (`code`, `name`)
 VALUES
-  ('04', 'Observer');
+  (4, 'Observer');
 
 -- 2. Users
 INSERT INTO
@@ -408,7 +403,7 @@ VALUES
     'peter01',
     'peter01@yopmail.com',
     'Peter',
-    '01',
+    1,
     1,
     '20194891  02qwoioqw',
     '15151512'
@@ -431,7 +426,7 @@ VALUES
     'john01',
     'john01@yopmail.com`,`John',
     'Johnathan',
-    '02',
+    2,
     1,
     '02914qwjiooq',
     '2314u1241'
@@ -454,7 +449,7 @@ VALUES
     'jane01',
     'janefoster09@yopmail.com',
     'Jane',
-    '02',
+    2,
     1,
     '10941902qwiour',
     '8720984eu'
@@ -492,12 +487,12 @@ VALUES
 INSERT INTO
   `ProjectMembers` (`project_id`, `user_id`, `role_code`)
 VALUES
-  (1, 1, '03');
+  (1, 1, 3);
 
 INSERT INTO
   `ProjectMembers` (`project_id`, `user_id`, `role_code`)
 VALUES
-  (1, 2, '02');
+  (1, 2, 2);
 
 -- 5. Tasks
 INSERT INTO

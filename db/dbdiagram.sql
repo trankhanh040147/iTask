@@ -7,7 +7,7 @@ Table Users {
     full_name nvarchar [not null]
     /* role bigint */ 
     /* role enum [not null, default: 'user', values: 'user', 'admin', 'manager'] */
-    role_code varchar [not null, ref: > Roles.code]
+    role_code int [not null, ref: > Roles.code]
     title varchar 
     status int [not null]
     password_hash varchar [not null]
@@ -115,7 +115,7 @@ Table ProjectMembers {
     project_id bigint [ref: > Projects.id]
     user_id bigint [ref: > Users.id]
     added_at timestamp [default: `now()`]
-    role_code varchar [ref: > Roles.code]
+    role_code int [ref: > Roles.code]
 }
 
 Table ProjectMemberInvited {
@@ -132,7 +132,7 @@ Table UserAccountInvited {
 }
 
 Table Roles {
-    code varchar [pk]
+    code int [pk]
     name varchar
 }
 /* For examples: Roles */
