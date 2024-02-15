@@ -3,10 +3,10 @@ package bookingusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/iomodel"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
+	"iTask/modules/booking/iomodel"
 
 	"github.com/samber/lo"
 )

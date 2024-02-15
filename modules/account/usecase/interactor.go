@@ -2,11 +2,11 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/config"
-	"paradise-booking/entities"
-	accountstorage "paradise-booking/modules/account/storage"
-	"paradise-booking/worker"
+	"iTask/common"
+	"iTask/config"
+	"iTask/entities"
+	accountstorage "iTask/modules/account/storage"
+	"iTask/worker"
 )
 
 type AccountStorage interface {

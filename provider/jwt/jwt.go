@@ -3,8 +3,8 @@ package jwtprovider
 import (
 	"errors"
 	"fmt"
-	"paradise-booking/common"
-	"paradise-booking/config"
+	"iTask/common"
+	"iTask/config"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"

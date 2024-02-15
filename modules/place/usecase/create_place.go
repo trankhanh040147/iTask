@@ -2,8 +2,8 @@ package placeusecase
 
 import (
 	"context"
-	"paradise-booking/modules/place/convert"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/modules/place/convert"
+	"iTask/modules/place/iomodel"
 )
 
 func (uc *placeUseCase) CreatePlace(ctx context.Context, data *iomodel.CreatePlaceReq, emailVendor string) error {

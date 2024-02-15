@@ -3,9 +3,9 @@ package bookingusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
 )
 
 func (uc *bookingUseCase) CancelBooking(ctx context.Context, bookingID int) error {

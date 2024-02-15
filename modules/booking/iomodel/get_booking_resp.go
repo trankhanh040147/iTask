@@ -1,7 +1,7 @@
 package iomodel
 
 import (
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 type GetBookingResp struct {

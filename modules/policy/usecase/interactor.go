@@ -2,7 +2,7 @@ package policiesusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 type PolicyStore interface {

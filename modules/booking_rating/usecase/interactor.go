@@ -2,7 +2,7 @@ package bookingratingusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 type BookingRatingSto interface {

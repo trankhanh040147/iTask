@@ -2,8 +2,8 @@ package bookingdetailstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingDetailStorage) Create(ctx context.Context, data *entities.BookingDetail) (err error) {

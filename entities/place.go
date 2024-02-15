@@ -1,7 +1,7 @@
 package entities
 
 import (
-	"paradise-booking/common"
+	"iTask/common"
 	"strconv"
 )
 

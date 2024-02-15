@@ -2,8 +2,8 @@ package placehandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	placeIomodel "paradise-booking/modules/place/iomodel"
+	"iTask/common"
+	placeIomodel "iTask/modules/place/iomodel"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

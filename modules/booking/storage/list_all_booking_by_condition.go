@@ -2,8 +2,8 @@ package bookingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingStorage) ListAllBookingWithCondition(ctx context.Context, condition []common.Condition) ([]entities.Booking, error) {

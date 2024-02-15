@@ -2,10 +2,10 @@ package bookingusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/convert"
-	"paradise-booking/modules/booking/iomodel"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/booking/convert"
+	"iTask/modules/booking/iomodel"
 )
 
 func (uc *bookingUseCase) GetBookingByPlaceID(ctx context.Context, placeId int, paging *common.Paging) ([]iomodel.GetBookingByPlaceResp, error) {

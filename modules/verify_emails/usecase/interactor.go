@@ -2,7 +2,7 @@ package verifyemailsusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 type verifyEmailsStorage interface {

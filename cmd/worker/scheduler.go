@@ -1,8 +1,8 @@
 package cmdworker
 
 import (
-	"paradise-booking/config"
-	"paradise-booking/worker"
+	"iTask/config"
+	"iTask/worker"
 
 	"github.com/hibiken/asynq"
 )

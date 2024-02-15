@@ -2,7 +2,7 @@ package placestorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 
 	"gorm.io/gorm"
 )

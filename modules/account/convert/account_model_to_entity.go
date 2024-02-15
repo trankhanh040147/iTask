@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"paradise-booking/entities"
-	"paradise-booking/modules/account/iomodel"
+	"iTask/entities"
+	"iTask/modules/account/iomodel"
 )
 
 func ConvertAccountRegisModelToEntity(account *iomodel.AccountRegister) entities.Account {

@@ -2,8 +2,8 @@ package wishlistusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
-	wishlistiomodel "paradise-booking/modules/wishlist/iomodel"
+	"iTask/entities"
+	wishlistiomodel "iTask/modules/wishlist/iomodel"
 )
 
 func (wishListUsecase *wishListUsecase) CreateWishList(ctx context.Context, data *wishlistiomodel.CreateWishListReq) (*entities.WishList, error) {

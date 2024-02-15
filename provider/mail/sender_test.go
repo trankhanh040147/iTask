@@ -2,7 +2,7 @@ package mail
 
 import (
 	"errors"
-	"paradise-booking/config"
+	"iTask/config"
 
 	"github.com/spf13/viper"
 )

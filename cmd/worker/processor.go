@@ -2,13 +2,13 @@ package cmdworker
 
 import (
 	"log"
-	"paradise-booking/config"
-	accountusecase "paradise-booking/modules/account/usecase"
-	bookinghandler "paradise-booking/modules/booking/handler"
-	bookingusecase "paradise-booking/modules/booking/usecase"
-	verifyemailsusecase "paradise-booking/modules/verify_emails/usecase"
-	"paradise-booking/provider/mail"
-	"paradise-booking/worker"
+	"iTask/config"
+	accountusecase "iTask/modules/account/usecase"
+	bookinghandler "iTask/modules/booking/handler"
+	bookingusecase "iTask/modules/booking/usecase"
+	verifyemailsusecase "iTask/modules/verify_emails/usecase"
+	"iTask/provider/mail"
+	"iTask/worker"
 
 	"github.com/hibiken/asynq"
 )

@@ -2,8 +2,8 @@ package bookingratingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingratingstorage) GetByCondition(ctx context.Context, condition map[string]interface{}) ([]entities.BookingRating, error) {

@@ -2,8 +2,8 @@ package accounthandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	"paradise-booking/modules/account/iomodel"
+	"iTask/common"
+	"iTask/modules/account/iomodel"
 
 	"github.com/gin-gonic/gin"
 )

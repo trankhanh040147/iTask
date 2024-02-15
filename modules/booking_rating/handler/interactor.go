@@ -2,8 +2,8 @@ package bookingratinghandler
 
 import (
 	"context"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking_rating/iomodel"
+	"iTask/entities"
+	"iTask/modules/booking_rating/iomodel"
 )
 
 type placeRatingUseCase interface {

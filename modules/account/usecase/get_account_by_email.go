@@ -2,8 +2,8 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/modules/account/convert"
-	"paradise-booking/modules/account/iomodel"
+	"iTask/modules/account/convert"
+	"iTask/modules/account/iomodel"
 )
 
 func (uc *accountUseCase) GetAccountByEmail(ctx context.Context, email string) (account *iomodel.AccountInfoResp, err error) {

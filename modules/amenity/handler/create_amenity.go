@@ -2,7 +2,7 @@ package amenityhandler
 
 import (
 	"net/http"
-	"paradise-booking/modules/amenity/iomodel"
+	"iTask/modules/amenity/iomodel"
 
 	"github.com/gin-gonic/gin"
 )

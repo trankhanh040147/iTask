@@ -2,8 +2,8 @@ package bookinghandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	"paradise-booking/modules/booking/iomodel"
+	"iTask/common"
+	"iTask/modules/booking/iomodel"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

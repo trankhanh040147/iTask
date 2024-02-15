@@ -2,9 +2,9 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/account/iomodel"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/account/iomodel"
 )
 
 func (uc *accountUseCase) UpdateAccountRoleByID(ctx context.Context, accountModel *iomodel.AccountChangeRole, id int) (err error) {

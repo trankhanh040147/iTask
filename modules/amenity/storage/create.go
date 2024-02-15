@@ -2,7 +2,7 @@ package amenitystorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *amenityStorage) Create(ctx context.Context, data *entities.Amenity) (res *entities.Amenity, err error) {

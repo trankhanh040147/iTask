@@ -2,7 +2,7 @@ package wishlisthandler
 
 import (
 	"net/http"
-	wishlistiomodel "paradise-booking/modules/wishlist/iomodel"
+	wishlistiomodel "iTask/modules/wishlist/iomodel"
 
 	"github.com/gin-gonic/gin"
 )

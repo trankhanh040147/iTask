@@ -2,7 +2,7 @@ package bookingratingusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (uc *bookingRatingUsecase) GetStatisticByPlaceID(ctx context.Context, placeId int) ([]entities.StatisticResp, error) {

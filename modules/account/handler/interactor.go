@@ -2,11 +2,11 @@ package accounthandler
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/config"
-	"paradise-booking/entities"
-	"paradise-booking/modules/account/iomodel"
-	jwtprovider "paradise-booking/provider/jwt"
+	"iTask/common"
+	"iTask/config"
+	"iTask/entities"
+	"iTask/modules/account/iomodel"
+	jwtprovider "iTask/provider/jwt"
 )
 
 type accountUseCase interface {

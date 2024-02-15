@@ -2,7 +2,7 @@ package bookinghandler
 
 import (
 	"net/http"
-	"paradise-booking/constant"
+	"iTask/constant"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

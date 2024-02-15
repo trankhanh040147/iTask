@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"mime/multipart"
-	"paradise-booking/common"
+	"iTask/common"
 )
 
 func (uc *uploadUseCase) UploadFile(ctx context.Context, fileHeader *multipart.FileHeader) (*common.Image, error) {

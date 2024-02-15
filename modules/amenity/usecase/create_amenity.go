@@ -2,8 +2,8 @@ package amenityusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
-	"paradise-booking/modules/amenity/iomodel"
+	"iTask/entities"
+	"iTask/modules/amenity/iomodel"
 )
 
 func (u *amenityUseCase) CreateAmenity(ctx context.Context, data *iomodel.CreateAmenityReq) (err error) {

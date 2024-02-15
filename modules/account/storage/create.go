@@ -2,8 +2,8 @@ package accountstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *accountStorage) Create(ctx context.Context, account *entities.Account) (err error) {

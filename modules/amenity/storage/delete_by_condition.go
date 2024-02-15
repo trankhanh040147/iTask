@@ -2,7 +2,7 @@ package amenitystorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *amenityStorage) DeleteByCondition(ctx context.Context, condition map[string]any) error {

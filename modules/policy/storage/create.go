@@ -2,7 +2,7 @@ package policiesstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *policyStorage) Create(ctx context.Context, data *entities.Policy) error {

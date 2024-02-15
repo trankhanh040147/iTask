@@ -2,8 +2,8 @@ package accounthandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	"paradise-booking/modules/account/convert"
+	"iTask/common"
+	"iTask/modules/account/convert"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
+	"iTask/constant"
+	"iTask/entities"
 
 	"github.com/hibiken/asynq"
 	"github.com/rs/zerolog/log"

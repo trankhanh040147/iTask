@@ -2,7 +2,7 @@ package policieshandler
 
 import (
 	"net/http"
-	"paradise-booking/modules/policy/iomodel"
+	"iTask/modules/policy/iomodel"
 
 	"github.com/gin-gonic/gin"
 )

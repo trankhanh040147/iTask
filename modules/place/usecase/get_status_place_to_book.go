@@ -2,9 +2,9 @@ package placeusecase
 
 import (
 	"context"
-	"paradise-booking/constant"
-	"paradise-booking/modules/place/iomodel"
-	"paradise-booking/utils"
+	"iTask/constant"
+	"iTask/modules/place/iomodel"
+	"iTask/utils"
 )
 
 func (uc *placeUseCase) GetStatusPlaceToBook(ctx context.Context, placeId int, dateFrom, dateTo string) (*iomodel.GetStatusPlaceToBookResp, error) {

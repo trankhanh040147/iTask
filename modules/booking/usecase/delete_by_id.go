@@ -3,7 +3,7 @@ package bookingusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/constant"
+	"iTask/constant"
 )
 
 func (uc *bookingUseCase) DeleteBookingByID(ctx context.Context, id int) error {

@@ -2,9 +2,9 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/utils"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/utils"
 )
 
 func (uc *accountUseCase) UpdatePassword(ctx context.Context, email string, newPassword string) error {

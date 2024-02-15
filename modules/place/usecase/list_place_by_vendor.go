@@ -2,9 +2,9 @@ package placeusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/modules/place/convert"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/common"
+	"iTask/modules/place/convert"
+	"iTask/modules/place/iomodel"
 )
 
 func (uc *placeUseCase) ListPlaceByVendor(ctx context.Context, vendorEmail string) (result []iomodel.GetPlaceResp, err error) {

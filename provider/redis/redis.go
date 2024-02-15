@@ -3,7 +3,7 @@ package redis
 import (
 	"context"
 	"fmt"
-	"paradise-booking/config"
+	"iTask/config"
 
 	"github.com/go-redis/redis/v8"
 )

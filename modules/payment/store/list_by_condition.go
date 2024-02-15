@@ -2,7 +2,7 @@ package paymentstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *paymentStorage) ListByCondition(ctx context.Context, condition map[string]interface{}) ([]entities.Payment, error) {

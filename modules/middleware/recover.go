@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"paradise-booking/common"
+	"iTask/common"
 
 	"github.com/gin-gonic/gin"
 )

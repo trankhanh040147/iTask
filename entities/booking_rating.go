@@ -1,6 +1,6 @@
 package entities
 
-import "paradise-booking/common"
+import "iTask/common"
 
 type BookingRating struct {
 	common.SQLModel

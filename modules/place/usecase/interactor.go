@@ -2,11 +2,11 @@ package placeusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/config"
-	"paradise-booking/entities"
-	"paradise-booking/modules/place/iomodel"
-	googlemapprovider "paradise-booking/provider/googlemap"
+	"iTask/common"
+	"iTask/config"
+	"iTask/entities"
+	"iTask/modules/place/iomodel"
+	googlemapprovider "iTask/provider/googlemap"
 	"time"
 )
 

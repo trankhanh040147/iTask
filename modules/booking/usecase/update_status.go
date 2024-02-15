@@ -2,8 +2,8 @@ package bookingusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (uc *bookingUseCase) UpdateStatusBooking(ctx context.Context, bookingID, status int) error {

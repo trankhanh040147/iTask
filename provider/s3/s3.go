@@ -3,8 +3,8 @@ package s3provider
 import (
 	"context"
 	"log"
-	"paradise-booking/common"
-	"paradise-booking/config"
+	"iTask/common"
+	"iTask/config"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"

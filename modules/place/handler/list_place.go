@@ -2,9 +2,9 @@ package placehandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	"paradise-booking/modules/place/convert"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/common"
+	"iTask/modules/place/convert"
+	"iTask/modules/place/iomodel"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

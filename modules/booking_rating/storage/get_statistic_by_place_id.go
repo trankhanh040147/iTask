@@ -2,8 +2,8 @@ package bookingratingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingratingstorage) GetStatisticByPlaceID(ctx context.Context, placeId int64) ([]entities.StatisticResp, error) {

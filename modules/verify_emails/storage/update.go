@@ -2,8 +2,8 @@ package verifyemailsstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *verifyEmailsStorage) Update(ctx context.Context, email string, _type int, verifyEmail *entities.VerifyEmail) error {

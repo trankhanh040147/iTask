@@ -2,9 +2,9 @@ package bookinghandler
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/iomodel"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/booking/iomodel"
 )
 
 type BookingUseCase interface {

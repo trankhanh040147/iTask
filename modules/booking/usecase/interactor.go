@@ -2,13 +2,13 @@ package bookingusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/config"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/iomodel"
-	bookingdetailstorage "paradise-booking/modules/booking_detail/storage"
-	momoprovider "paradise-booking/provider/momo"
-	"paradise-booking/worker"
+	"iTask/common"
+	"iTask/config"
+	"iTask/entities"
+	"iTask/modules/booking/iomodel"
+	bookingdetailstorage "iTask/modules/booking_detail/storage"
+	momoprovider "iTask/provider/momo"
+	"iTask/worker"
 	"time"
 )
 

@@ -2,9 +2,9 @@ package worker
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/config"
-	"paradise-booking/constant"
+	"iTask/common"
+	"iTask/config"
+	"iTask/constant"
 	"time"
 
 	"github.com/hibiken/asynq"

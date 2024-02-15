@@ -7,8 +7,8 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"paradise-booking/config"
-	"paradise-booking/utils"
+	"iTask/config"
+	"iTask/utils"
 	"time"
 
 	"moul.io/http2curl"

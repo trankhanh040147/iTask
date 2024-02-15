@@ -2,9 +2,9 @@ package accountstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
 )
 
 func (s *accountStorage) GetAllAccountUserAndVendor(ctx context.Context, paging *common.Paging) ([]entities.Account, error) {

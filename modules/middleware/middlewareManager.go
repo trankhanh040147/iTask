@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"context"
-	"paradise-booking/config"
-	"paradise-booking/entities"
+	"iTask/config"
+	"iTask/entities"
 )
 
 type AccountStorage interface {

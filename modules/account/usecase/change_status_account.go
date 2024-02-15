@@ -2,7 +2,7 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (uc *accountUseCase) ChangeStatusAccount(ctx context.Context, accountID int, status int) error {

@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"paradise-booking/config"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
+	"iTask/config"
+	"iTask/constant"
+	"iTask/entities"
 	"strconv"
 
 	"github.com/sony/sonyflake"

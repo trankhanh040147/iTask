@@ -1,8 +1,8 @@
 package uploadusecase
 
 import (
-	"paradise-booking/config"
-	s3provider "paradise-booking/provider/s3"
+	"iTask/config"
+	s3provider "iTask/provider/s3"
 )
 
 type uploadUseCase struct {

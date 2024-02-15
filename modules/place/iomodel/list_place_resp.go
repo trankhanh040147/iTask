@@ -1,6 +1,6 @@
 package iomodel
 
-import "paradise-booking/common"
+import "iTask/common"
 
 type ListPlaceResp struct {
 	Data   []GetPlaceResp `json:"data"`

@@ -3,8 +3,8 @@ package accountusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/common"
-	"paradise-booking/worker"
+	"iTask/common"
+	"iTask/worker"
 	"time"
 
 	"github.com/hibiken/asynq"

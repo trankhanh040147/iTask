@@ -2,8 +2,8 @@ package wishliststorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *wishListStorage) UpdateByID(ctx context.Context, id int, data *entities.WishList) error {

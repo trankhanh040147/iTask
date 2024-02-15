@@ -2,7 +2,7 @@ package bookingstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 	"time"
 )
 

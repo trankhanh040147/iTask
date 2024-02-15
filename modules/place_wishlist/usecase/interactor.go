@@ -2,8 +2,8 @@ package placewishlistusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 	"time"
 )
 

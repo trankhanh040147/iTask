@@ -2,7 +2,7 @@ package policiesstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *policyStorage) GetByPlaceID(ctx context.Context, placeId int) ([]entities.Policy, error) {

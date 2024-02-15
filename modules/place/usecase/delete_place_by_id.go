@@ -3,7 +3,7 @@ package placeusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/common"
+	"iTask/common"
 )
 
 func (uc *placeUseCase) DeletePlaceByID(ctx context.Context, placeID int, vendorEmail string) (err error) {

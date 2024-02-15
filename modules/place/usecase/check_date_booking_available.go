@@ -2,8 +2,8 @@ package placeusecase
 
 import (
 	"context"
-	"paradise-booking/constant"
-	"paradise-booking/utils"
+	"iTask/constant"
+	"iTask/utils"
 )
 
 func (uc *placeUseCase) CheckDateBookingAvailable(ctx context.Context, placeId int64, dateFrom string, dateTo string) (isValid *bool, err error) {

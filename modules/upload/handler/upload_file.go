@@ -2,7 +2,7 @@ package uploadhandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
+	"iTask/common"
 
 	"github.com/gin-gonic/gin"
 )

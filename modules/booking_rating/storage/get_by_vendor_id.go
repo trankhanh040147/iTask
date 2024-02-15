@@ -2,8 +2,8 @@ package bookingratingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingratingstorage) GetByVendorID(ctx context.Context, vendorID int) ([]entities.BookingRating, error) {

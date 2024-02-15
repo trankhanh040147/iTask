@@ -2,7 +2,7 @@ package amenityusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (uc *amenityUseCase) GetAllConfigAmenity(ctx context.Context) (res []entities.ConfigAmenity, err error) {

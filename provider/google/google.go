@@ -1,7 +1,7 @@
 package googleprovider
 
 import (
-	"paradise-booking/config"
+	"iTask/config"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"

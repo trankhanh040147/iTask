@@ -2,7 +2,7 @@ package paymentstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *paymentStorage) CreatePayment(ctx context.Context, payment *entities.Payment) error {

@@ -2,10 +2,10 @@ package verifyemailsusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
-	"paradise-booking/utils"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
+	"iTask/utils"
 
 	"gorm.io/gorm"
 )

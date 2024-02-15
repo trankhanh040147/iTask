@@ -3,11 +3,11 @@ package accountusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/modules/account/iomodel"
-	jwtprovider "paradise-booking/provider/jwt"
-	"paradise-booking/utils"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/modules/account/iomodel"
+	jwtprovider "iTask/provider/jwt"
+	"iTask/utils"
 )
 
 func (uc *accountUseCase) LoginAccount(ctx context.Context, accountModel *iomodel.AccountLogin) (token *jwtprovider.Token, err error) {

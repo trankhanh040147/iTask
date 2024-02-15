@@ -2,8 +2,8 @@ package placewishliststorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *placeWishListStorage) Delete(ctx context.Context, place_id, wish_list_id int) error {

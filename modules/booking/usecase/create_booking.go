@@ -2,13 +2,13 @@ package bookingusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/convert"
-	"paradise-booking/modules/booking/iomodel"
-	bookingdetailstorage "paradise-booking/modules/booking_detail/storage"
-	"paradise-booking/worker"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
+	"iTask/modules/booking/convert"
+	"iTask/modules/booking/iomodel"
+	bookingdetailstorage "iTask/modules/booking_detail/storage"
+	"iTask/worker"
 	"time"
 
 	"github.com/hibiken/asynq"

@@ -2,7 +2,7 @@ package paymenthandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
+	"iTask/common"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"paradise-booking/config"
-	"paradise-booking/utils"
+	"iTask/config"
+	"iTask/utils"
 	"testing"
 
 	"github.com/spf13/viper"

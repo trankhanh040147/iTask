@@ -2,7 +2,7 @@ package amenityusecase
 
 import (
 	"context"
-	"paradise-booking/modules/amenity/iomodel"
+	"iTask/modules/amenity/iomodel"
 )
 
 func (u *amenityUseCase) DeleteAmenityByListId(ctx context.Context, req *iomodel.DeleteAmenityReq) error {

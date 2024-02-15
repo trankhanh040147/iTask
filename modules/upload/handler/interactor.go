@@ -3,8 +3,8 @@ package uploadhandler
 import (
 	"context"
 	"mime/multipart"
-	"paradise-booking/common"
-	"paradise-booking/config"
+	"iTask/common"
+	"iTask/config"
 )
 
 type uploadUseCase interface {

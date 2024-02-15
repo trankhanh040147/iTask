@@ -2,10 +2,10 @@ package bookingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/iomodel"
-	"paradise-booking/utils"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/booking/iomodel"
+	"iTask/utils"
 )
 
 func (s *bookingStorage) ListByFilter(ctx context.Context, filter *iomodel.FilterListBooking, paging *common.Paging, userId int) ([]entities.Booking, error) {

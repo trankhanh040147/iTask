@@ -1,9 +1,9 @@
 package convert
 
 import (
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/iomodel"
-	"paradise-booking/utils"
+	"iTask/entities"
+	"iTask/modules/booking/iomodel"
+	"iTask/utils"
 )
 
 func ConvertBookingModelToGetResp(user *entities.Account, dataBooking *entities.Booking, place *entities.Place, bookingDetail *entities.BookingDetail) *iomodel.GetBookingResp {

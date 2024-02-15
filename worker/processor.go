@@ -2,10 +2,10 @@ package worker
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
-	"paradise-booking/provider/mail"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
+	"iTask/provider/mail"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/hibiken/asynq"

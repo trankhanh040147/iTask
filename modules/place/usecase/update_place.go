@@ -3,9 +3,9 @@ package placeusecase
 import (
 	"context"
 	"errors"
-	"paradise-booking/common"
-	"paradise-booking/modules/place/convert"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/common"
+	"iTask/modules/place/convert"
+	"iTask/modules/place/iomodel"
 )
 
 func (uc *placeUseCase) UpdatePlace(ctx context.Context, data *iomodel.UpdatePlaceReq, placeID int, vendorEmail string) error {

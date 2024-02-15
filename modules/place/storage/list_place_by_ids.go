@@ -2,8 +2,8 @@ package placestorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *placeStorage) ListPlaceInIDs(ctx context.Context, placeIds []int) ([]entities.Place, error) {

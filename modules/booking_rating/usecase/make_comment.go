@@ -2,8 +2,8 @@ package bookingratingusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking_rating/iomodel"
+	"iTask/entities"
+	"iTask/modules/booking_rating/iomodel"
 )
 
 func (u *bookingRatingUsecase) MakeComment(ctx context.Context, userID int, data *iomodel.CreateBookingRatingReq) (*entities.BookingRating, error) {

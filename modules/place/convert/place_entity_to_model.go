@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"paradise-booking/entities"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/entities"
+	"iTask/modules/place/iomodel"
 )
 
 func ConvertPlaceEntityToGetModel(data *entities.Place, isFree bool, ratingAverage *float64) *iomodel.GetPlaceResp {

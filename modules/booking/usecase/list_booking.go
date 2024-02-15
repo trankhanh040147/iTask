@@ -2,9 +2,9 @@ package bookingusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/modules/booking/convert"
-	"paradise-booking/modules/booking/iomodel"
+	"iTask/common"
+	"iTask/modules/booking/convert"
+	"iTask/modules/booking/iomodel"
 )
 
 func (uc *bookingUseCase) ListBooking(ctx context.Context, paging *common.Paging, filter *iomodel.FilterListBooking, userID int) (*iomodel.ListBookingResp, error) {

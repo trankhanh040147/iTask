@@ -2,7 +2,7 @@ package verifyemailshanlder
 
 import (
 	"net/http"
-	"paradise-booking/constant"
+	"iTask/constant"
 
 	"github.com/gin-gonic/gin"
 )

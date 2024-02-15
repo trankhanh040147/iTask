@@ -2,8 +2,8 @@ package bookingdetailstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingDetailStorage) GetByBookingID(ctx context.Context, bookingId int) (res *entities.BookingDetail, err error) {

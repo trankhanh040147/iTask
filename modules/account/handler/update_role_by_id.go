@@ -2,7 +2,7 @@ package accounthandler
 
 import (
 	"net/http"
-	"paradise-booking/modules/account/iomodel"
+	"iTask/modules/account/iomodel"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

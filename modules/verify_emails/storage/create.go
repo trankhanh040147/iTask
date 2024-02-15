@@ -2,7 +2,7 @@ package verifyemailsstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *verifyEmailsStorage) Create(ctx context.Context, data *entities.VerifyEmail) (*entities.VerifyEmail, error) {

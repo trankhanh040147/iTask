@@ -2,14 +2,14 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/constant"
-	"paradise-booking/entities"
-	"paradise-booking/modules/account/convert"
-	"paradise-booking/modules/account/iomodel"
-	accountstorage "paradise-booking/modules/account/storage"
-	"paradise-booking/utils"
-	"paradise-booking/worker"
+	"iTask/common"
+	"iTask/constant"
+	"iTask/entities"
+	"iTask/modules/account/convert"
+	"iTask/modules/account/iomodel"
+	accountstorage "iTask/modules/account/storage"
+	"iTask/utils"
+	"iTask/worker"
 	"time"
 
 	"github.com/hibiken/asynq"

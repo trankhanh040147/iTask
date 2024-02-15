@@ -2,8 +2,8 @@ package bookingratinghandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	"paradise-booking/modules/booking_rating/iomodel"
+	"iTask/common"
+	"iTask/modules/booking_rating/iomodel"
 
 	"github.com/gin-gonic/gin"
 )

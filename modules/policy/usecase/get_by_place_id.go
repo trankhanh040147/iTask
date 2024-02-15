@@ -2,7 +2,7 @@ package policiesusecase
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (uc *policyUsecase) GetPolicyByPlaceID(ctx context.Context, placeId int) ([]entities.Policy, error) {

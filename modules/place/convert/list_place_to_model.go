@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"paradise-booking/common"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/common"
+	"iTask/modules/place/iomodel"
 )
 
 func ConvertPlaceToListModel(listPlace []iomodel.GetPlaceResp, paging *common.Paging) *iomodel.ListPlaceResp {

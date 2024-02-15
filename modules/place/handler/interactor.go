@@ -2,8 +2,8 @@ package placehandler
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/common"
+	"iTask/modules/place/iomodel"
 )
 
 type placeUseCase interface {

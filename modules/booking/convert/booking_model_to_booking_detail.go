@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking/iomodel"
+	"iTask/entities"
+	"iTask/modules/booking/iomodel"
 )
 
 func ConvertBookingModelToBookingDetail(model *iomodel.CreateBookingReq) *entities.BookingDetail {

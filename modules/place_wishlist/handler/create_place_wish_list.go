@@ -2,8 +2,8 @@ package placewishlisthandler
 
 import (
 	"net/http"
-	"paradise-booking/common"
-	"paradise-booking/modules/place_wishlist/iomodel"
+	"iTask/common"
+	"iTask/modules/place_wishlist/iomodel"
 
 	"github.com/gin-gonic/gin"
 )

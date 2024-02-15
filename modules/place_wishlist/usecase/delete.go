@@ -2,7 +2,7 @@ package placewishlistusecase
 
 import (
 	"context"
-	"paradise-booking/common"
+	"iTask/common"
 )
 
 func (uc *placeWishListUsecase) DeletePlaceWishList(ctx context.Context, placeId, wishListID int) error {

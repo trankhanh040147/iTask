@@ -2,8 +2,8 @@ package policieshandler
 
 import (
 	"context"
-	"paradise-booking/entities"
-	"paradise-booking/modules/policy/iomodel"
+	"iTask/entities"
+	"iTask/modules/policy/iomodel"
 )
 
 type PolicyUseCase interface {

@@ -2,7 +2,7 @@ package amenitystorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *amenityStorage) ListByPlaceID(ctx context.Context, placeID int) ([]entities.Amenity, error) {

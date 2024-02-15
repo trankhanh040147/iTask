@@ -2,8 +2,8 @@ package wishlistusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (uc *wishListUsecase) DeleteByID(ctx context.Context, id int) error {

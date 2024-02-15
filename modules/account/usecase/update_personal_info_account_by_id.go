@@ -2,9 +2,9 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/modules/account/convert"
-	"paradise-booking/modules/account/iomodel"
+	"iTask/common"
+	"iTask/modules/account/convert"
+	"iTask/modules/account/iomodel"
 )
 
 func (uc *accountUseCase) UpdatePersonalInforAccountById(ctx context.Context, accountModel *iomodel.AccountUpdatePersonalInfo, id int) (err error) {

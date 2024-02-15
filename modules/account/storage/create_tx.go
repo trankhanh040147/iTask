@@ -2,7 +2,7 @@ package accountstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 type CreateUserTxParam struct {

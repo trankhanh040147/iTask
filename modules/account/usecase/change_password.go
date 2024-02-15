@@ -2,10 +2,10 @@ package accountusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/account/iomodel"
-	"paradise-booking/utils"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/account/iomodel"
+	"iTask/utils"
 )
 
 func (uc *accountUseCase) ChangePassword(ctx context.Context, email string, changePassModel *iomodel.ChangePassword) error {

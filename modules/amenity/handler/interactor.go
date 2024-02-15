@@ -2,8 +2,8 @@ package amenityhandler
 
 import (
 	"context"
-	"paradise-booking/entities"
-	"paradise-booking/modules/amenity/iomodel"
+	"iTask/entities"
+	"iTask/modules/amenity/iomodel"
 )
 
 type AmenityUseCase interface {

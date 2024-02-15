@@ -2,7 +2,7 @@ package placewishliststorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *placeWishListStorage) GetByCondition(ctx context.Context, condition map[string]interface{}) ([]entities.PlaceWishList, error) {

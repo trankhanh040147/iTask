@@ -2,8 +2,8 @@ package paymentusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 type PaymentSto interface {

@@ -2,7 +2,7 @@ package bookingdetailstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 type CreateBookingDetailTxParam struct {

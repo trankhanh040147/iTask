@@ -2,7 +2,7 @@ package policiesstorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *policyStorage) GetByCondition(ctx context.Context, condition map[string]any) ([]entities.Policy, error) {

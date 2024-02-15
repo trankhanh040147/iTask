@@ -2,8 +2,8 @@ package placewishlistusecase
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (uc *placeWishListUsecase) GetPlaceByWishListID(ctx context.Context, wishListID int, paging *common.Paging, userID int) ([]entities.Place, error) {

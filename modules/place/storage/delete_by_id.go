@@ -2,8 +2,8 @@ package placestorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *placeStorage) DeleteByID(ctx context.Context, id int) error {

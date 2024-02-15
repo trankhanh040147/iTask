@@ -3,8 +3,8 @@ package middleware
 import (
 	"log"
 	"net/http"
-	"paradise-booking/common"
-	jwtprovider "paradise-booking/provider/jwt"
+	"iTask/common"
+	jwtprovider "iTask/provider/jwt"
 	"strings"
 
 	"github.com/gin-gonic/gin"

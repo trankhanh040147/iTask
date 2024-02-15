@@ -2,8 +2,8 @@ package bookingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingStorage) UpdateStatus(ctx context.Context, bookingID int, status int) error {

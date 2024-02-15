@@ -3,8 +3,8 @@ package cache
 import (
 	"context"
 	"fmt"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 	"time"
 )
 

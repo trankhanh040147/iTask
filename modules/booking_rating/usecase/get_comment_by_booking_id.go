@@ -3,9 +3,9 @@ package bookingratingusecase
 import (
 	"context"
 	"log"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/booking_rating/iomodel"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/booking_rating/iomodel"
 )
 
 func (uc *bookingRatingUsecase) GetCommentByBookingID(ctx context.Context, bookingID int) ([]iomodel.GetCommentResp, error) {

@@ -2,8 +2,8 @@ package bookingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 
 	"gorm.io/gorm"
 )

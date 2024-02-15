@@ -2,8 +2,8 @@ package bookingstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *bookingStorage) GetByPlaceID(ctx context.Context, placeId int, paging *common.Paging) ([]entities.Booking, error) {

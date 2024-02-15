@@ -2,8 +2,8 @@ package placewishliststorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *placeWishListStorage) GetPlaceIDs(ctx context.Context, wish_list_id int, paging *common.Paging, userId int) ([]int, error) {

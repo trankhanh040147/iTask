@@ -2,10 +2,10 @@ package placestorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	"paradise-booking/modules/place/iomodel"
-	googlemapprovider "paradise-booking/provider/googlemap"
+	"iTask/common"
+	"iTask/entities"
+	"iTask/modules/place/iomodel"
+	googlemapprovider "iTask/provider/googlemap"
 )
 
 func (s *placeStorage) ListPlaces(ctx context.Context, paging *common.Paging, filter *iomodel.Filter, address *googlemapprovider.GoogleMapAddress) ([]entities.Place, error) {

@@ -2,8 +2,8 @@ package accountstorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *accountStorage) UpdateAccountById(ctx context.Context, id int, accountUpdate *entities.Account) error {

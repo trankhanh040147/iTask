@@ -2,7 +2,7 @@ package placestorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *placeStorage) UpdateWithMap(ctx context.Context, place *entities.Place, props map[string]interface{}) error {

@@ -2,7 +2,7 @@ package wishliststorage
 
 import (
 	"context"
-	"paradise-booking/entities"
+	"iTask/entities"
 )
 
 func (s *wishListStorage) Create(ctx context.Context, data *entities.WishList) error {

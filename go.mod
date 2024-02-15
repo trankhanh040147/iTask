@@ -1,4 +1,4 @@
-module paradise-booking
+module iTask
 
 go 1.19
 

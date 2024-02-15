@@ -2,8 +2,8 @@ package wishliststorage
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
+	"iTask/common"
+	"iTask/entities"
 )
 
 func (s *wishListStorage) GetByUserID(ctx context.Context, userId int, paging *common.Paging) ([]entities.WishList, error) {

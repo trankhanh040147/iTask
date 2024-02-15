@@ -2,7 +2,7 @@ package mysqlprovider
 
 import (
 	"fmt"
-	"paradise-booking/config"
+	"iTask/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

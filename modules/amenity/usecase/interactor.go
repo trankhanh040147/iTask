@@ -2,8 +2,8 @@ package amenityusecase
 
 import (
 	"context"
-	"paradise-booking/config"
-	"paradise-booking/entities"
+	"iTask/config"
+	"iTask/entities"
 )
 
 type AmenityStorage interface {

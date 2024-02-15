@@ -1,6 +1,6 @@
 package iomodel
 
-import "paradise-booking/entities"
+import "iTask/entities"
 
 type GetCommentByPlaceResp struct {
 	ListRating []GetCommentRespByPlace

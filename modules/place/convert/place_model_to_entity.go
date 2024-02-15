@@ -1,8 +1,8 @@
 package convert
 
 import (
-	"paradise-booking/entities"
-	"paradise-booking/modules/place/iomodel"
+	"iTask/entities"
+	"iTask/modules/place/iomodel"
 )
 
 func ConvertPlaceCreateModelToEntity(data *iomodel.CreatePlaceReq) *entities.Place {

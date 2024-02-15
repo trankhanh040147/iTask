@@ -2,9 +2,9 @@ package wishlisthandler
 
 import (
 	"context"
-	"paradise-booking/common"
-	"paradise-booking/entities"
-	wishlistiomodel "paradise-booking/modules/wishlist/iomodel"
+	"iTask/common"
+	"iTask/entities"
+	wishlistiomodel "iTask/modules/wishlist/iomodel"
 )
 
 type wishListUseCase interface {
