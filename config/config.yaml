@@ -18,11 +18,11 @@ mysql:
   # User: root
   # Password: aaCfeH12efF2-3Gfh-b6A--Aac1HH-4c
   # DBName: railway
-  Host: paradise.cxs0mgue8763.ap-southeast-1.rds.amazonaws.com
+  Host: trankhanh-rds.c3kmq2oy4fy8.us-east-1.rds.amazonaws.com
   Port: 3306
-  User: admin
-  Password: 109339Lam
-  DBName: paradise
+  User: root
+  Password: Trankhanh47
+  DBName: iTask
 
 aws:
   Region: ap-southeast-1
@@ -33,11 +33,11 @@ aws:
   S3FolderImages: images
   
 redis:
-  Host: roundhouse.proxy.rlw    y.net
+  Host: monorail.proxy.rlwy.net
   #Host: localhost
-  Port: 31002
+  Port: 33723
   #Port: 6379
-  Password: FLn5DhEbgfciBNIlK2Jp3PICeJo6cMHN
+  Password: Ld43kK5joKE6DJ1fjOEmkhhncNHe261j
   #Password: ""
   DB: 0
 

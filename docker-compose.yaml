@@ -7,8 +7,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=109339Lam@
-      - MYSQL_DATABASE=paradise
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Trankhanh47
     volumes:
       - database_mysql:/var/lib/mysql
     networks:
