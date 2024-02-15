@@ -26,6 +26,8 @@ import (
 	redisprovider "paradise-booking/provider/redis"
 	s3provider "paradise-booking/provider/s3"
 
+	// s3provider "paradise-booking/provider/s3"
+	"paradise-booking/utils"
 	"paradise-booking/worker"
 	"sync"
 
@@ -47,7 +49,7 @@ func main() {
 		log.Fatalln("Can not connect mysql: ", err)
 	}
 
-	//utils.RunDBMigration(cfg)
+	utils.RunDBMigration(cfg)
 
 	// Declare redis
 	redis, err := redisprovider.NewRedisClient(cfg)
