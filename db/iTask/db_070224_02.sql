@@ -164,6 +164,15 @@ CREATE TABLE `TaskComments` (
   `updated_at` timestamp DEFAULT (now())
 );
 
+CREATE TABLE verify_emails (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    email varchar(255) NOT NULL,
+    scret_code varchar(255) NOT NULL,
+    type int NOT NULL,
+    created_at timestamp DEFAULT (now()),
+    expired_at timestamp NOT NULL
+)
+
 -- auto increment
 ALTER TABLE
   `Users`
