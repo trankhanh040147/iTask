@@ -10,7 +10,7 @@ type AccountInfoResp struct {
 	Phone    string `json:"phone"`
 	Dob      string `json:"dob"`
 	Bio      string `json:"bio"`
-	Avt      string `json:"avatar"`
+	Avt      string `json:"profile_ava_url"`
 	Created  string `json:"created"`
 	Updated  string `json:"updated"`
 }

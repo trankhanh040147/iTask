@@ -12,7 +12,7 @@ func (hdl *placeHandler) CreatePlace() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var placeBody placeIomodel.CreatePlaceReq
 
-		requester := c.MustGet("Account").(common.Requester)
+		requester := c.MustGet(common.CurrentUser).(common.Requester)
 		if err := c.ShouldBind(&placeBody); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err})
 			return

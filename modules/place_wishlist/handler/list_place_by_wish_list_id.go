@@ -10,7 +10,7 @@ import (
 
 func (hdl *placeWishListHandler) ListPlaceByWishListID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		requester := ctx.MustGet("Account").(common.Requester)
+		requester := ctx.MustGet(common.CurrentUser).(common.Requester)
 
 		_wishListID := ctx.Query("wish_list_id")
 		wishListID, err := strconv.Atoi(_wishListID)

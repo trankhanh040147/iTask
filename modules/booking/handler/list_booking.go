@@ -11,7 +11,7 @@ import (
 
 func (hdl *bookingHandler) ListBooking() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		requester := ctx.MustGet("Account").(common.Requester)
+		requester := ctx.MustGet(common.CurrentUser).(common.Requester)
 
 		var paging common.Paging
 		var filter iomodel.FilterListBooking

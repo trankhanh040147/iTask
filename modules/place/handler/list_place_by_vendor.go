@@ -9,7 +9,7 @@ import (
 
 func (hdl *placeHandler) ListPlaceByVendor() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		requester := ctx.MustGet("Account").(common.Requester)
+		requester := ctx.MustGet(common.CurrentUser).(common.Requester)
 
 		places, err := hdl.placeUC.ListPlaceByVendor(ctx.Request.Context(), requester.GetEmail())
 		if err != nil {

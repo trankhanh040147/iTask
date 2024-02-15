@@ -11,7 +11,7 @@ import (
 func (hdl *accountHandler) ChangePassword() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		requester := c.MustGet("Account").(common.Requester)
+		requester := c.MustGet(common.CurrentUser).(common.Requester)
 
 		changePassModel := iomodel.ChangePassword{}
 		if err := c.ShouldBind(&changePassModel); err != nil {

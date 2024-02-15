@@ -10,7 +10,7 @@ import (
 
 func (hdl *bookingratinghandler) MakeComment() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		requester := c.MustGet("Account").(common.Requester)
+		requester := c.MustGet(common.CurrentUser).(common.Requester)
 
 		input := iomodel.CreateBookingRatingReq{}
 		if err := c.ShouldBind(&input); err != nil {

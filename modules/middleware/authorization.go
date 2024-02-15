@@ -49,7 +49,7 @@ func (m *middlewareManager) RequiredAuth() gin.HandlerFunc {
 			panic(common.ErrBadRequest(err))
 		}
 
-		c.Set("Account", account)
+		c.Set(common.CurrentUser, account)
 
 		c.Next()
 	}

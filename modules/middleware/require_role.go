@@ -11,7 +11,7 @@ import (
 
 func (m *middlewareManager) RequiredRoles(roles ...constant.Role) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		account := ctx.MustGet("Account").(*entities.Account)
+		account := ctx.MustGet(common.CurrentUser).(*entities.Account)
 		for i := range roles {
 			if account.Role == int(roles[i]) {
 				ctx.Next()

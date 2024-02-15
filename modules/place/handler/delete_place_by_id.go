@@ -11,7 +11,7 @@ import (
 func (hdl *placeHandler) DeletePlaceByID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		requester := ctx.MustGet("Account").(common.Requester)
+		requester := ctx.MustGet(common.CurrentUser).(common.Requester)
 
 		placeID := ctx.Query("id")
 		id, err := strconv.Atoi(placeID)
