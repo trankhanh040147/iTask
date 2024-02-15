@@ -15,13 +15,13 @@ type Account struct {
 	Address         string `json:"address" gorm:"column:address"`
 	Phone           string `json:"phone" gorm:"column:phone"`
 	Dob             string `json:"dob" gorm:"column:dob"`
-	Avatar          string `json:"avatar" gorm:"avatar"`
+	Avatar          string `json:"profile_ava_url" gorm:"profile_ava_url"`
 	IsEmailVerified int    `json:"is_email_verified" gorm:"is_email_verified"`
 	Bio             string `json:"bio" gorm:"bio"`
 }
 
 func (Account) TableName() string {
-	return "accounts"
+	return "Users"
 }
 
 func (a *Account) GetRole() int {

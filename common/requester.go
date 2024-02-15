@@ -5,3 +5,5 @@ type Requester interface {
 	GetEmail() string
 	GetID() int
 }
+
+const CurrentUser = "current_user"
