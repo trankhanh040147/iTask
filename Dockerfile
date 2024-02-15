@@ -1,20 +1,27 @@
-FROM golang:latest as builder
-WORKDIR /app
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app
+# Docker file quy định nội dung của 1 docker image - dựa theo Dockerfile, Docker biết cần làm những gì để create 1 docker image
+#stage build
+#Build image base on base image
+FROM golang:1.21-alpine as builder
 
+#Copy all files from project to images
+COPY ./ /app/
+
+#Set working directory is folder app
+WORKDIR /app/
+
+#Cài đặt các dependencies cho project
+RUN go mod download
+#Buid project
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o go-airbnb .
+
+#stage runner
 FROM alpine
 WORKDIR /app/
-COPY --from=builder /app/app /app/
-#EXPOSE
-ENTRYPOINT ["./app"]
-
-#docker build -t social-todo-service:1.0 .
-
-#MYSQL_GORM_DB_SOURCE=root:my-secret-pw@tcp(127.0.0.1:3309)/social-todo-list?charset=utf8mb4&parseTime=True&loc=Local;
-#MYSQL_GORM_DB_SOURCE=root:my-secret-pw@tcp(my_mysql:3306)/social-todo-list?charset=utf8mb4&parseTime=True&loc=Local;
-#MYSQL_GORM_DB_TYPE=mysql;SECRET=iTaskSecret2024;SIMPLE_VALUEF=iTask
-
-
-
-docker run -d --name social-todo -p 3000:3000  -e MYSQL_GORM_DB_SOURCE="root:Trankhanh47@tcp(trankhanh-rds.c3kmq2oy4fy8.us-east-1.rds.amazonaws.com:3306)/social-todo-list?charset=utf8mb4&parseTime=True&loc=Local" -e MYSQL_GORM_DB_TYPE=mysql -e SECRET=iTaskSecret2024 social-todo-service
+# copy file thực thi go từ stage trước đó
+COPY --from=builder /app/go-airbnb .
+#copy config
+COPY config/config.yaml ./config/
+#copy migrations
+COPY migrations migrations
+#CMD ["make migrate_up"]
+CMD ["/app/go-airbnb"]
