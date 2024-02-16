@@ -4,53 +4,53 @@ on:
   pull_request:
     branches: [ "main" ]
     types:
-        - closed
-  
+      - closed
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.19'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.19'
 
-    - name: Build
-      run: go build -v ./...
+      - name: Build
+        run: go build -v ./...
 
-    - name: Test
-      run: go test -v ./...
+      - name: Test
+        run: go test -v ./...
 
-    - name: Login to AWS ECR
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set default.region  ${{ secrets.AWS_REGION }}
-        aws configure set default.output json
-        aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com
-    
-    - name: Build and push Docker image
-      run: |
-        docker build -t paradise-backend .
-        docker tag paradise-backend:latest 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com/paradise-backend:latest
-        docker push 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com/paradise-backend:latest
-    
-    - name: Deploy to Server EC2
-      uses: appleboy/ssh-action@master
-      with: 
-        host: ec2-54-255-194-221.ap-southeast-1.compute.amazonaws.com  
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          sudo su
+      - name: Login to AWS ECR
+        run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set default.region  ${{ secrets.AWS_REGION }}
           aws configure set default.output json
-          aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com  
-          docker login -u AWS -p $(aws ecr get-login-password --region ap-southeast-1) https://553321397725.dkr.ecr.ap-southeast-1.amazonaws.com
-          docker rm -vf $(docker ps -aq)
-          docker rmi -f $(docker images -aq)
-          docker run --name AppBE -d -p 8080:8080 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com/paradise-backend:latest
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/k8f8o0i8
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t itask .
+          docker tag itask:latest public.ecr.aws/k8f8o0i8/itask:latest
+          docker push public.ecr.aws/k8f8o0i8/itask:latest
+
+#    - name: Deploy to Server EC2
+#      uses: appleboy/ssh-action@master
+#      with:
+#        host: ec2-54-255-194-221.ap-southeast-1.compute.amazonaws.com
+#        username: ubuntu
+#        key: ${{ secrets.SSH_PRIVATE_KEY }}
+#        script: |
+#          sudo su
+#          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws configure set default.region  ${{ secrets.AWS_REGION }}
+#          aws configure set default.output json
+#          aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com
+#          docker login -u AWS -p $(aws ecr get-login-password --region ap-southeast-1) https://553321397725.dkr.ecr.ap-southeast-1.amazonaws.com
+#          docker rm -vf $(docker ps -aq)
+#          docker rmi -f $(docker images -aq)
+#          docker run --name AppBE -d -p 8080:8080 553321397725.dkr.ecr.ap-southeast-1.amazonaws.com/paradise-backend:latest

@@ -18,7 +18,7 @@ mysql:
   # User: root
   # Password: aaCfeH12efF2-3Gfh-b6A--Aac1HH-4c
   # DBName: railway
-  Host: trankhanh-rds.c3kmq2oy4fy8.us-east-1.rds.amazonaws.com
+  Host: khanhtran-rds.c9seqcum6oc9.ap-southeast-1.rds.amazonaws.com
   Port: 3306
   User: root
   Password: Trankhanh47
@@ -26,12 +26,13 @@ mysql:
 
 aws:
   Region: ap-southeast-1
-  APIKey: AKIAYBVEGPXO3V3KAGWE
-  SecretKey: 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
-  S3Domain: d1c6814z4iseiw.cloudfront.net
-  S3Bucket: paradisebookings3
-  S3FolderImages: images
-  
+  APIKey: AKIAZQ3DTRXKC4YZM446
+  SecretKey: 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
+#  S3Domain: d1c6814z4iseiw.cloudfront.net
+#  S3Bucket: paradisebookings3
+#  S3FolderImages: images
+#
+
 redis:
   Host: monorail.proxy.rlwy.net
   #Host: localhost
