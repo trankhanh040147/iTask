@@ -23,19 +23,19 @@ jobs:
       - name: Test
         run: go test -v ./...
 
-      - name: Login to AWS ECR
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set default.region  ${{ secrets.AWS_REGION }}
-          aws configure set default.output json
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/k8f8o0i8
-
-      - name: Build and push Docker image
-        run: |
-          docker build -t itask .
-          docker tag itask:latest public.ecr.aws/k8f8o0i8/itask:latest
-          docker push public.ecr.aws/k8f8o0i8/itask:latest
+#      - name: Login to AWS ECR
+#        run: |
+#          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws configure set default.region  ${{ secrets.AWS_REGION }}
+#          aws configure set default.output json
+#          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/k8f8o0i8
+#
+#      - name: Build and push Docker image
+#        run: |
+#          docker build -t itask .
+#          docker tag itask:latest public.ecr.aws/k8f8o0i8/itask:latest
+#          docker push public.ecr.aws/k8f8o0i8/itask:latest
 
 #    - name: Deploy to Server EC2
 #      uses: appleboy/ssh-action@master
