@@ -43,9 +43,9 @@ jobs:
 
       - name: Deploy to Server EC2
         uses: appleboy/ssh-action@master
-        env:
-          ECR_URI: 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com
         with:
+          env:
+            ECR_URI: 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com
           host: ec2-54-169-214-21.ap-southeast-1.compute.amazonaws.com
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -55,8 +55,8 @@ jobs:
             aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws configure set default.region  ${{ secrets.AWS_REGION }}
             aws configure set default.output json
-            aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com
-            sudo docker login -u AWS -p $(aws ecr get-login-password --region ap-southeast-1) https://654654541268.dkr.ecr.ap-southeast-1.amazonaws.com
+            aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin $ECR_URI
+            sudo docker login -u AWS -p $(aws ecr get-login-password --region ap-southeast-1) https://$ECR_URI
             sudo docker rm -vf $(docker ps -aq)
             sudo docker rmi -f $(docker images -aq)
-            sudo docker run --name AppBE -d -p 8080:8080 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com/itask:latest
+            sudo docker run --name AppBE -d -p 8080:8080 $ECR_URI/itask:latest
