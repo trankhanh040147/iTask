@@ -29,7 +29,7 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set default.region  ${{ secrets.AWS_REGION }}
           aws configure set default.output json
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/k8f8o0i8
+          aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com
 
       - name: Build and push Docker image
         run: |
