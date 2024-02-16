@@ -47,7 +47,7 @@ jobs:
           ECR_URI: 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com
         with:
           host: ec2-54-169-214-21.ap-southeast-1.compute.amazonaws.com
-          username: ubuntu
+          username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             sudo su
