@@ -1,18 +1,18 @@
 version: '3.9'
 
 services:
-  paradise_mysql:
+  itask_mysql:
     image: mysql
-    container_name: paradise_mysql
+    container_name: itask_mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=Trankhanh47
     volumes:
       - database_mysql:/var/lib/mysql
     networks:
-      - paradise_network
+      - itask_network
 
   redis:
     image: redis:alpine
@@ -20,24 +20,25 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - paradise_network
+      - itask_network
 
   api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: paradise-app-api
+    container_name: itask-app-api
     ports:
       - "8080:8080"
     networks:
-      - paradise_network
+      - itask_network
     depends_on:
-      #- paradise_mysql
+      #- itask_mysql
       - redis
-    #command: ["/app/wait-for-it.sh", "paradise-mysql:3306", "--", "/app/start.sh"]
+    #command: ["/app/wait-for-it.sh", "itask-mysql:3306", "--", "/app/start.sh"]
+
 volumes:
   database_mysql:
 
 networks:
-  paradise_network:
+  itask_network:
     driver: bridge
