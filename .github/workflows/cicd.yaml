@@ -17,8 +17,8 @@ jobs:
         with:
           go-version: '1.19'
 
-      - name: Build
-        run: go build -v ./...
+  #      - name: Build
+  #        run: go build -v ./...
 
 #      - name: Test
 #        run: go test -v ./...
@@ -34,8 +34,8 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -t itask .
-          docker tag itask:latest public.ecr.aws/k8f8o0i8/itask:latest
-          docker push public.ecr.aws/k8f8o0i8/itask:latest
+          docker tag itask:latest 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com/itask:latest
+          docker push 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com/itask:latest
 
 #    - name: Deploy to Server EC2
 #      uses: appleboy/ssh-action@master
