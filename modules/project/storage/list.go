@@ -49,6 +49,8 @@ func (store *sqlStore) ListProject(
 	//	db = db.Preload(value)
 	//}
 
+	db = db.Preload("Members").Preload("Members.AccountInfo")
+
 	//if cursor := strings.TrimSpace(paging.FakeCursor); cursor != "" {
 	//	id, err := common.UIDFromBase58(cursor)
 	//	if err != nil {

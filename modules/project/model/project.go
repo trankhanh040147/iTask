@@ -3,6 +3,7 @@ package model
 import (
 	"errors"
 	"iTask/common"
+	"iTask/modules/project_members/model"
 	"time"
 )
 
@@ -17,18 +18,20 @@ const (
 
 type Project struct {
 	common.SQLModel
-	Name                string     `json:"name" gorm:"column:name"`
-	Description         string     `json:"description" gorm:"column:description"`
-	Status              int        `json:"status" gorm:"column:status"`
-	Thumbnail           string     `json:"thumbnail_url" gorm:"column:thumbnail_url"`
-	Privacy             string     `json:"privacy" gorm:"column:privacy"`
-	CreatedBy           int        `json:"created_by" gorm:"column:created_by"`
-	Deadline            string     `json:"deadline" gorm:"column:deadline"`
-	StartedAt           *time.Time `json:"started_at" gorm:"column:started_at"`
-	TotalTasks          int        `json:"total_tasks" gorm:"-"`
-	TotalCompletedTasks int        `json:"completed_tasks" gorm:"-"`
-	//Owner       Account    `json:"owner" gorm:"foreignKey:CreatedBy"`
+	Name                string               `json:"name" gorm:"column:name"`
+	Description         string               `json:"description" gorm:"column:description"`
+	Status              int                  `json:"status" gorm:"column:status"`
+	Thumbnail           string               `json:"thumbnail_url" gorm:"column:thumbnail_url"`
+	Privacy             string               `json:"privacy" gorm:"column:privacy"`
+	CreatedBy           int                  `json:"created_by" gorm:"column:created_by"`
+	Deadline            string               `json:"deadline" gorm:"column:deadline"`
+	StartedAt           *time.Time           `json:"started_at" gorm:"column:started_at"`
+	TotalTasks          int                  `json:"total_tasks" gorm:"-"`
+	TotalCompletedTasks int                  `json:"completed_tasks" gorm:"-"`
+	Members             []model.SimpleMember `json:"members" gorm:"foreignKey:ProjectId"`
 }
+
+//Owner               iomodel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
 
 func (Project) TableName() string {
 	return "Projects"
