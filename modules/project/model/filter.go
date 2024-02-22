@@ -1,6 +1,6 @@
 package model
 
 type Filter struct {
-	Keyword       *string `json:"keyword"`
-	DateRangeFrom int     `json:"date_range_from"`
+	Keyword          string `json:"keyword" form:"keyword"`
+	CreatedDateRange int    `json:"created_date_range" form:"created_date_range"`
 }
