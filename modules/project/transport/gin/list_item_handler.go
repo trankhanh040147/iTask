@@ -66,6 +66,9 @@ func ListItem(db *gorm.DB) func(ctx *gin.Context) {
 			model.Filter
 		}
 
+		// Default value for CreatedDayRange
+		queryString.CreatedDayRange = -1
+
 		if err := c.ShouldBind(&queryString); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),

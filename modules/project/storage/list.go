@@ -30,12 +30,12 @@ func (store *sqlStore) ListProject(
 		if v := f.Keyword; v != "" {
 			db = db.Where("name LIKE ? OR description LIKE ?", "%"+v+"%", "%"+v+"%")
 		}
+
 		// if DateRangeFrom = 0, list all projects today
 		// if DateRangeFrom = 1, list all projects since yesterday
 		// if DateRangeFrom = 2, list all projects since 2 days ago
-
 		today := time.Now()
-		if v := f.CreatedDateRange; v >= 0 {
+		if v := f.CreatedDayRange; v >= 0 {
 			dateRange := today.AddDate(0, 0, -v)
 			db = db.Where("created_at >= ?", dateRange)
 		}
