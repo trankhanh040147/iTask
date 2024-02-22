@@ -8,6 +8,7 @@ import (
 	"iTask/modules/project/model"
 	repository "iTask/modules/project/repo"
 	"iTask/modules/project/storage"
+	taskStorage "iTask/modules/task/storage"
 	"net/http"
 )
 
@@ -77,8 +78,8 @@ func ListItem(db *gorm.DB) func(ctx *gin.Context) {
 		//requester := c.MustGet(common.CurrentUser).(common.Requester)
 		//requester := nil
 		store := storage.NewSQLStore(db)
-		//taskStore := storage2.NewSQLStore(db)
-		repo := repository.NewListProjectRepo(store, nil)
+		taskStore := taskStorage.NewSQLStore(db)
+		repo := repository.NewListProjectRepo(store, taskStore, nil)
 		business := biz.NewListProjectBiz(repo, nil)
 
 		result, err := business.ListProject(c.Request.Context(), &queryString.Filter, &queryString.Paging)

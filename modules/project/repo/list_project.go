@@ -16,7 +16,7 @@ type ListProjectStorage interface {
 }
 
 type TaskStorage interface {
-	GetTotalTasks(ctx context.Context, ids []int) (map[int]int, error)
+	GetTotalTasks(ctx context.Context, cond map[string]interface{}) (map[int]int, error)
 }
 
 type listProjectRepo struct {
@@ -25,13 +25,13 @@ type listProjectRepo struct {
 	requester   common.Requester
 }
 
-//	func NewListProjectRepo(store ListProjectStorage, taskStorage TaskStorage, requester common.Requester) *listProjectRepo {
-//		return &listProjectRepo{store: store, taskStorage: taskStorage, requester: requester}
-//	}
-
-func NewListProjectRepo(store ListProjectStorage, requester common.Requester) *listProjectRepo {
-	return &listProjectRepo{store: store, requester: requester}
+func NewListProjectRepo(store ListProjectStorage, taskStorage TaskStorage, requester common.Requester) *listProjectRepo {
+	return &listProjectRepo{store: store, taskStorage: taskStorage, requester: requester}
 }
+
+//func NewListProjectRepo(store ListProjectStorage, requester common.Requester) *listProjectRepo {
+//	return &listProjectRepo{store: store, requester: requester}
+//}
 
 func (repo *listProjectRepo) ListProject(
 	ctx context.Context,
@@ -50,19 +50,27 @@ func (repo *listProjectRepo) ListProject(
 		return data, nil
 	}
 
-	//ids := make([]int, len(data))
-	//for index := range ids {
-	//	ids[index] = data[index].Id
-	//}
-	//
-	//ProjectLikesMap, err := repo.taskStorage.GetTotalTasks(newCtx, ids)
-	//if err != nil {
-	//	return data, nil
-	//}
-	//
-	//for index := range data {
-	//	data[index].TotalTasks = ProjectLikesMap[data[index].Id]
-	//}
+	ids := make([]int, len(data))
+	for index := range ids {
+		ids[index] = data[index].Id
+	}
+
+	TotalTasksMap, err := repo.taskStorage.GetTotalTasks(newCtx, nil)
+	if err != nil {
+		return data, nil
+	}
+
+	cond := map[string]interface{}{"status": common.StatusCompleted}
+
+	TotalCompletedTasksMap, err := repo.taskStorage.GetTotalTasks(newCtx, cond)
+	if err != nil {
+		return data, nil
+	}
+
+	for index := range data {
+		data[index].TotalTasks = TotalTasksMap[data[index].Id]
+		data[index].TotalCompletedTasks = TotalCompletedTasksMap[data[index].Id]
+	}
 
 	return data, nil
 }

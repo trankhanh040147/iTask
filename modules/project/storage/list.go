@@ -4,6 +4,8 @@ import (
 	"golang.org/x/net/context"
 	"iTask/common"
 	"iTask/modules/project/model"
+	"log"
+	"time"
 )
 
 func (store *sqlStore) ListProject(
@@ -16,17 +18,28 @@ func (store *sqlStore) ListProject(
 
 	db := store.db.
 		Table(model.Project{}.TableName()).
-		Where("status <> ?", model.StatusDeleted)
+		Where("status <> ?", common.StatusDeleted)
 
 	// Get items of requester only
 	// requester := ctx.Value(common.CurrentUser).(common.Requester)
 	// db = db.Where("user_id = ?", requester.GetUserId())
 
-	//if f := filter; f != nil {
-	//	if v := f.Status; v != "" {
-	//		db = db.Where("status = ?", v)
-	//	}
-	//}
+	log.Println("filter: ", filter)
+
+	if f := filter; f != nil {
+		if v := f.Keyword; v != "" {
+			db = db.Where("name LIKE ? OR description LIKE ?", "%"+v+"%", "%"+v+"%")
+		}
+		// if DateRangeFrom = 0, list all projects today
+		// if DateRangeFrom = 1, list all projects since yesterday
+		// if DateRangeFrom = 2, list all projects since 2 days ago
+
+		today := time.Now()
+		if v := f.CreatedDateRange; v >= 0 {
+			dateRange := today.AddDate(0, 0, -v)
+			db = db.Where("created_at >= ?", dateRange)
+		}
+	}
 
 	if err := db.Select("id").Count(&paging.Total).Error; err != nil {
 		return nil, common.ErrorDB(err)
