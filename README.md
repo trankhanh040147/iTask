@@ -1,4 +1,4 @@
-# ParadiseBookingApp
+# iTask
 # Hướng Dẫn Cài Đặt Ứng Dụng BackEnd
 
 Hướng dẫn này cung cấp các bước chi tiết để thiết lập và chạy ứng dụng BackEnd sử dụng Docker và Docker Compose. Ứng dụng bao gồm ba thành phần chính: dịch vụ BackEnd, cơ sở dữ liệu MySQL và bộ nhớ đệm Redis.
