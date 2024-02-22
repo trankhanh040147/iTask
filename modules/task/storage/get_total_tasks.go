@@ -22,7 +22,7 @@ func (s *sqlStore) GetTotalTasks(ctx context.Context, cond map[string]interface{
 
 	if err := s.db.Table(model.Task{}.TableName()).
 		//if err := s.db.Model(&model.Task{}).
-		Select("project_id, count(*) as total_tasks").
+		Select("project_id, count(id) as total_tasks").
 		Where(cond).
 		Group("project_id").
 		//Pluck("project_id, total_tasks", &data).Error; err != nil {
