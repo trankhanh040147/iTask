@@ -1,8 +1,6 @@
 package main
 
 import (
-	"log"
-	"net/http"
 	cmdworker "iTask/cmd/worker"
 	"iTask/config"
 	"iTask/constant"
@@ -15,6 +13,7 @@ import (
 	"iTask/modules/middleware"
 	paymentstorage "iTask/modules/payment/store"
 	placestorage "iTask/modules/place/storage"
+	ginproject "iTask/modules/project/transport/gin"
 	uploadhandler "iTask/modules/upload/handler"
 	uploadusecase "iTask/modules/upload/usecase"
 	verifyemailshanlder "iTask/modules/verify_emails/handler"
@@ -25,6 +24,8 @@ import (
 	mysqlprovider "iTask/provider/mysql"
 	redisprovider "iTask/provider/redis"
 	s3provider "iTask/provider/s3"
+	"log"
+	"net/http"
 
 	"iTask/worker"
 	"sync"
@@ -186,6 +187,12 @@ func main() {
 	v1.POST("/change/status", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.AdminRole), accountHdl.ChangeStatusAccount())
 	v1.POST("/forgot/password", accountHdl.ForgotPassword())
 	v1.POST("/reset/password", accountHdl.ResetPassword())
+
+	// Project
+	projects := v1.Group("/projects")
+	{
+		projects.GET("", ginproject.ListItem(db))
+	}
 
 	// // Place
 	// v1.POST("/places", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.VendorRole), placeHdl.CreatePlace())

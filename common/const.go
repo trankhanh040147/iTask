@@ -23,6 +23,11 @@ const (
 	OperatorNotBetween      Operator = "NOT BETWEEN"
 )
 
+const (
+	StatusDeleted   = 3
+	StatusCompleted = 2
+)
+
 func (c Condition) BuildQuery() string {
 	return c.Field + " " + string(c.Operator)
 }
