@@ -56,6 +56,11 @@ func NewCustomError(causes error, msg string) *AppError {
 	return &AppError{Causes: causes, Message: msg, StatusCode: http.StatusBadRequest}
 }
 
+func ErrValidation(err error) *AppError {
+	return NewCustomError(err, "ErrValidation")
+	//return NewErrorResponse(err, "Validation error", err.Error(), "ErrValidation")
+}
+
 func ErrCannotListEntity(entity string, cause error) *AppError {
 	return NewCustomError(cause, fmt.Sprintf("Cannot list %s", entity))
 }
