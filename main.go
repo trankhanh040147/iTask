@@ -189,9 +189,10 @@ func main() {
 	v1.POST("/reset/password", accountHdl.ResetPassword())
 
 	// Project
-	projects := v1.Group("/projects")
+	projects := v1.Group("/projects", middlewares.RequiredAuth())
 	{
 		projects.GET("", ginproject.ListItem(db))
+		projects.POST("", ginproject.CreateItem(db))
 	}
 
 	// // Place
