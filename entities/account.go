@@ -36,6 +36,28 @@ func (a *Account) GetID() int {
 	return a.Id
 }
 
+type UserRole int
+
+const (
+	RoleMember UserRole = 1 + iota
+	RoleOwner
+	RoleAdmin
+	RoleObserver
+)
+
+func (role UserRole) String() string {
+	switch role {
+	case RoleAdmin:
+		return "admin"
+	case RoleMember:
+		return "member"
+	case RoleOwner:
+		return "owner"
+	default:
+		return "observer"
+	}
+}
+
 var MapRole map[int]string = map[int]string{
 	1: "Member",
 	2: "Owner",
