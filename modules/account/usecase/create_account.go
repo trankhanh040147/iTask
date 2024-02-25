@@ -2,6 +2,7 @@ package accountusecase
 
 import (
 	"context"
+	"errors"
 	"iTask/common"
 	"iTask/constant"
 	"iTask/entities"
@@ -19,6 +20,14 @@ func (uc *accountUseCase) CreateAccount(ctx context.Context, accountModel *iomod
 
 	// convert from iomodel to entity
 	accountEntity := convert.ConvertAccountRegisModelToEntity(accountModel)
+
+	// check if email is existed
+	accountFound, err := uc.accountStorage.GetAccountByEmail(ctx, accountModel.Email)
+
+	if accountFound != nil {
+		return nil, errors.New("Email is existed")
+	}
+
 	accountEntity.Status = int(constant.StatusActive)
 	accountEntity.IsEmailVerified = 1 // change_later
 	// hash password before store in db
