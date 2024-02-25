@@ -69,3 +69,17 @@ var MapStatus map[int]string = map[int]string{
 	2: "Active",
 	1: "Inactive",
 }
+
+//var (
+//	ErrEmailOrPasswordInvalid = common.NewCustomError(
+//		errors.New("email or password invalid"),
+//		"email or password invalid",
+//		"ErrUsernameOrPasswordInvalid",
+//	)
+//
+//	ErrEmailExisted = common.NewCustomError(
+//		errors.New("email has already existed"),
+//		"email has already existed",
+//		"ErrEmailExisted",
+//	)
+//)
