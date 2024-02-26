@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"log"
-	"net/http"
 	"iTask/common"
 	jwtprovider "iTask/provider/jwt"
+	"log"
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -32,7 +32,7 @@ func (m *middlewareManager) RequiredAuth() gin.HandlerFunc {
 			// c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
 			// return
 			log.Printf("err: %v, when extractTokenFromHeader", err)
-			panic(common.ErrAuthorized(err))
+			panic(common.ErrUnauthorized(err))
 		}
 
 		payload, err := jwtprovider.ValidateJWT(token, m.cfg)
@@ -40,7 +40,7 @@ func (m *middlewareManager) RequiredAuth() gin.HandlerFunc {
 			// c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
 			// return
 			log.Printf("err: %v, when ValidateJWT", err)
-			panic(common.ErrAuthorized(err))
+			panic(common.ErrUnauthorized(err))
 		}
 		account, err := m.accountSto.GetAccountByEmail(c.Request.Context(), payload.Email)
 		if err != nil {

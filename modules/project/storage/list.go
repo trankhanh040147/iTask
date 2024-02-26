@@ -42,7 +42,7 @@ func (store *sqlStore) ListProject(
 	}
 
 	if err := db.Select("id").Count(&paging.Total).Error; err != nil {
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 	}
 
 	//for _, value := range moreKeys {
@@ -54,7 +54,7 @@ func (store *sqlStore) ListProject(
 	//if cursor := strings.TrimSpace(paging.FakeCursor); cursor != "" {
 	//	id, err := common.UIDFromBase58(cursor)
 	//	if err != nil {
-	//		return nil, common.ErrorDB(err)
+	//		return nil, common.ErrDB(err)
 	//	}
 	//
 	//	db = db.Where("id < ?", id())
@@ -68,7 +68,7 @@ func (store *sqlStore) ListProject(
 		Order("id desc").
 		Limit(paging.Limit).
 		Find(&result).Error; err != nil {
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 	}
 
 	//size := len(result)

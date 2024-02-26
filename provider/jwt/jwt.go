@@ -70,7 +70,7 @@ func ValidateJWT(accessToken string, cfg *config.Config) (*TokenPayload, error) 
 
 // Declare errors relate to token
 var (
-	ErrTokenNotFound = common.ErrAuthorized(errors.New("token not found"))
-	ErrEncodingToken = common.ErrAuthorized(errors.New("error encoding token"))
-	ErrInvalidToken  = common.ErrAuthorized(errors.New("invalid token"))
+	ErrTokenNotFound = common.ErrUnauthorized(errors.New("token not found"))
+	ErrEncodingToken = common.ErrUnauthorized(errors.New("error encoding token"))
+	ErrInvalidToken  = common.ErrUnauthorized(errors.New("invalid token"))
 )

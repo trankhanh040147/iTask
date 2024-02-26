@@ -18,7 +18,7 @@ func (s *accountStorage) GetProfileByID(ctx context.Context, id int) (*entities.
 			return nil, common.RecordNotFound
 		}
 
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 	}
 
 	return &account, nil

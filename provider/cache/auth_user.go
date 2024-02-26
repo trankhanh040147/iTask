@@ -43,7 +43,7 @@ func (c *authUserCache) GetAccountByEmail(ctx context.Context, email string) (*e
 
 	// save data to cache
 	if err := c.cacheStore.Set(ctx, key, &u, time.Hour*12); err != nil {
-		panic(common.NewCustomError(err, "Error when cache.Set() data"))
+		panic(common.NewCustomError(err, "Error when cache.Set() data", "ErrCacheSetData"))
 	}
 	return u, err
 

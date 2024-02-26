@@ -10,7 +10,7 @@ func (s *accountStorage) Create(ctx context.Context, account *entities.Account) 
 	db := s.db
 
 	if err = db.Create(account).Error; err != nil {
-		return common.ErrorDB(err)
+		return common.ErrDB(err)
 	}
 	return nil
 }
