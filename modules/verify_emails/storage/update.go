@@ -10,7 +10,7 @@ func (s *verifyEmailsStorage) Update(ctx context.Context, email string, _type in
 	db := s.db
 	data := entities.VerifyEmail{}
 	if err := db.Table(data.TableName()).Where("email = ? and type = ?", email, _type).Updates(verifyEmail).Error; err != nil {
-		return common.ErrorDB(err)
+		return common.ErrDB(err)
 	}
 	return nil
 }

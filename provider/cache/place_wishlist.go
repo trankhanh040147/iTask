@@ -2,9 +2,8 @@ package cache
 
 import (
 	"context"
-	"log"
-	"iTask/common"
 	"iTask/entities"
+	"log"
 	"time"
 )
 
@@ -65,7 +64,8 @@ func (c *placeWishListCache) GetByCondition(ctx context.Context, condition map[s
 
 	// save data to cache
 	if err := c.cacheStore.Set(ctx, key, &u, time.Hour*24); err != nil {
-		panic(common.NewCustomError(err, "Error when cache.Set() data"))
+		//panic(common.NewCustomError(err, "Error when cache.Set() data"))
+		panic(err)
 	}
 	return u, err
 

@@ -13,14 +13,14 @@ func (uc *verifyEmailsUseCase) CheckResetCodePasswordIsMatching(ctx context.Cont
 	data, err := uc.verifyEmailsStore.Get(ctx, email, code, constant.TypeResetPassword)
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return common.ErrResetCodePasswordIsNotMatching("reset code", nil)
+			return common.ErrResetCodePasswordIsNotMatching(nil)
 		}
 		return err
 	}
 
 	// check if reset code is expired
 	if data.IsExpired() {
-		return common.ErrExpiredResetCodePassword("reset code", err)
+		return common.ErrExpiredResetCodePassword(nil)
 	}
 
 	// if all is ok

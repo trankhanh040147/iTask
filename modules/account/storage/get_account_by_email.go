@@ -15,7 +15,7 @@ func (s *accountStorage) GetAccountByEmail(ctx context.Context, email string) (*
 		if err == gorm.ErrRecordNotFound {
 			return nil, err
 		}
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 	}
 	return &account, nil
 }

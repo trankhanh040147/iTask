@@ -13,11 +13,11 @@ func (s *accountStorage) GetAllAccountUserAndVendor(ctx context.Context, paging 
 	db = db.Where("role = ? OR role = ?", constant.UserRole, constant.VendorRole)
 
 	if err := db.Count(&paging.Total).Error; err != nil {
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 	}
 
 	if err := db.Offset((paging.Page - 1) * paging.Limit).Limit(paging.Limit).Find(&result).Error; err != nil {
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 	}
 
 	return result, nil

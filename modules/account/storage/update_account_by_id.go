@@ -10,7 +10,7 @@ func (s *accountStorage) UpdateAccountById(ctx context.Context, id int, accountU
 	db := s.db
 	var account entities.Account
 	if err := db.Table(account.TableName()).Where("id = ?", id).Updates(&accountUpdate).Error; err != nil {
-		return common.ErrorDB(err)
+		return common.ErrDB(err)
 	}
 	return nil
 }

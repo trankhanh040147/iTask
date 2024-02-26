@@ -1,126 +1,250 @@
 package common
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 type AppError struct {
-	StatusCode int    `json:"status"`
+	StatusCode int    `json:"status_code"`
+	RootErr    error  `json:"-"`
 	Message    string `json:"message"`
-
-	Causes error `json:"-"` // root error
-	//Key    string `json:"key"` // using to do multi language
+	Log        string `json:"log"`
+	Key        string `json:"error_key"`
 }
 
-func (e *AppError) RootErr() error {
-	if err, ok := e.Causes.(*AppError); ok {
-		return err.RootErr()
+func NewErrorResponse(root error, msg, log, key string) *AppError {
+	return &AppError{
+		StatusCode: http.StatusBadRequest,
+		RootErr:    root,
+		Message:    msg,
+		Log:        log,
+		Key:        key,
 	}
-	return e.Causes
+}
+
+// AppError implements the error interface.
+// AppError(AppError(...(error))) will return the root error.
+// Example:
+// err := errors.New("cannot connect to database server")
+// appErr := NewErrorResponse(err, "cannot connect to database server", "cannot connect to database server", "cannot_connect_to_database_server")
+// appErr.RootError() // 'cannot connect to database server
+
+func (e *AppError) RootError() error {
+	// If the root error is an AppError, return its root error instead.
+	// This is useful when we want to wrap an error with a more specific error message.
+	// For example, we want to wrap a database error with a message 'cannot connect to database
+	// server' instead of 'pq: cannot connect to database server
+	// Cast the root error to AppError and return its root error.
+	// Otherwise, return the root error itself.
+
+	if err, ok := e.RootErr.(*AppError); ok {
+		return err.RootError()
+	}
+
+	return e.RootErr
 }
 
 func (e *AppError) Error() string {
-	return e.RootErr().Error()
+	return e.RootError().Error()
 }
 
-func ErrAuthorized(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "you have no authorize", StatusCode: http.StatusUnauthorized}
+func NewFullErrorResponse(StatusCode int, root error, msg, log, key string) *AppError {
+	return &AppError{
+		StatusCode: StatusCode,
+		RootErr:    root,
+		Message:    msg,
+		Log:        log,
+		Key:        key,
+	}
 }
 
-func ErrForbidden(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "you have no permission", StatusCode: http.StatusForbidden}
+func NewUnauthorized(root error, msg, key string) *AppError {
+	return &AppError{
+		StatusCode: http.StatusUnauthorized,
+		RootErr:    root,
+		Message:    msg,
+		Key:        key,
+	}
 }
 
-func ErrNotOwner(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "you are not owner of this place", StatusCode: http.StatusForbidden}
+func NewCustomError(root error, msg, key string) *AppError {
+	if root != nil {
+		return NewErrorResponse(root, msg, root.Error(), key)
+	}
+
+	return NewErrorResponse(errors.New(msg), msg, msg, key)
 }
 
-func ErrBadRequest(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "invalid request", StatusCode: http.StatusBadRequest}
+func ErrDB(err error) *AppError {
+	return NewFullErrorResponse(http.StatusInternalServerError, err, "Something went wrong with DB", err.Error(), "DB_ERROR")
 }
 
-func NewNotFoundError(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "not found", StatusCode: http.StatusNotFound}
+func ErrInvalidRequest(err error) *AppError {
+	return NewErrorResponse(err, "Invalid request", err.Error(), "ErrInvalidRequest")
 }
 
-func ErrInternal(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "Something went wrong in the server", StatusCode: http.StatusInternalServerError}
-}
-
-func ErrorDB(causes error) *AppError {
-	return &AppError{Causes: causes, Message: "Something went wrong with db", StatusCode: http.StatusInternalServerError}
-}
-
-func NewCustomError(causes error, msg string) *AppError {
-	return &AppError{Causes: causes, Message: msg, StatusCode: http.StatusBadRequest}
+func ErrInternal(err error) *AppError {
+	return NewFullErrorResponse(http.StatusInternalServerError, err,
+		"Something went wrong in the server", err.Error(), "ErrInternal")
 }
 
 func ErrValidation(err error) *AppError {
-	return NewCustomError(err, "ErrValidation")
-	//return NewErrorResponse(err, "Validation error", err.Error(), "ErrValidation")
+	return NewErrorResponse(err, "Validation error", err.Error(), "ErrValidation")
 }
 
-func ErrCannotListEntity(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("Cannot list %s", entity))
+func ErrCannotListEntity(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Cannot list %s", strings.ToLower(entity)),
+		fmt.Sprintf("ErrCannotList%s", entity),
+	)
 }
 
-func ErrEntityNotFound(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s not found", entity))
+func ErrCannotDeleteEntity(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Cannot delete %s", strings.ToLower(entity)),
+		fmt.Sprintf("ErrCannotDelete%s", entity),
+	)
 }
 
-func ErrCannotCreateEntity(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("Cannot create %s", entity))
+func ErrCannotUpdateEntity(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Cannot update %s", strings.ToLower(entity)),
+		fmt.Sprintf("ErrCannotUpdate%s", entity),
+	)
 }
 
-func ErrCannotGetEntity(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("Cannot get %s", entity))
+func ErrEntityDeleted(entity string) *AppError {
+	return NewCustomError(
+		nil,
+		fmt.Sprintf("%s has been deleted", strings.ToLower(entity)),
+		fmt.Sprintf("Err%sDeleted", entity),
+	)
 }
 
-func ErrCannotUpdateEntity(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("Cannot update %s", entity))
+func ErrEntityExisted(entity string) *AppError {
+	return NewCustomError(
+		nil,
+		fmt.Sprintf("%s already exists", strings.ToLower(entity)),
+		fmt.Sprintf("Err%sExisted", entity),
+	)
 }
 
-func ErrCannotDeleteEntity(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("Cannot delete %s", entity))
+func ErrEntityNotFound(entity string) *AppError {
+	return NewCustomError(
+		nil,
+		fmt.Sprintf("%s not found", strings.ToLower(entity)),
+		fmt.Sprintf("Err%sNotFound", entity),
+	)
 }
 
-func ErrEntityExisted(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s have existed", entity))
+func ErrCannotCreateEntity(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Cannot create %s", strings.ToLower(entity)),
+		fmt.Sprintf("ErrCannotCreate%s", entity),
+	)
 }
 
-func ErrEmailOrPasswordInvalid(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s email or password invalid", entity))
+func ErrCannotGetEntity(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Cannot get %s", strings.ToLower(entity)),
+		fmt.Sprintf("ErrCannotGet%s", entity),
+	)
 }
 
-func ErrEmailNotExist(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s email is not exist", entity))
+func ErrNoPermission(err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("You don't have permission to do this action"),
+		fmt.Sprintf("ErrNoPermission"),
+	)
 }
 
-func ErrExpiredVerifyCode(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s verify code is expired", entity))
+func ErrBadRequest(err error) *AppError {
+	return NewFullErrorResponse(http.StatusBadRequest, err, "Bad request", err.Error(), "ErrBadRequest")
 }
 
-func ErrVerifyCodeIsNotMatching(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s verify code is not matching", entity))
+func ErrUnauthorized(err error) *AppError {
+	return NewFullErrorResponse(http.StatusUnauthorized, err, "Unauthorized", err.Error(), "ErrUnauthorized")
 }
 
-func ErrOldPasswordInvalid(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s old password invalid", entity))
+func ErrResetCodePasswordIsNotMatching(err error) *AppError {
+	return NewCustomError(
+		err,
+		"Reset code password is not matching",
+		"ErrResetCodePasswordIsNotMatching",
+	)
 }
 
-func ErrExpiredResetCodePassword(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s reset code password is expired", entity))
+func ErrExpiredResetCodePassword(err error) *AppError {
+	return NewCustomError(
+		err,
+		"Reset code is expired",
+		"ErrExpiredResetCodePassword",
+	)
 }
 
-func ErrResetCodePasswordIsNotMatching(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s reset code password is not matching", entity))
+func ErrVerifyCodeIsNotMatching(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("%s is not matching", entity),
+		fmt.Sprintf("ErrVerifyCodeIsNotMatching"),
+	)
 }
 
-func ErrAccountIsNotActive(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s status is not active", entity))
+func ErrOldPasswordInvalid(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Old %s is invalid", entity),
+		fmt.Sprintf("ErrOldPasswordInvalid"),
+	)
 }
 
-func ErrAccountIsNotVerify(entity string, cause error) *AppError {
-	return NewCustomError(cause, fmt.Sprintf("%s is not verify", entity))
+func ErrEmailNotExist(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("%s not exist", entity),
+		fmt.Sprintf("ErrEmailNotExist"),
+	)
 }
+
+func ErrAccountIsNotActive(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("%s is not active", entity),
+		fmt.Sprintf("ErrAccountIsNotActive"),
+	)
+}
+
+func ErrAccountIsNotVerify(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("%s is not verify", entity),
+		fmt.Sprintf("ErrAccountIsNotVerify"),
+	)
+}
+
+func ErrEmailOrPasswordInvalid(entity string, err error) *AppError {
+	return NewCustomError(
+		err,
+		fmt.Sprintf("Email or password is invalid", entity),
+		fmt.Sprintf("ErrEmailOrPasswordInvalid"),
+	)
+}
+
+func ErrForbidden(err error) *AppError {
+	return NewCustomError(
+		err,
+		"Forbidden",
+		"ErrForbidden",
+	)
+}
+
+var RecordNotFound = errors.New("record not found")

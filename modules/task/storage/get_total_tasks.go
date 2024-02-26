@@ -31,7 +31,7 @@ func (s *sqlStore) GetTotalTasks(ctx context.Context, cond map[string]interface{
 		if errors.Is(gorm.ErrRecordNotFound, err) {
 			return nil, common.RecordNotFound
 		}
-		return nil, common.ErrorDB(err)
+		return nil, common.ErrDB(err)
 
 	}
 
