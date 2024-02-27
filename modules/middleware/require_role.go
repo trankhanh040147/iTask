@@ -3,17 +3,16 @@ package middleware
 import (
 	"errors"
 	"iTask/common"
-	"iTask/constant"
 	"iTask/entities"
 
 	"github.com/gin-gonic/gin"
 )
 
-func (m *middlewareManager) RequiredRoles(roles ...constant.Role) gin.HandlerFunc {
+func (m *middlewareManager) RequiredRoles(roles ...entities.UserRole) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		account := ctx.MustGet(common.CurrentUser).(*entities.Account)
 		for i := range roles {
-			if account.Role == int(roles[i]) {
+			if int(account.Role) == int(roles[i]) {
 				ctx.Next()
 				return
 			}

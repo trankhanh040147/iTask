@@ -59,7 +59,7 @@ import (
 //	}
 //}
 
-func ListItem(db *gorm.DB) func(ctx *gin.Context) {
+func ListProject(db *gorm.DB) func(ctx *gin.Context) {
 	return func(c *gin.Context) {
 		var queryString struct {
 			common.Paging

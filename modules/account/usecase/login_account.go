@@ -33,7 +33,7 @@ func (uc *accountUseCase) LoginAccount(ctx context.Context, accountModel *iomode
 	}
 
 	// generate toke
-	token, err = jwtprovider.GenerateJWT(jwtprovider.TokenPayload{Role: account.Role, Email: account.Email}, uc.cfg)
+	token, err = jwtprovider.GenerateJWT(jwtprovider.TokenPayload{Role: int(account.Role), Email: account.Email}, uc.cfg)
 	if err != nil {
 		return nil, common.ErrInternal(err)
 	}

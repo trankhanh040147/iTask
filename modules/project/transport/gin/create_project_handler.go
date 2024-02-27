@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func CreateItem(db *gorm.DB) func(ctx *gin.Context) {
+func CreateProject(db *gorm.DB) func(ctx *gin.Context) {
 	return func(c *gin.Context) {
 		var projectData model.ProjectCreation
 
@@ -23,7 +23,7 @@ func CreateItem(db *gorm.DB) func(ctx *gin.Context) {
 		}
 
 		requester := c.MustGet(common.CurrentUser).(common.Requester)
-		projectData.CreatedBy = requester.GetID()
+		projectData.CreatedBy = requester.GetUserId()
 
 		store := storage.NewSQLStore(db)
 		business := biz.NewCreateProjectBiz(store)
