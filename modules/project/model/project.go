@@ -12,15 +12,39 @@ var (
 	ErrProjectIsDeleted  = errors.New("project is deleted")
 )
 
+type ProjectStatus int
+
 const (
 	EntityName = "Project"
 )
+
+const (
+	StatusPending ProjectStatus = 1 + iota
+	StatusInProgress
+	StatusDone
+	StatusDeleted
+)
+
+func (status ProjectStatus) String() string {
+	switch status {
+	case StatusPending:
+		return "Pending"
+	case StatusInProgress:
+		return "In Progress"
+	case StatusDone:
+		return "Done"
+	case StatusDeleted:
+		return "Deleted"
+	default:
+		return "Unknown"
+	}
+}
 
 type Project struct {
 	common.SQLModel
 	Name                string               `json:"name" gorm:"column:name"`
 	Description         string               `json:"description" gorm:"column:description"`
-	Status              int                  `json:"status" gorm:"column:status"`
+	Status              ProjectStatus        `json:"status" gorm:"column:status"`
 	Thumbnail           string               `json:"thumbnail_url" gorm:"column:thumbnail_url"`
 	Privacy             string               `json:"privacy" gorm:"column:privacy"`
 	CreatedBy           int                  `json:"created_by" gorm:"column:created_by"`
@@ -37,7 +61,7 @@ func (Project) TableName() string {
 	return "Projects"
 }
 
-func (a *Project) GetStatus() int {
+func (a *Project) GetStatus() ProjectStatus {
 	return a.Status
 }
 

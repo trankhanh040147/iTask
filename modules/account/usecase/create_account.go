@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"iTask/common"
-	"iTask/constant"
 	"iTask/entities"
 	"iTask/modules/account/convert"
 	"iTask/modules/account/iomodel"
@@ -28,7 +27,7 @@ func (uc *accountUseCase) CreateAccount(ctx context.Context, accountModel *iomod
 		return nil, errors.New("Email is existed")
 	}
 
-	accountEntity.Status = int(constant.StatusActive)
+	accountEntity.Status = entities.StatusActive
 	accountEntity.IsEmailVerified = 1 // change_later
 	// hash password before store in db
 	hashedPassword, err := utils.HashPassword(accountEntity.Password)
@@ -37,7 +36,7 @@ func (uc *accountUseCase) CreateAccount(ctx context.Context, accountModel *iomod
 	}
 
 	// default in first register account will have role user
-	accountEntity.Role = int(constant.UserRole)
+	accountEntity.Role = entities.RoleMember
 	accountEntity.Password = hashedPassword
 
 	paramCreateTx := accountstorage.CreateUserTxParam{

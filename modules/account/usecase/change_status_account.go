@@ -7,7 +7,7 @@ import (
 
 func (uc *accountUseCase) ChangeStatusAccount(ctx context.Context, accountID int, status int) error {
 	updateStatusAccount := entities.Account{
-		Status: status,
+		Status: entities.UserStatus(status),
 	}
 
 	err := uc.accountStorage.UpdateAccountById(ctx, accountID, &updateStatusAccount)

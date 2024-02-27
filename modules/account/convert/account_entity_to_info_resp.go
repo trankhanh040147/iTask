@@ -10,7 +10,7 @@ func ConvertAccountEntityToInfoResp(account *entities.Account) *iomodel.AccountI
 	updated := account.UpdatedAt.Format("2006-01-02 15:04:05")
 	return &iomodel.AccountInfoResp{
 		Id:       account.Id,
-		Role:     account.Role,
+		Role:     account.Role.String(),
 		Email:    account.Email,
 		Username: account.Username,
 		FullName: account.FullName,

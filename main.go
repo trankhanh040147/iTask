@@ -3,7 +3,7 @@ package main
 import (
 	cmdworker "iTask/cmd/worker"
 	"iTask/config"
-	"iTask/constant"
+	"iTask/entities"
 	accounthandler "iTask/modules/account/handler"
 	accountstorage "iTask/modules/account/storage"
 	accountusecase "iTask/modules/account/usecase"
@@ -126,18 +126,20 @@ func main() {
 	v1.PATCH("/account/:id", accountHdl.UpdatePersonalInfoAccountById())
 	v1.GET("/profile", accountHdl.GetAccountByEmail())
 	v1.GET("/profile/:id", accountHdl.GetAccountByID())
-	v1.GET("/accounts", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.AdminRole), accountHdl.GetAllAccountUserAndVendor())
-	v1.PATCH("/account/role/:id", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.AdminRole), accountHdl.UpdateAccountRoleByID())
+	v1.GET("/accounts", middlewares.RequiredAuth(), middlewares.RequiredRoles(entities.RoleAdmin), accountHdl.GetAllAccountUserAndVendor())
+	v1.PATCH("/account/role/:id", middlewares.RequiredAuth(), middlewares.RequiredRoles(entities.RoleAdmin), accountHdl.UpdateAccountRoleByID())
 	v1.POST("/change/password", middlewares.RequiredAuth(), accountHdl.ChangePassword())
-	v1.POST("/change/status", middlewares.RequiredAuth(), middlewares.RequiredRoles(constant.AdminRole), accountHdl.ChangeStatusAccount())
+	v1.POST("/change/status", middlewares.RequiredAuth(), middlewares.RequiredRoles(entities.RoleAdmin), accountHdl.ChangeStatusAccount())
 	v1.POST("/forgot/password", accountHdl.ForgotPassword())
 	v1.POST("/reset/password", accountHdl.ResetPassword())
 
 	// Project
 	projects := v1.Group("/projects", middlewares.RequiredAuth())
 	{
-		projects.GET("", ginproject.ListItem(db))
-		projects.POST("", ginproject.CreateItem(db))
+		projects.GET("", ginproject.ListProject(db))
+		projects.GET("/:id", ginproject.GetProject(db))
+		projects.POST("", ginproject.CreateProject(db))
+		projects.POST("/:id", ginproject.UpdateProject(db))
 	}
 
 	// verify email

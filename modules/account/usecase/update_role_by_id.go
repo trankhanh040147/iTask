@@ -10,7 +10,7 @@ import (
 func (uc *accountUseCase) UpdateAccountRoleByID(ctx context.Context, accountModel *iomodel.AccountChangeRole, id int) (err error) {
 
 	model := entities.Account{
-		Role: accountModel.Role,
+		Role: entities.UserRole(accountModel.Role),
 	}
 	err = uc.accountStorage.UpdateAccountById(ctx, id, &model)
 	if err != nil {

@@ -1,9 +1,13 @@
 package common
 
 type Requester interface {
-	GetRole() int
+	GetRole() string
 	GetEmail() string
-	GetID() int
+	GetUserId() int
 }
 
 const CurrentUser = "current_user"
+
+func IsAdmin(requester Requester) bool {
+	return requester.GetRole() == "admin"
+}

@@ -6,33 +6,33 @@ import (
 
 type Account struct {
 	common.SQLModel
-	Username        string `json:"username" gorm:"column:username"`
-	Email           string `json:"email" gorm:"column:email"`
-	FullName        string `json:"full_name" gorm:"column:full_name"`
-	Role            int    `json:"role" gorm:"role"`
-	Status          int    `json:"status" gorm:"column:status"`
-	Password        string `json:"password" gorm:"column:password"`
-	Address         string `json:"address" gorm:"column:address"`
-	Phone           string `json:"phone" gorm:"column:phone"`
-	Dob             string `json:"dob" gorm:"column:dob"`
-	Avatar          string `json:"profile_ava_url" gorm:"profile_ava_url"`
-	IsEmailVerified int    `json:"is_email_verified" gorm:"is_email_verified"`
-	Bio             string `json:"bio" gorm:"bio"`
+	Username        string     `json:"username" gorm:"column:username"`
+	Email           string     `json:"email" gorm:"column:email"`
+	FullName        string     `json:"full_name" gorm:"column:full_name"`
+	Role            UserRole   `json:"role" gorm:"role"`
+	Status          UserStatus `json:"status" gorm:"column:status"`
+	Password        string     `json:"password" gorm:"column:password"`
+	Address         string     `json:"address" gorm:"column:address"`
+	Phone           string     `json:"phone" gorm:"column:phone"`
+	Dob             string     `json:"dob" gorm:"column:dob"`
+	Avatar          string     `json:"profile_ava_url" gorm:"profile_ava_url"`
+	IsEmailVerified int        `json:"is_email_verified" gorm:"is_email_verified"`
+	Bio             string     `json:"bio" gorm:"bio"`
 }
 
 func (Account) TableName() string {
 	return "Users"
 }
 
-func (a *Account) GetRole() int {
-	return a.Role
+func (a *Account) GetRole() string {
+	return a.Role.String()
 }
 
 func (a *Account) GetEmail() string {
 	return a.Email
 }
 
-func (a *Account) GetID() int {
+func (a *Account) GetUserId() int {
 	return a.Id
 }
 
@@ -55,6 +55,22 @@ func (role UserRole) String() string {
 		return "owner"
 	default:
 		return "observer"
+	}
+}
+
+type UserStatus int
+
+const (
+	StatusActive UserStatus = 1 + iota
+	StatusInactive
+)
+
+func (status UserStatus) String() string {
+	switch status {
+	case StatusActive:
+		return "active"
+	default:
+		return "inactive"
 	}
 }
 
