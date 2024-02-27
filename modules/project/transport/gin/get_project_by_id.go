@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetItem(db *gorm.DB) func(ctx *gin.Context) {
+func GetProject(db *gorm.DB) func(ctx *gin.Context) {
 	return func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("id"))
 
