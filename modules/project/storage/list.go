@@ -45,9 +45,9 @@ func (store *sqlStore) ListProject(
 		return nil, common.ErrDB(err)
 	}
 
-	//for _, value := range moreKeys {
-	//	db = db.Preload(value)
-	//}
+	for _, value := range moreKeys {
+		db = db.Preload(value)
+	}
 
 	db = db.Preload("Members").Preload("Members.AccountInfo")
 
