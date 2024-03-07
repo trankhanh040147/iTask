@@ -3,6 +3,7 @@ package model
 import (
 	"errors"
 	"iTask/common"
+	"iTask/modules/account/iomodel"
 	"iTask/modules/project_members/model"
 	"time"
 )
@@ -42,17 +43,18 @@ func (status ProjectStatus) String() string {
 
 type Project struct {
 	common.SQLModel
-	Name                string               `json:"name" gorm:"column:name"`
-	Description         string               `json:"description" gorm:"column:description"`
-	Status              ProjectStatus        `json:"status" gorm:"column:status"`
-	Thumbnail           string               `json:"thumbnail_url" gorm:"column:thumbnail_url"`
-	Privacy             string               `json:"privacy" gorm:"column:privacy"`
-	CreatedBy           int                  `json:"created_by" gorm:"column:created_by"`
-	Deadline            string               `json:"deadline" gorm:"column:deadline"`
-	StartedAt           *time.Time           `json:"started_at" gorm:"column:started_at"`
-	TotalTasks          int                  `json:"total_tasks" gorm:"-"`
-	TotalCompletedTasks int                  `json:"completed_tasks" gorm:"-"`
-	Members             []model.SimpleMember `json:"members" gorm:"foreignKey:ProjectId"`
+	Name                string                 `json:"name" gorm:"column:name"`
+	Description         string                 `json:"description" gorm:"column:description"`
+	Status              ProjectStatus          `json:"status" gorm:"column:status"`
+	Thumbnail           string                 `json:"thumbnail_url" gorm:"column:thumbnail_url"`
+	Privacy             string                 `json:"privacy" gorm:"column:privacy"`
+	CreatedBy           int                    `json:"-" gorm:"column:created_by"`
+	Owner               *iomodel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
+	Deadline            string                 `json:"deadline" gorm:"column:deadline"`
+	StartedAt           *time.Time             `json:"started_at" gorm:"column:started_at"`
+	TotalTasks          int                    `json:"total_tasks" gorm:"-"`
+	TotalCompletedTasks int                    `json:"completed_tasks" gorm:"-"`
+	Members             *[]model.SimpleMember  `json:"members" gorm:"foreignKey:ProjectId"`
 }
 
 //Owner               iomodel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
@@ -65,8 +67,8 @@ func (a *Project) GetStatus() ProjectStatus {
 	return a.Status
 }
 
-func (a *Project) GetCreatedBy() int {
-	return a.CreatedBy
+func (a *Project) GetƠwner() *iomodel.SimpleAccount {
+	return a.Owner
 }
 
 func (a *Project) GetID() int {
