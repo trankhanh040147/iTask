@@ -9,7 +9,7 @@ import (
 	accountusecase "iTask/modules/account/usecase"
 	"iTask/modules/middleware"
 	ginproject "iTask/modules/project/transport/gin"
-	gintask "iTask/modules/task/transport"
+	gintask "iTask/modules/task/transport/gin"
 	uploadhandler "iTask/modules/upload/handler"
 	uploadusecase "iTask/modules/upload/usecase"
 	verifyemailshanlder "iTask/modules/verify_emails/handler"

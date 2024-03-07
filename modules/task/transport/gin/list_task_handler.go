@@ -1,4 +1,4 @@
-package gintask
+package gin
 
 import (
 	"github.com/gin-gonic/gin"
@@ -21,14 +21,14 @@ func ListTask(db *gorm.DB) func(ctx *gin.Context) {
 		// Default value for CreatedDayRange
 		// queryString.CreatedDayRange = -1
 		//
-		//if err := c.ShouldBind(&queryString); err != nil {
-		//	c.JSON(http.StatusBadRequest, gin.H{
-		//		"error": err.Error(),
-		//	})
-		//	return
-		//}
-		//
-		//queryString.Paging.Process()
+		if err := c.ShouldBind(&queryString); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		queryString.Paging.Process()
 
 		//requester := c.MustGet(common.CurrentUser).(common.Requester)
 		//requester := nil
