@@ -23,6 +23,7 @@ const (
 	OperatorNotBetween      Operator = "NOT BETWEEN"
 )
 
+// status of: Project, Task
 const (
 	StatusDeleted   = 3
 	StatusCompleted = 2
