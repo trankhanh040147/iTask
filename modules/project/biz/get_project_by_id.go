@@ -7,7 +7,7 @@ import (
 )
 
 type GetProjectStorage interface {
-	GetProject(ctx context.Context, cond map[string]interface{}) (*model.Project, error)
+	GetProject(ctx context.Context, cond map[string]interface{}, moreKeys ...string) (*model.Project, error)
 }
 
 type getProjectBiz struct {

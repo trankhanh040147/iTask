@@ -141,6 +141,7 @@ func main() {
 		projects.GET("/:id", ginproject.GetProject(db))
 		projects.POST("", ginproject.CreateProject(db))
 		projects.POST("/:id", ginproject.UpdateProject(db))
+		projects.DELETE("/:id", ginproject.DeleteProject(db))
 	}
 
 	// Task
