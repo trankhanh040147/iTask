@@ -8,7 +8,7 @@ import (
 )
 
 type UpdateProjectStorage interface {
-	GetProject(ctx context.Context, cond map[string]interface{}) (*model.Project, error)
+	GetProject(ctx context.Context, cond map[string]interface{}, moreKeys ...string) (*model.Project, error)
 	UpdateProject(ctx context.Context, cond map[string]interface{}, dataUpdate *model.ProjectUpdate) error
 }
 

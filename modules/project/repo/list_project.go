@@ -17,6 +17,7 @@ type ListProjectStorage interface {
 
 type TaskStorage interface {
 	GetTotalTasks(ctx context.Context, cond map[string]interface{}) (map[int]int, error)
+	//ListTask(ctx context.Context, filter *model.Filter, paging *common.Paging, moreKeys ...string) ([]model.Task, error)
 }
 
 type listProjectRepo struct {
