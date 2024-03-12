@@ -20,6 +20,7 @@ type ProjectCreation struct {
 	TotalTasks          int                  `json:"total_tasks" gorm:"-"`
 	TotalCompletedTasks int                  `json:"completed_tasks" gorm:"-"`
 	Members             []model.SimpleMember `json:"members" gorm:"foreignKey:ProjectId"`
+	Tags                string               `json:"tags" gorm:"-"`
 }
 
 func (i *ProjectCreation) Validate() error {

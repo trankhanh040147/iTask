@@ -8,7 +8,7 @@ import (
 	"iTask/modules/project/model"
 	repository "iTask/modules/project/repo"
 	"iTask/modules/project/storage"
-	projecTagStorage "iTask/modules/project_tags/model"
+	projecTagStorage "iTask/modules/project_tags/storage"
 	taskStorage "iTask/modules/task/storage"
 	"net/http"
 )
