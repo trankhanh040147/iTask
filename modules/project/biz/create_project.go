@@ -4,6 +4,7 @@ import (
 	"context"
 	"iTask/common"
 	"iTask/modules/project/model"
+	projectTagModel "iTask/modules/project_tags/model"
 	tagModel "iTask/modules/tag/model"
 )
 
@@ -43,18 +44,17 @@ func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.P
 	if err := biz.tagStorage.CreateTagsByTagNames(ctx, int(tagModel.TypeProject), data.Tags); err != nil {
 		return common.ErrCannotCreateEntity(tagModel.EntityName, err)
 	}
-	return nil
 
 	//// get tags id
-	//TagIds, err := biz.tagStorage.GetTagIdsByNames(ctx, data.Tags)
-	//if err != nil {
-	//	return common.ErrCannotCreateEntity(tagModel.EntityName, err)
-	//}
-	//
-	//// update project tags
-	//if err := biz.projectTagStorage.UpdateProjectTagsByProjectId(ctx, data.Id, TagIds); err != nil {
-	//	return common.ErrCannotCreateEntity(projecTagModel.EntityName, err)
-	//}
-	//
-	//return nil
+	TagIds, err := biz.tagStorage.GetTagIdsByNames(ctx, data.Tags)
+	if err != nil {
+		return common.ErrCannotCreateEntity(tagModel.EntityName, err)
+	}
+
+	// update project tags
+	if err := biz.projectTagStorage.UpdateProjectTagsByProjectId(ctx, data.Id, TagIds); err != nil {
+		return common.ErrCannotCreateEntity(projectTagModel.EntityName, err)
+	}
+
+	return nil
 }
