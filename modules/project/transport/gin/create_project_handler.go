@@ -7,6 +7,8 @@ import (
 	"iTask/modules/project/biz"
 	"iTask/modules/project/model"
 	"iTask/modules/project/storage"
+	storage3 "iTask/modules/project_tags/storage"
+	storage2 "iTask/modules/tag/storage"
 	"net/http"
 )
 
@@ -26,7 +28,10 @@ func CreateProject(db *gorm.DB) func(ctx *gin.Context) {
 		projectData.CreatedBy = requester.GetUserId()
 
 		store := storage.NewSQLStore(db)
-		business := biz.NewCreateProjectBiz(store)
+		tagStore := storage2.NewSQLStore(db)
+		projectTagStore := storage3.NewSQLStore(db)
+
+		business := biz.NewCreateProjectBiz(store, projectTagStore, tagStore)
 
 		// step 3: use db.Create to
 		if err := business.CreateNewProject(c.Request.Context(), &projectData); err != nil {

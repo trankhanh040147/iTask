@@ -4,18 +4,30 @@ import (
 	"context"
 	"iTask/common"
 	"iTask/modules/project/model"
+	tagModel "iTask/modules/tag/model"
 )
 
 type CreateProjectStorage interface {
 	CreateProject(ctx context.Context, data *model.ProjectCreation) error
 }
 
-type createProjectBiz struct {
-	store CreateProjectStorage
+type ProjectTagStorage interface {
+	UpdateProjectTagsByProjectId(ctx context.Context, projectId int, tagIds []int) error
 }
 
-func NewCreateProjectBiz(store CreateProjectStorage) *createProjectBiz {
-	return &createProjectBiz{store: store}
+type TagStorage interface {
+	CreateTagsByTagNames(ctx context.Context, tagType int, tags string) error
+	GetTagIdsByNames(ctx context.Context, tags string) ([]int, error)
+}
+
+type createProjectBiz struct {
+	store             CreateProjectStorage
+	projectTagStorage ProjectTagStorage
+	tagStorage        TagStorage
+}
+
+func NewCreateProjectBiz(store CreateProjectStorage, projectTagStorage ProjectTagStorage, tagStorage TagStorage) *createProjectBiz {
+	return &createProjectBiz{store: store, projectTagStorage: projectTagStorage, tagStorage: tagStorage}
 }
 
 func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.ProjectCreation) error {
@@ -27,5 +39,22 @@ func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.P
 		return common.ErrCannotCreateEntity(model.EntityName, err)
 	}
 
+	// create tags
+	if err := biz.tagStorage.CreateTagsByTagNames(ctx, int(tagModel.TypeProject), data.Tags); err != nil {
+		return common.ErrCannotCreateEntity(tagModel.EntityName, err)
+	}
 	return nil
+
+	//// get tags id
+	//TagIds, err := biz.tagStorage.GetTagIdsByNames(ctx, data.Tags)
+	//if err != nil {
+	//	return common.ErrCannotCreateEntity(tagModel.EntityName, err)
+	//}
+	//
+	//// update project tags
+	//if err := biz.projectTagStorage.UpdateProjectTagsByProjectId(ctx, data.Id, TagIds); err != nil {
+	//	return common.ErrCannotCreateEntity(projecTagModel.EntityName, err)
+	//}
+	//
+	//return nil
 }
