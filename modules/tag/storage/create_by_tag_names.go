@@ -12,7 +12,8 @@ func (s *sqlStore) CreateTagsByTagNames(ctx context.Context, tagType int, tags s
 	tagNames := strings.Split(tags, ",")
 	for _, tagName := range tagNames {
 		tagName = strings.TrimSpace(tagName)
-
+		tagName = strings.ToLower(tagName)
+		
 		tag := model.TagCreation{
 			Name: tagName,
 			Type: model.TagType(tagType),
