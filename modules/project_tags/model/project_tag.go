@@ -13,7 +13,7 @@ var (
 type ProjectStatus int
 
 const (
-	EntityName = "Project"
+	EntityName = "project_tags"
 )
 
 const (

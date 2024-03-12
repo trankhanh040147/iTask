@@ -1,6 +1,9 @@
-package model
+package storage
 
-import "context"
+import (
+	"context"
+	"iTask/modules/project_tags/model"
+)
 
 func (s *sqlStore) GetProjectTagsByProjectId(ctx context.Context, cond map[string]interface{}) (map[int]string, error) {
 	data := make(map[int]string)
@@ -18,7 +21,7 @@ func (s *sqlStore) GetProjectTagsByProjectId(ctx context.Context, cond map[strin
 
 	var results []result
 
-	if err := s.db.Table(ProjectTag{}.TableName()).
+	if err := s.db.Table(model.ProjectTag{}.TableName()).
 		Select("project_id, group_concat(t.`name` separator ', ') as tags").
 		Joins("join Tags t on t.id = tag_id").
 		Where(cond).
