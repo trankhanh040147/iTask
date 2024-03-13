@@ -4,7 +4,6 @@ import (
 	"golang.org/x/net/context"
 	"iTask/common"
 	"iTask/modules/project/model"
-	"log"
 	"time"
 )
 
@@ -24,7 +23,7 @@ func (store *sqlStore) ListProject(
 	// requester := ctx.Value(common.CurrentUser).(common.Requester)
 	// db = db.Where("user_id = ?", requester.GetUserId())
 
-	log.Println("filter: ", filter)
+	//log.Println("filter: ", filter)
 
 	if f := filter; f != nil {
 		if v := f.Keyword; v != "" {
@@ -65,7 +64,7 @@ func (store *sqlStore) ListProject(
 	if err := db.
 		Select("*").
 		Offset((paging.Page - 1) * paging.Limit).
-		Order("id desc").
+		Order("id").
 		Limit(paging.Limit).
 		Find(&result).Error; err != nil {
 		return nil, common.ErrDB(err)
