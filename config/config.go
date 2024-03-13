@@ -2,7 +2,6 @@ package config
 
 import (
 	"errors"
-
 	"github.com/spf13/viper"
 )
 
@@ -44,13 +43,17 @@ type AppConfig struct {
 	MigrationURL string
 }
 type MysqlConfig struct {
-	Host          string
-	ContainerName string
-	Port          string
-	User          string
-	Password      string
-	DBName        string
+	Host            string
+	ContainerName   string
+	Port            string
+	User            string
+	Password        string
+	DBName          string
+	MaxOpenConns    int
+	MaxIdleConns    int
+	MaxConnLifetime string
 }
+
 type AWSConfig struct {
 	Region         string
 	APIKey         string

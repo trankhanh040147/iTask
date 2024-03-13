@@ -23,6 +23,10 @@ mysql:
   User: root
   Password: Trankhanh47
   DBName: iTask
+  MaxIdleConns: 100
+  MaxOpenConns: 100
+  ConnMaxLifetime: hour
+
 
 aws:
   Region: ap-southeast-1
