@@ -20,7 +20,7 @@ type Task struct {
 	common.SQLModel
 	Name        string                   `json:"name" gorm:"column:name"`
 	Description string                   `json:"description" gorm:"column:description"`
-	Status      int                      `json:"status" gorm:"column:status"`
+	Status      TaskStatus               `json:"status" gorm:"column:status"`
 	ProjectId   int                      `json:"project_id" gorm:"column:project_id"`
 	CreatedBy   int                      `json:"-" gorm:"column:created_by"`
 	ParentTask  int                      `json:"parent_task_id" gorm:"column:parent_task_id"`
@@ -30,15 +30,15 @@ type Task struct {
 	DueDate     *time.Time               `json:"due_date" gorm:"column:due_date"`
 	StartedAt   *time.Time               `json:"started_at" gorm:"column:started_at"`
 	CompletedAt *time.Time               `json:"completed_at" gorm:"column:completed_at"`
-	Owner       *userModel.SimpleAccount `json:"created_by" gorm:"foreignKey:CreatedBy"`
+	Owner       *userModel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
 }
 
 func (Task) TableName() string {
 	return "Tasks"
 }
 
-func (a *Task) GetStatus() int {
-	return a.Status
+func (a *Task) GetStatus() string {
+	return a.Status.String()
 }
 
 func (a *Task) GetCreatedBy() int {
@@ -49,14 +49,26 @@ func (a *Task) GetID() int {
 	return a.Id
 }
 
-var MapPriority map[int]string = map[int]string{
-	1: "High",
-	2: "Medium",
-	3: "Low",
-}
+type TaskStatus int
 
-var MapTaskStatus map[int]string = map[int]string{
-	3: "Deleted",
-	2: "Completed",
-	1: "Incomplete",
+const (
+	StatusPending TaskStatus = 1 + iota
+	StatusInProgress
+	StatusDone
+	StatusDeleted
+)
+
+func (status TaskStatus) String() string {
+	switch status {
+	case StatusPending:
+		return "Pending"
+	case StatusInProgress:
+		return "In Progress"
+	case StatusDone:
+		return "Done"
+	case StatusDeleted:
+		return "Deleted"
+	default:
+		return "Unknown"
+	}
 }
