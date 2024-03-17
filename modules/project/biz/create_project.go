@@ -32,9 +32,9 @@ func NewCreateProjectBiz(store CreateProjectStorage, projectTagStorage ProjectTa
 }
 
 func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.ProjectCreation) error {
-	if err := data.Validate(); err != nil {
-		return common.ErrValidation(err)
-	}
+	//if err := data.Validate(); err != nil {
+	//	return common.ErrValidation(err)
+	//}
 
 	if err := biz.store.CreateProject(ctx, data); err != nil {
 		return common.ErrCannotCreateEntity(model.EntityName, err)

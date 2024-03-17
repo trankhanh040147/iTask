@@ -13,7 +13,8 @@ type ProjectCreation struct {
 	Description         string               `json:"description" gorm:"column:description"`
 	Status              int                  `json:"status" gorm:"column:status"`
 	Thumbnail           string               `json:"thumbnail_url" gorm:"column:thumbnail_url"`
-	Privacy             string               `json:"privacy" gorm:"column:privacy"`
+	Privacy             ProjectPrivacy       `json:"privacy" gorm:"column:privacy"`
+	Priority            int                  `json:"priority" gorm:"column:priority"`
 	CreatedBy           int                  `json:"created_by" gorm:"column:created_by"`
 	Deadline            string               `json:"deadline" gorm:"column:deadline"`
 	StartedAt           *time.Time           `json:"started_at" gorm:"column:started_at"`
