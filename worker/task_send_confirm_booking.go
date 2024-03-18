@@ -67,7 +67,7 @@ func (processor *redisTaskProcessor) ProcessTaskSendConfirmBooking(ctx context.C
 }
 
 func sendMailToVerifyBooking(processor *redisTaskProcessor, account *entities.Account, bookingID int) error {
-	subject := "Welcome to Paradise Booking"
+	subject := "Welcome to ITask"
 	verifyUrl := fmt.Sprintf("%s?booking_id=%d&status=%d",
 		UrlConfirmBooking, bookingID, constant.BookingStatusConfirmed)
 	content := fmt.Sprintf(`Hello %s,<br/>

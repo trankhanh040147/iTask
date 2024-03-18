@@ -15,7 +15,7 @@ CREATE TABLE `Users`
     `dob`               date,
     `profile_ava_url`   varchar(255),
     `profile_cover_url` varchar(255),
-    `is_email_verified` int,
+    `is_email_verified` int DEFAULT 0,
     `bio`               varchar(255),
     `created_at`        timestamp DEFAULT (now()),
     `updated_at`        timestamp DEFAULT (now())

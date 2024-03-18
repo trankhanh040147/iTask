@@ -15,9 +15,10 @@ type Account struct {
 	Address         string     `json:"address" gorm:"column:address"`
 	Phone           string     `json:"phone" gorm:"column:phone"`
 	Dob             string     `json:"dob" gorm:"column:dob"`
-	Avatar          string     `json:"profile_ava_url" gorm:"profile_ava_url"`
-	IsEmailVerified int        `json:"is_email_verified" gorm:"is_email_verified"`
-	Bio             string     `json:"bio" gorm:"bio"`
+	Avatar          string     `json:"profile_ava_url" gorm:"column:avatar"`
+	Cover           string     `json:"profile_cover_url" gorm:"column:profile_cover_url"`
+	IsEmailVerified int        `json:"is_email_verified" gorm:"column:is_email_verified"`
+	Bio             string     `json:"bio" gorm:"column:bio"`
 }
 
 func (Account) TableName() string {

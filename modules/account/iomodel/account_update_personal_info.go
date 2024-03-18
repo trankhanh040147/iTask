@@ -7,5 +7,6 @@ type AccountUpdatePersonalInfo struct {
 	Phone    string `json:"phone"`
 	Dob      string `json:"dob"`
 	Avt      string `json:"profile_ava_url"`
+	Cover    string `json:"profile_cover_url"`
 	Bio      string `json:"bio"`
 }
