@@ -27,6 +27,7 @@ func ConvertAccountUpdatePersonalInfoModelToEntity(account *iomodel.AccountUpdat
 		Phone:    account.Phone,
 		Dob:      account.Dob,
 		Avatar:   account.Avt,
+		Cover:    account.Cover,
 		Bio:      account.Bio,
 	}
 }

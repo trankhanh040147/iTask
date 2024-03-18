@@ -11,6 +11,7 @@ type AccountInfoResp struct {
 	Dob      string `json:"dob"`
 	Bio      string `json:"bio"`
 	Avt      string `json:"profile_ava_url"`
+	Cover    string `json:"profile_cover_url"`
 	Created  string `json:"created"`
 	Updated  string `json:"updated"`
 }
