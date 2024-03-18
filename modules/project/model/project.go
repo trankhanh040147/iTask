@@ -14,6 +14,8 @@ var (
 )
 
 type ProjectStatus int
+type ProjectPrivacy int
+type ProjectPriority int
 
 const (
 	EntityName = "Project"
@@ -24,6 +26,17 @@ const (
 	StatusInProgress
 	StatusDone
 	StatusDeleted
+)
+
+const (
+	PrivacyPrivate ProjectPrivacy = iota
+	PrivacyPublic
+)
+
+const (
+	PriorityHigh ProjectPriority = 1 + iota
+	PriorityMedium
+	PriorityLow
 )
 
 func (status ProjectStatus) String() string {
@@ -41,13 +54,41 @@ func (status ProjectStatus) String() string {
 	}
 }
 
+func (privacy ProjectPrivacy) String() string {
+	switch privacy {
+	case PrivacyPublic:
+		return "Public"
+	case PrivacyPrivate:
+		return "Private"
+	default:
+		return "Unknown"
+	}
+}
+
+func (priority ProjectPriority) String() string {
+	switch priority {
+	case PriorityHigh:
+		return "High"
+	case PriorityMedium:
+		return "Medium"
+	case PriorityLow:
+		return "Low"
+	default:
+		return "Unknown"
+	}
+}
+
 type Project struct {
 	common.SQLModel
 	Name                string                 `json:"name" gorm:"column:name"`
 	Description         string                 `json:"description" gorm:"column:description"`
-	Status              ProjectStatus          `json:"status" gorm:"column:status"`
+	Status              ProjectStatus          `json:"-" gorm:"column:status"`
+	StatusValue         string                 `json:"status" gorm:"-"`
 	Thumbnail           string                 `json:"thumbnail_url" gorm:"column:thumbnail_url"`
-	Privacy             string                 `json:"privacy" gorm:"column:privacy"`
+	Privacy             ProjectPrivacy         `json:"-" gorm:"column:privacy"`
+	PrivacyValue        string                 `json:"privacy" gorm:"-"`
+	Priority            ProjectPriority        `json:"-" gorm:"column:priority"`
+	PriorityValue       string                 `json:"priority" gorm:"-"`
 	CreatedBy           int                    `json:"-" gorm:"column:created_by"`
 	Owner               *iomodel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
 	Deadline            string                 `json:"deadline" gorm:"column:deadline"`
