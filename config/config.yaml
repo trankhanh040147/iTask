@@ -52,9 +52,9 @@ google:
   RedirectURL: http://localhost:3000/
 
 email:
-  EmailSenderName: LamNguyen
-  EmailSenderAddress: lamfan011@gmail.com
-  EmailSenderPassword: earzqfmxxcxorlxz
+  EmailSenderName: iTask
+  EmailSenderAddress: itask.bsn@gmail.com
+  EmailSenderPassword: svflmxlqrbekqfyf
 
 cronspec:
   UpdateStatusBooking: 0 0 * * *
