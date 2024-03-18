@@ -79,7 +79,7 @@ func (processor *redisTaskProcessor) ProcessTaskSendVerifyEmail(ctx context.Cont
 }
 
 func sendMailToVerifyEmail(processor *redisTaskProcessor, verifyEmail *entities.VerifyEmail, account *entities.Account) error {
-	subject := "Welcome to Paradise Booking"
+	subject := "Welcome to ITask"
 	verifyUrl := fmt.Sprintf("%s?email=%s&secret_code=%s",
 		UrlVerifyEmail, verifyEmail.Email, verifyEmail.ScretCode)
 	content := fmt.Sprintf(`Hello %s,<br/>

@@ -67,7 +67,7 @@ func (processor *redisTaskProcessor) ProcessTaskSendVerifyResetCodePassword(ctx 
 }
 
 func sendMailToVerifyResetCodePassword(processor *redisTaskProcessor, verifyResetCodePassword *entities.VerifyEmail, account *entities.Account) error {
-	subject := "Welcome to Paradise Booking"
+	subject := "Welcome to ITask"
 	content := fmt.Sprintf(`Hello %s,<br/>
 	This is reset code for you: %s<br/>
 	`, account.FullName, verifyResetCodePassword.ScretCode)
