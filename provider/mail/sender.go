@@ -52,9 +52,9 @@ func (sender *gmailSender) SendEmail(
 	e.HTML = []byte(content)
 
 	for _, attachFile := range attachFiles {
-		_, e := e.AttachFile(attachFile)
-		if e != nil {
-			return e
+		_, err := e.AttachFile(attachFile)
+		if err != nil {
+			return err
 		}
 	}
 	smtpAuth := smtp.PlainAuth("", sender.fromEmailAddr, sender.fromEmailPassword, smptAuthAddress)

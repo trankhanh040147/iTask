@@ -2,7 +2,10 @@ package mail
 
 import (
 	"errors"
+	"github.com/stretchr/testify/require"
 	"iTask/config"
+	"log"
+	"testing"
 
 	"github.com/spf13/viper"
 )
@@ -31,22 +34,27 @@ func LoadConfigTest() (*config.Config, error) {
 	return &c, nil
 }
 
-// func TestSendEmailWithGmail(t *testing.T) {
-// 	cfg, err := LoadConfigTest()
-// 	require.NoError(t, err)
-// 	if err != nil {
-// 		log.Fatalln("Get config error", err)
-// 		return
-// 	}
+func TestSendEmailWithGmail(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 
-// 	sender := NewGmailSender(cfg.Email.EmailSenderName, cfg.Email.EmailSenderAddress, cfg.Email.EmailSenderPassword)
-// 	subject := "Test send email"
-// 	content := `
-// 		<h1>Test send email</h1>
-// 		<p>Test send email</p>
-// 		`
-// 	to := []string{"phatbfbf@gmail.com"}
-// 	attachFileq := []string{"../../tmp/test_send_mail.md"}
-// 	err = sender.SendEmail(subject, content, to, nil, nil, attachFileq)
-// 	require.NoError(t, err)
-// }
+	cfg, err := LoadConfigTest()
+	require.NoError(t, err)
+	if err != nil {
+		log.Fatalln("Get config error", err)
+		return
+	}
+
+	sender := NewGmailSender(cfg.Email.EmailSenderName, cfg.Email.EmailSenderAddress, cfg.Email.EmailSenderPassword)
+	subject := "Test send email"
+	content := `
+		<h1>Test send email</h1>
+		<p>Test send email</p>
+		`
+	to := []string{"trankhanh040147@gmail.com"}
+	//attachFileq := []string{"../../tmp/test_send_mail.md"}
+	attachFileq := []string{"../../README.md"}
+	err = sender.SendEmail(subject, content, to, nil, nil, attachFileq)
+	require.NoError(t, err)
+}
