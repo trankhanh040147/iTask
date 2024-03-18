@@ -18,6 +18,8 @@ const (
 	QueueDefault               = "default"
 )
 
+// TaskProcessor will pick up the tasks from the Redis queue and process them
+
 type TaskProcessor interface {
 	Start() error
 	ProcessTaskSendVerifyEmail(ctx context.Context, task *asynq.Task) error

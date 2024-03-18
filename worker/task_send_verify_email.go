@@ -29,7 +29,10 @@ func (distributor *redisTaskDistributor) DistributeTaskSendVerifyEmail(
 	if err != nil {
 		return fmt.Errorf("error when marshal payload: %v", err)
 	}
+
 	task := asynq.NewTask(TaskSendVerifyEmail, jsonPayload, opts...)
+
+	// send task to Redis queue
 	info, err := distributor.client.EnqueueContext(ctx, task)
 	if err != nil {
 		return fmt.Errorf("error when enqueue task: %v", err)
@@ -37,10 +40,15 @@ func (distributor *redisTaskDistributor) DistributeTaskSendVerifyEmail(
 
 	log.Info().Str("type", task.Type()).Bytes("payload", task.Payload()).
 		Str("queue", info.Queue).Int("max_retry", info.MaxRetry).Msg("enqueued task")
+
 	return nil
 }
 
 func (processor *redisTaskProcessor) ProcessTaskSendVerifyEmail(ctx context.Context, task *asynq.Task) error {
+
+	// log start processing task
+	log.Info().Str("type", task.Type()).Bytes("payload", task.Payload()).Msg("processing task")
+
 	var payload PayloadSendVerifyEmail
 	if err := json.Unmarshal(task.Payload(), &payload); err != nil {
 		return fmt.Errorf("error when unmarshal payload: %w", asynq.SkipRetry)
@@ -59,7 +67,10 @@ func (processor *redisTaskProcessor) ProcessTaskSendVerifyEmail(ctx context.Cont
 		return fmt.Errorf("error when create verify email: %w", err)
 	}
 
-	sendMailToVerifyEmail(processor, dataVerifyEmail, account)
+	if err := sendMailToVerifyEmail(processor, dataVerifyEmail, account); err != nil {
+		return fmt.Errorf("error when send verify email: %w", err)
+	}
+
 	log.Info().Msg("send verify email success")
 
 	log.Info().Str("type", task.Type()).Bytes("payload", task.Payload()).
