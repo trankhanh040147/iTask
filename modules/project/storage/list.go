@@ -75,10 +75,5 @@ func (store *sqlStore) ListProject(
 	//	paging.NextCursor = result[size-1].SQLModel.Id
 	//}
 
-	for _, v := range result {
-		v.PriorityValue = v.Priority.String()
-		v.PrivacyValue = v.Privacy.String()
-	}
-
 	return result, nil
 }

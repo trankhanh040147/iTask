@@ -103,6 +103,12 @@ func ListProject(db *gorm.DB) func(ctx *gin.Context) {
 		// 	result[i].Mask()
 		// }
 
+		for item := range result {
+			result[item].PriorityValue = result[item].Priority.String()
+			result[item].StatusValue = result[item].Status.String()
+			result[item].PrivacyValue = result[item].Privacy.String()
+		}
+
 		c.JSON(http.StatusOK, common.NewSuccessResponse(result, queryString.Paging, queryString.Filter))
 	}
 }

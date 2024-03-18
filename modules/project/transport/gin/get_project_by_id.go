@@ -30,6 +30,10 @@ func GetProject(db *gorm.DB) func(ctx *gin.Context) {
 			panic(err)
 		}
 
+		data.PriorityValue = data.Priority.String()
+		data.StatusValue = data.Status.String()
+		data.PrivacyValue = data.Privacy.String()
+
 		c.JSON(http.StatusOK, common.SimpleSuccessResponse(data))
 	}
 }
