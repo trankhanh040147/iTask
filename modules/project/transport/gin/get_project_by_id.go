@@ -4,6 +4,7 @@ import (
 	"iTask/common"
 	"iTask/modules/project/biz"
 	"iTask/modules/project/storage"
+	projectTagStore "iTask/modules/project_tags/storage"
 	"net/http"
 
 	"strconv"
@@ -22,7 +23,8 @@ func GetProject(db *gorm.DB) func(ctx *gin.Context) {
 
 		// dependency
 		store := storage.NewSQLStore(db)
-		business := biz.NewGetProjectBiz(store)
+		projectTagStore := projectTagStore.NewSQLStore(db)
+		business := biz.NewGetProjectBiz(store, projectTagStore)
 
 		data, err := business.GetProjectById(c.Request.Context(), id)
 
