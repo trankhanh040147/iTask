@@ -21,9 +21,11 @@ func ConvertAccountEntityToInfoMangageForAdmin(accounts []entities.Account) []io
 			Role:    v.Role.String(),
 			Status:  v.Status.String(),
 			Address: v.Address,
+			Title:   v.Title,
 			Phone:   v.Phone,
 			Dob:     v.Dob,
 			Avt:     v.Avatar,
+			Cover:   v.Cover,
 			Created: created,
 			Updated: updated,
 		})

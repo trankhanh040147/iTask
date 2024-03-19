@@ -20,6 +20,7 @@ func ConvertAccountEntityToInfoResp(account *entities.Account) *iomodel.AccountI
 		Username: account.Username,
 		FullName: account.FullName,
 		Address:  account.Address,
+		Title:    account.Title,
 		Phone:    account.Phone,
 		Dob:      account.Dob,
 		Avt:      account.Avatar,
