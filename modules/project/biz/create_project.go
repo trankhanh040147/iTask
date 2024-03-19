@@ -14,6 +14,7 @@ type CreateProjectStorage interface {
 
 type ProjectTagStorage interface {
 	UpdateProjectTagsByProjectId(ctx context.Context, projectId int, tagIds []int) error
+	GetProjectTagsByProjectId(ctx context.Context, cond map[string]interface{}) (map[int]string, error)
 }
 
 type TagStorage interface {

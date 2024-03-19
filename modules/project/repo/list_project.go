@@ -84,8 +84,6 @@ func (repo *listProjectRepo) ListProject(ctx context.Context,
 		return data, nil
 	}
 
-	cond = map[string]interface{}{"status": common.StatusCompleted}
-
 	for index := range data {
 		data[index].Tags = ProjectTagsMap[data[index].Id]
 	}

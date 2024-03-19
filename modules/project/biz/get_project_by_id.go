@@ -11,11 +11,12 @@ type GetProjectStorage interface {
 }
 
 type getProjectBiz struct {
-	store GetProjectStorage
+	store             GetProjectStorage
+	ProjectTagStorage ProjectTagStorage
 }
 
-func NewGetProjectBiz(store GetProjectStorage) *getProjectBiz {
-	return &getProjectBiz{store: store}
+func NewGetProjectBiz(store GetProjectStorage, projectTagStorage ProjectTagStorage) *getProjectBiz {
+	return &getProjectBiz{store: store, ProjectTagStorage: projectTagStorage}
 }
 
 func (biz *getProjectBiz) GetProjectById(ctx context.Context, id int) (*model.Project, error) {
@@ -24,6 +25,16 @@ func (biz *getProjectBiz) GetProjectById(ctx context.Context, id int) (*model.Pr
 	if err != nil {
 		return nil, common.ErrCannotGetEntity(model.EntityName, err)
 	}
+
+	cond := map[string]interface{}{"project_id": id}
+
+	// get tags
+	ProjectTagsMap, err := biz.ProjectTagStorage.GetProjectTagsByProjectId(ctx, cond)
+	if err != nil {
+		return data, nil
+	}
+
+	data.Tags = ProjectTagsMap[data.Id]
 
 	return data, nil
 }
