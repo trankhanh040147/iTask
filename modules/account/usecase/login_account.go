@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"iTask/common"
-	"iTask/constant"
+	"iTask/entities"
 	"iTask/modules/account/iomodel"
 	jwtprovider "iTask/provider/jwt"
 	"iTask/utils"
@@ -18,7 +18,7 @@ func (uc *accountUseCase) LoginAccount(ctx context.Context, accountModel *iomode
 	}
 
 	// check status account
-	if account.Status != constant.StatusActive {
+	if account.Status != entities.StatusActive {
 		return nil, common.ErrAccountIsNotActive(account.TableName(), errors.New("account is not active"))
 	}
 

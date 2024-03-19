@@ -13,7 +13,6 @@ import (
 	gintask "iTask/modules/task/transport/gin"
 	uploadhandler "iTask/modules/upload/handler"
 	uploadusecase "iTask/modules/upload/usecase"
-	verifyemailshanlder "iTask/modules/verify_emails/handler"
 	verifyemailsstorage "iTask/modules/verify_emails/storage"
 	verifyemailsusecase "iTask/modules/verify_emails/usecase"
 	"iTask/provider/cache"
@@ -77,7 +76,6 @@ func main() {
 	// declare verify email usecase
 	verifyEmailsSto := verifyemailsstorage.NewVerifyEmailsStorage(db)
 	verifyEmailsUseCase := verifyemailsusecase.NewVerifyEmailsUseCase(verifyEmailsSto, accountSto)
-	verifyEmailsHdl := verifyemailshanlder.NewVerifyEmailsHandler(verifyEmailsUseCase)
 
 	accountUseCase := accountusecase.NewUserUseCase(cfg, accountSto, verifyEmailsUseCase, taskDistributor)
 	accountHdl := accounthandler.NewAccountHandler(cfg, accountUseCase)
@@ -130,10 +128,7 @@ func main() {
 	v1.GET("/profile/:id", accountHdl.GetAccountByID())
 	v1.GET("/accounts", middlewares.RequiredAuth(), middlewares.RequiredRoles(entities.RoleAdmin), accountHdl.GetAllAccountUserAndVendor())
 	v1.PATCH("/account/role/:id", middlewares.RequiredAuth(), middlewares.RequiredRoles(entities.RoleAdmin), accountHdl.UpdateAccountRoleByID())
-	v1.POST("/change/password", middlewares.RequiredAuth(), accountHdl.ChangePassword())
 	v1.POST("/change/status", middlewares.RequiredAuth(), middlewares.RequiredRoles(entities.RoleAdmin), accountHdl.ChangeStatusAccount())
-	v1.POST("/forgot/password", accountHdl.ForgotPassword())
-	v1.POST("/reset/password", accountHdl.ResetPassword())
 
 	// Project
 	projects := v1.Group("/projects", middlewares.RequiredAuth())
@@ -162,12 +157,6 @@ func main() {
 		//tags.POST("", gintag.CreateProject(db))
 		//tags.POST("/:id", gintag.UpdateProject(db))
 	}
-
-	// verify email
-	v1.GET("/verify_email", verifyEmailsHdl.CheckVerifyCodeIsMatching())
-
-	// verify reset code password
-	v1.GET("/verify_reset_password", verifyEmailsHdl.CheckResetCodePasswordIsMatching())
 
 	// upload file to s3
 	v1.POST("/upload", middlewares.RequiredAuth(), uploadHdl.UploadFile())

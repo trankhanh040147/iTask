@@ -28,7 +28,7 @@ func (uc *accountUseCase) CreateAccount(ctx context.Context, accountModel *iomod
 	}
 
 	accountEntity.Status = entities.StatusActive
-	accountEntity.IsEmailVerified = 1 // change_later
+	accountEntity.IsEmailVerified = 0
 	// hash password before store in db
 	hashedPassword, err := utils.HashPassword(accountEntity.Password)
 	if err != nil {
