@@ -7,6 +7,7 @@ type AccountInfoResp struct {
 	Username string `json:"username"`
 	FullName string `json:"full_name"`
 	Address  string `json:"address"`
+	Title    string `json:"title"`
 	Phone    string `json:"phone"`
 	Dob      string `json:"dob"`
 	Bio      string `json:"bio"`

@@ -10,6 +10,7 @@ type Account struct {
 	Email           string     `json:"email" gorm:"column:email"`
 	FullName        string     `json:"full_name" gorm:"column:full_name"`
 	Role            UserRole   `json:"role" gorm:"role"`
+	Title           string     `json:"title" gorm:"column:title"`
 	Status          UserStatus `json:"status" gorm:"column:status"`
 	Password        string     `json:"password" gorm:"column:password"`
 	Address         string     `json:"address" gorm:"column:address"`
