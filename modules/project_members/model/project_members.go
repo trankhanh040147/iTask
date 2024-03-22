@@ -2,7 +2,6 @@ package model
 
 import (
 	"errors"
-	"iTask/common"
 	"time"
 )
 
@@ -16,7 +15,7 @@ const (
 )
 
 type ProjectMember struct {
-	common.SQLModel
+	Id        int        `json:"id" gorm:"column:id"`
 	ProjectId int        `json:"project_id" gorm:"column:project_id"`
 	UserId    int        `json:"user_id" gorm:"column:user_id"`
 	AddedAt   *time.Time `json:"added_at" gorm:"column:added_at"`
