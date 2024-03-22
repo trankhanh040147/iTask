@@ -20,7 +20,7 @@ func NewGetProjectBiz(store GetProjectStorage, projectTagStorage ProjectTagStora
 }
 
 func (biz *getProjectBiz) GetProjectById(ctx context.Context, id int) (*model.Project, error) {
-	data, err := biz.store.GetProject(ctx, map[string]interface{}{"id": id})
+	data, err := biz.store.GetProject(ctx, map[string]interface{}{"id": id}, "Owner")
 
 	if err != nil {
 		return nil, common.ErrCannotGetEntity(model.EntityName, err)
