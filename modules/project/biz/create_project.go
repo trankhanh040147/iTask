@@ -26,16 +26,20 @@ type createProjectBiz struct {
 	store             CreateProjectStorage
 	projectTagStorage ProjectTagStorage
 	tagStorage        TagStorage
+	requester         common.Requester
 }
 
-func NewCreateProjectBiz(store CreateProjectStorage, projectTagStorage ProjectTagStorage, tagStorage TagStorage) *createProjectBiz {
-	return &createProjectBiz{store: store, projectTagStorage: projectTagStorage, tagStorage: tagStorage}
+func NewCreateProjectBiz(store CreateProjectStorage, projectTagStorage ProjectTagStorage, tagStorage TagStorage, requester common.Requester) *createProjectBiz {
+	return &createProjectBiz{store: store, projectTagStorage: projectTagStorage, tagStorage: tagStorage, requester: requester}
 }
 
 func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.ProjectCreation) error {
 	//if err := data.Validate(); err != nil {
 	//	return common.ErrValidation(err)
 	//}
+
+	// todo: testing CreateBy
+	data.CreatedBy = biz.requester.GetUserId()
 
 	if err := biz.store.CreateProject(ctx, data); err != nil {
 		return common.ErrCannotCreateEntity(model.EntityName, err)
@@ -56,6 +60,8 @@ func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.P
 	if err := biz.projectTagStorage.UpdateProjectTagsByProjectId(ctx, data.Id, TagIds); err != nil {
 		return common.ErrCannotCreateEntity(projectTagModel.EntityName, err)
 	}
+
+	// todo: add project_members
 
 	return nil
 }

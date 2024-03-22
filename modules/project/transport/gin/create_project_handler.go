@@ -31,7 +31,7 @@ func CreateProject(db *gorm.DB) func(ctx *gin.Context) {
 		tagStore := storage2.NewSQLStore(db)
 		projectTagStore := storage3.NewSQLStore(db)
 
-		business := biz.NewCreateProjectBiz(store, projectTagStore, tagStore)
+		business := biz.NewCreateProjectBiz(store, projectTagStore, tagStore, requester)
 
 		// step 3: use db.Create to
 		if err := business.CreateNewProject(c.Request.Context(), &projectData); err != nil {
