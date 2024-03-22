@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"iTask/common"
 	"iTask/modules/project/model"
 )
@@ -13,8 +14,14 @@ type ListProjectStorage interface {
 		paging *common.Paging,
 		moreKeys ...string,
 	) ([]model.Project, error)
+	ListProjectByProjectIds(
+		ctx context.Context,
+		projectIds []int,
+		filter *model.Filter,
+		paging *common.Paging,
+		moreKeys ...string,
+	) ([]model.Project, error)
 }
-
 type TaskStorage interface {
 	GetTotalTasks(ctx context.Context, cond map[string]interface{}) (map[int]int, error)
 	//ListTask(ctx context.Context, filter *model.Filter, paging *common.Paging, moreKeys ...string) ([]model.Task, error)
@@ -24,20 +31,21 @@ type ProjectTagStorage interface {
 	GetProjectTagsByProjectId(ctx context.Context, cond map[string]interface{}) (map[int]string, error)
 }
 
+type ProjectMemberStorage interface {
+	GetProjectIdsByUserId(ctx context.Context, userId int) ([]int, error)
+}
+
 type listProjectRepo struct {
-	store             ListProjectStorage
-	taskStorage       TaskStorage
-	ProjectTagStorage ProjectTagStorage
-	requester         common.Requester
+	store                ListProjectStorage
+	taskStorage          TaskStorage
+	projectTagStorage    ProjectTagStorage
+	projectMemberStorage ProjectMemberStorage
+	requester            common.Requester
 }
 
-func NewListProjectRepo(store ListProjectStorage, taskStorage TaskStorage, ProjectTagStorage ProjectTagStorage, requester common.Requester) *listProjectRepo {
-	return &listProjectRepo{store: store, taskStorage: taskStorage, ProjectTagStorage: ProjectTagStorage, requester: requester}
+func NewListProjectRepo(store ListProjectStorage, taskStorage TaskStorage, ProjectTagStorage ProjectTagStorage, ProjectMemberStorage ProjectMemberStorage, requester common.Requester) *listProjectRepo {
+	return &listProjectRepo{store: store, taskStorage: taskStorage, projectTagStorage: ProjectTagStorage, projectMemberStorage: ProjectMemberStorage, requester: requester}
 }
-
-//func NewListProjectRepo(store ListProjectStorage, requester common.Requester) *listProjectRepo {
-//	return &listProjectRepo{store: store, requester: requester}
-//}
 
 func (repo *listProjectRepo) ListProject(ctx context.Context,
 	filter *model.Filter,
@@ -46,7 +54,14 @@ func (repo *listProjectRepo) ListProject(ctx context.Context,
 ) ([]model.Project, error) {
 	newCtx := context.WithValue(ctx, common.CurrentUser, repo.requester)
 
-	data, err := repo.store.ListProject(newCtx, filter, paging, moreKeys...)
+	// get project_ids of projects where Requester is a member
+	projectIds, err := repo.projectMemberStorage.GetProjectIdsByUserId(newCtx, repo.requester.GetUserId())
+
+	// !logging
+	fmt.Println("<-----> projectIds: ", projectIds)
+
+	//data, err := repo.store.ListProject(newCtx, filter, paging, moreKeys...)
+	data, err := repo.store.ListProjectByProjectIds(newCtx, projectIds, filter, paging, moreKeys...)
 	if err != nil {
 		return nil, common.ErrCannotListEntity(model.EntityName, err)
 	}
@@ -79,7 +94,7 @@ func (repo *listProjectRepo) ListProject(ctx context.Context,
 	}
 
 	// get tags
-	ProjectTagsMap, err := repo.ProjectTagStorage.GetProjectTagsByProjectId(newCtx, nil)
+	ProjectTagsMap, err := repo.projectTagStorage.GetProjectTagsByProjectId(newCtx, nil)
 	if err != nil {
 		return data, nil
 	}

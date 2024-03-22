@@ -25,7 +25,6 @@ func (biz *getProjectBiz) GetProjectById(ctx context.Context, id int) (*model.Pr
 	if err != nil {
 		return nil, common.ErrCannotGetEntity(model.EntityName, err)
 	}
-
 	cond := map[string]interface{}{"project_id": id}
 
 	// get tags

@@ -1,6 +1,7 @@
 package ginproject
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"iTask/common"
@@ -8,6 +9,7 @@ import (
 	"iTask/modules/project/model"
 	repository "iTask/modules/project/repo"
 	"iTask/modules/project/storage"
+	storage2 "iTask/modules/project_members/storage"
 	projecTagStorage "iTask/modules/project_tags/storage"
 	taskStorage "iTask/modules/task/storage"
 	"net/http"
@@ -79,12 +81,14 @@ func ListProject(db *gorm.DB) func(ctx *gin.Context) {
 
 		queryString.Paging.Process()
 
-		//requester := c.MustGet(common.CurrentUser).(common.Requester)
-		//requester := nil
+		requester := c.MustGet(common.CurrentUser).(common.Requester)
+		// !logging
+		fmt.Println("<-----> requester: ", requester)
 		store := storage.NewSQLStore(db)
 		taskStore := taskStorage.NewSQLStore(db)
 		projectTagStore := projecTagStorage.NewSQLStore(db)
-		repo := repository.NewListProjectRepo(store, taskStore, projectTagStore, nil)
+		projectMemberStore := storage2.NewSQLStore(db)
+		repo := repository.NewListProjectRepo(store, taskStore, projectTagStore, projectMemberStore, requester)
 		business := biz.NewListProjectBiz(repo, nil)
 
 		result, err := business.ListProject(c.Request.Context(), &queryString.Filter, &queryString.Paging)

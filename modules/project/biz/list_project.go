@@ -30,6 +30,8 @@ func (biz *listProjectBiz) ListProject(ctx context.Context,
 ) ([]model.Project, error) {
 	newCtx := context.WithValue(ctx, common.CurrentUser, biz.requester)
 
+	// get project_ids from project_members where user_id = requester.GetUserId()
+
 	data, err := biz.repo.ListProject(newCtx, filter, paging, "Owner")
 
 	if err != nil {
