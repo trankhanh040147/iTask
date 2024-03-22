@@ -1,8 +1,8 @@
 package constant
 
 const (
-	UrlVerifyEmailFail       = "https://verify-failed.vercel.app/"
-	UrlVerifyEmailSuccess    = "https://verify-success.vercel.app/"
+	UrlVerifyEmailFail       = "http://localhost:3000/auth-fail"
+	UrlVerifyEmailSuccess    = "http://localhost:3000/auth-success"
 	UrlConfirmBookingSuccess = "https://booking-success.vercel.app/"
 	UrlConfirmBookingFail    = "https://booking-failed.vercel.app/"
 )
