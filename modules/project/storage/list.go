@@ -35,7 +35,7 @@ func (store *sqlStore) ListProject(
 		// if DateRangeFrom = 2, list all projects since 2 days ago
 		today := time.Now()
 		if v := f.CreatedDayRange; v >= 0 {
-			dateRange := today.AddDate(0, 0, -v)
+			dateRange := today.AddDate(0, 0, -v+1)
 			db = db.Where("created_at >= ?", dateRange)
 		}
 	}
