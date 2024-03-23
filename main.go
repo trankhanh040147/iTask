@@ -149,7 +149,7 @@ func main() {
 	tasks := v1.Group("/tasks", middlewares.RequiredAuth())
 	{
 		tasks.GET("", gintask.ListTask(db))
-		//projects.GET("/:id", ginproject.GetTask(db))
+		tasks.GET("/:id", gintask.GetTask(db))
 		//projects.POST("", ginproject.CreateTask(db))
 		tasks.POST("/:id", gintask.UpdateTask(db))
 	}

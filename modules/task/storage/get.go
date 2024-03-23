@@ -11,6 +11,10 @@ import (
 func (s *sqlStore) GetTask(ctx context.Context, cond map[string]interface{}, moreKeys ...string) (*model.Task, error) {
 	var data *model.Task
 
+	for _, key := range moreKeys {
+		s.db = s.db.Preload(key)
+	}
+
 	if err := s.db.Where(cond).First(&data).Error; err != nil {
 		if errors.Is(gorm.ErrRecordNotFound, err) {
 			return nil, common.RecordNotFound
