@@ -150,7 +150,7 @@ func main() {
 	{
 		tasks.GET("", gintask.ListTask(db))
 		tasks.GET("/:id", gintask.GetTask(db))
-		//projects.POST("", ginproject.CreateTask(db))
+		tasks.POST("", gintask.CreateTask(db))
 		tasks.POST("/:id", gintask.UpdateTask(db))
 	}
 
