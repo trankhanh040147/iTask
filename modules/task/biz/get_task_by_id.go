@@ -24,7 +24,7 @@ func (biz *getTaskBiz) GetTaskById(ctx context.Context, id int) (*model.Task, er
 	if err != nil {
 		return nil, common.ErrCannotGetEntity(model.EntityName, err)
 	}
-	
+
 	//// get tags
 
 	//cond := map[string]interface{}{"id": id}
@@ -35,6 +35,8 @@ func (biz *getTaskBiz) GetTaskById(ctx context.Context, id int) (*model.Task, er
 	//}
 	//
 	//data.Tags = TaskTagsMap[data.Id]
+
+	data.Parsing()
 
 	return data, nil
 }

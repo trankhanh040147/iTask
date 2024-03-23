@@ -18,44 +18,57 @@ const (
 
 type Task struct {
 	common.SQLModel
-	Name        string                   `json:"name" gorm:"column:name"`
-	Description string                   `json:"description" gorm:"column:description"`
-	Status      TaskStatus               `json:"status" gorm:"column:status"`
-	ProjectId   int                      `json:"project_id" gorm:"column:project_id"`
-	CreatedBy   int                      `json:"-" gorm:"column:created_by"`
-	ParentTask  int                      `json:"parent_task_id" gorm:"column:parent_task_id"`
-	Position    float64                  `json:"position" gorm:"column:position"`
-	Priority    int                      `json:"priority" gorm:"column:priority"`
-	Completed   bool                     `json:"completed" gorm:"column:completed"`
-	DueDate     *time.Time               `json:"due_date" gorm:"column:due_date"`
-	StartedAt   *time.Time               `json:"started_at" gorm:"column:started_at"`
-	CompletedAt *time.Time               `json:"completed_at" gorm:"column:completed_at"`
-	Owner       *userModel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
+	Name          string                   `json:"name" gorm:"column:name"`
+	Description   string                   `json:"description" gorm:"column:description"`
+	Status        TaskStatus               `json:"-" gorm:"column:status"`
+	StatusValue   string                   `json:"status" gorm:"column:-"`
+	ProjectId     int                      `json:"project_id" gorm:"column:project_id"`
+	CreatedBy     int                      `json:"-" gorm:"column:created_by"`
+	ParentTask    int                      `json:"parent_task_id" gorm:"column:parent_task_id"`
+	Position      float64                  `json:"position" gorm:"column:position"`
+	Priority      TaskPriority             `json:"-" gorm:"column:priority"`
+	PriorityValue string                   `json:"priority" gorm:"column:-"`
+	Completed     bool                     `json:"-" gorm:"column:completed"`
+	DueDate       *time.Time               `json:"due_date" gorm:"column:due_date"`
+	StartedAt     *time.Time               `json:"started_at" gorm:"column:started_at"`
+	CompletedAt   *time.Time               `json:"completed_at" gorm:"column:completed_at"`
+	Owner         *userModel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
 }
 
 func (Task) TableName() string {
 	return "Tasks"
 }
 
-func (a *Task) GetStatus() string {
-	return a.Status.String()
+func (t *Task) GetStatus() string {
+	return t.Status.String()
 }
 
-func (a *Task) GetCreatedBy() int {
-	return a.CreatedBy
+func (t *Task) GetCreatedBy() int {
+	return t.CreatedBy
 }
 
-func (a *Task) GetID() int {
-	return a.Id
+func (t *Task) GetID() int {
+	return t.Id
+}
+
+func (t *Task) Parsing() {
+	t.StatusValue = t.Status.String()
+	t.PriorityValue = t.Priority.String()
 }
 
 type TaskStatus int
+type TaskPriority int
 
 const (
 	StatusPending TaskStatus = 1 + iota
 	StatusInProgress
 	StatusDone
 	StatusDeleted
+)
+const (
+	PriorityHigh TaskPriority = 1 + iota
+	PriorityMedium
+	PriorityLow
 )
 
 func (status TaskStatus) String() string {
@@ -68,6 +81,19 @@ func (status TaskStatus) String() string {
 		return "Done"
 	case StatusDeleted:
 		return "Deleted"
+	default:
+		return "Unknown"
+	}
+}
+
+func (priority TaskPriority) String() string {
+	switch priority {
+	case PriorityHigh:
+		return "High"
+	case PriorityMedium:
+		return "Medium"
+	case PriorityLow:
+		return "Low"
 	default:
 		return "Unknown"
 	}
