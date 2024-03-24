@@ -152,6 +152,7 @@ func main() {
 		tasks.GET("/:id", gintask.GetTask(db))
 		tasks.POST("", gintask.CreateTask(db))
 		tasks.POST("/:id", gintask.UpdateTask(db))
+		tasks.DELETE("/:id", gintask.DeleteTask(db))
 	}
 
 	// Tag
