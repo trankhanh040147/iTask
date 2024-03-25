@@ -9,6 +9,7 @@ import (
 	accountusecase "iTask/modules/account/usecase"
 	"iTask/modules/middleware"
 	ginproject "iTask/modules/project/transport/gin"
+	ginprojectmembers "iTask/modules/project_members/handler"
 	gintag "iTask/modules/tag/transport"
 	gintask "iTask/modules/task/transport/gin"
 	uploadhandler "iTask/modules/upload/handler"
@@ -143,6 +144,12 @@ func main() {
 		projects.POST("", ginproject.CreateProject(db))
 		projects.POST("/:id", ginproject.UpdateProject(db))
 		projects.DELETE("/:id", ginproject.DeleteProject(db))
+	}
+
+	// ProjectMembers
+	projectMembers := v1.Group("/projectMembers", middlewares.RequiredAuth())
+	{
+		projectMembers.GET("/:project_id", ginprojectmembers.ListMembersByid(db))
 	}
 
 	// Task
