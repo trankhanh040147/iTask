@@ -12,7 +12,7 @@ type ListTaskStorage interface {
 		filter *model.Filter,
 		paging *common.Paging,
 		moreKeys ...string,
-	) ([]model.Task, error)
+	) ([](*model.Task), error)
 }
 
 //type TaskStorage interface {
@@ -34,7 +34,7 @@ func (repo *listTaskRepo) ListTask(
 	filter *model.Filter,
 	paging *common.Paging,
 	moreKeys ...string,
-) ([]model.Task, error) {
+) ([](*model.Task), error) {
 	newCtx := context.WithValue(ctx, common.CurrentUser, repo.requester)
 
 	data, err := repo.store.ListTask(newCtx, filter, paging, moreKeys...)

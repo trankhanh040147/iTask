@@ -12,7 +12,7 @@ type ListTaskRepo interface {
 		filter *model.Filter,
 		paging *common.Paging,
 		moreKeys ...string,
-	) ([]model.Task, error)
+	) ([](*model.Task), error)
 }
 
 type listTaskBiz struct {
@@ -27,13 +27,18 @@ func NewListTaskBiz(repo ListTaskRepo, requester common.Requester) *listTaskBiz 
 func (biz *listTaskBiz) ListTask(ctx context.Context,
 	filter *model.Filter,
 	paging *common.Paging,
-) ([]model.Task, error) {
+) ([](*model.Task), error) {
 	newCtx := context.WithValue(ctx, common.CurrentUser, biz.requester)
 
 	data, err := biz.repo.ListTask(newCtx, filter, paging, "Owner")
 
 	if err != nil {
 		return nil, common.ErrCannotListEntity(model.EntityName, err)
+	}
+
+	for _, t := range data {
+		t.Parsing()
+		//fmt.Printf("Task: %+v\n", t)
 	}
 
 	return data, nil

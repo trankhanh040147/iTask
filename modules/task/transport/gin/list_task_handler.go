@@ -18,9 +18,10 @@ func ListTask(db *gorm.DB) func(ctx *gin.Context) {
 			model.Filter
 		}
 
-		// Default value for CreatedDayRange
+		// Default value for Filter fields
 		// queryString.CreatedDayRange = -1
-		//
+		queryString.Status = -1
+
 		if err := c.ShouldBind(&queryString); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
@@ -30,10 +31,7 @@ func ListTask(db *gorm.DB) func(ctx *gin.Context) {
 
 		queryString.Paging.Process()
 
-		//requester := c.MustGet(common.CurrentUser).(common.Requester)
-		//requester := nil
 		store := storage.NewSQLStore(db)
-		//taskStore := taskStorage.NewSQLStore(db)
 		repo := repository.NewListTaskRepo(store, nil)
 		business := biz.NewListTaskBiz(repo, nil)
 
@@ -47,11 +45,10 @@ func ListTask(db *gorm.DB) func(ctx *gin.Context) {
 			return
 		}
 
-		// fea_FakeID
-
-		// for i := range result {
-		// 	result[i].Mask()
-		// }
+		//for _, t := range &result {
+		//	(t).Parsing()
+		//}
+		//fmt.Printf("Result: %+v\n", result)
 
 		c.JSON(http.StatusOK, common.NewSuccessResponse(result, queryString.Paging, queryString.Filter))
 	}
