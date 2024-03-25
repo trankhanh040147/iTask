@@ -1,6 +1,6 @@
 package model
 
 type Filter struct {
-	Keyword         string `json:"keyword" form:"keyword"`
-	CreatedDayRange int    `json:"created_day_range" form:"created_day_range"`
+	Keyword string `json:"keyword" form:"keyword"`
+	Status  int    `json:"status" form:"status"`
 }

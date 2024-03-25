@@ -21,13 +21,13 @@ type Task struct {
 	Name          string                   `json:"name" gorm:"column:name"`
 	Description   string                   `json:"description" gorm:"column:description"`
 	Status        TaskStatus               `json:"-" gorm:"column:status"`
-	StatusValue   string                   `json:"status" gorm:"column:-"`
+	StatusValue   string                   `json:"status" gorm:"-"`
 	ProjectId     int                      `json:"project_id" gorm:"column:project_id"`
 	CreatedBy     int                      `json:"-" gorm:"column:created_by"`
 	ParentTask    int                      `json:"parent_task_id" gorm:"column:parent_task_id"`
 	Position      float64                  `json:"position" gorm:"column:position"`
 	Priority      TaskPriority             `json:"-" gorm:"column:priority"`
-	PriorityValue string                   `json:"priority" gorm:"column:-"`
+	PriorityValue string                   `json:"priority" gorm:"-"`
 	Completed     bool                     `json:"-" gorm:"column:completed"`
 	DueDate       *time.Time               `json:"due_date" gorm:"column:due_date"`
 	StartedAt     *time.Time               `json:"started_at" gorm:"column:started_at"`

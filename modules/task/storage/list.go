@@ -12,8 +12,8 @@ func (store *sqlStore) ListTask(
 	filter *model.Filter,
 	paging *common.Paging,
 	moreKeys ...string,
-) ([]model.Task, error) {
-	var result []model.Task
+) ([](*model.Task), error) {
+	var result [](*model.Task)
 
 	db := store.db.
 		Table(model.Task{}.TableName()).
@@ -25,20 +25,16 @@ func (store *sqlStore) ListTask(
 
 	log.Println("filter: ", filter)
 
-	//if f := filter; f != nil {
-	//	if v := f.Keyword; v != "" {
-	//		db = db.Where("name LIKE ? OR description LIKE ?", "%"+v+"%", "%"+v+"%")
-	//	}
-	//
-	//	// if DateRangeFrom = 0, list all projects today
-	//	// if DateRangeFrom = 1, list all projects since yesterday
-	//	// if DateRangeFrom = 2, list all projects since 2 days ago
-	//	today := time.Now()
-	//	if v := f.CreatedDayRange; v >= 0 {
-	//		dateRange := today.AddDate(0, 0, -v)
-	//		db = db.Where("created_at >= ?", dateRange)
-	//	}
-	//}
+	if f := filter; f != nil {
+		//if v := f.Keyword; v != "" {
+		//	db = db.Where("name LIKE ? OR description LIKE ?", "%"+v+"%", "%"+v+"%")
+		//}
+
+		if v := f.Status; v != -1 {
+			db = db.Where("status = ?", v)
+		}
+
+	}
 
 	if err := db.Select("id").Count(&paging.Total).Error; err != nil {
 		return nil, common.ErrDB(err)
