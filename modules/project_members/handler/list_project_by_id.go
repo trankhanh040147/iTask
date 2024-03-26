@@ -12,7 +12,7 @@ import (
 
 func ListMembersByid(db *gorm.DB) func(ctx *gin.Context) {
 	return func(c *gin.Context) {
-		id, err := strconv.Atoi(c.Param("id"))
+		id, err := strconv.Atoi(c.Param("project_id"))
 
 		if err != nil {
 			panic(common.ErrInvalidRequest(err))

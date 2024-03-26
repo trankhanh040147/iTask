@@ -15,9 +15,9 @@ func (store *sqlStore) ListMembersById(
 
 	db := store.db
 
-	db.Preload("AccountInfo")
+	db = db.Preload("AccountInfo")
 
-	if err := db.Select('*').Where("id = ?", id).Find(&result).Error; err != nil {
+	if err := db.Select("*").Where("project_id = ?", id).Find(&result).Error; err != nil {
 		return nil, common.ErrDB(err)
 	}
 
