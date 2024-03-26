@@ -12,6 +12,7 @@ import (
 	ginprojectmembers "iTask/modules/project_members/handler"
 	gintag "iTask/modules/tag/transport"
 	gintask "iTask/modules/task/transport/gin"
+	gintaskassignee "iTask/modules/task_assignees/handler"
 	uploadhandler "iTask/modules/upload/handler"
 	uploadusecase "iTask/modules/upload/usecase"
 	verifyemailshanlder "iTask/modules/verify_emails/handler"
@@ -150,6 +151,12 @@ func main() {
 	projectMembers := v1.Group("/projectMembers", middlewares.RequiredAuth())
 	{
 		projectMembers.GET("/:project_id", ginprojectmembers.ListMembersByid(db))
+	}
+
+	// TaskAssignee
+	taskAssignees := v1.Group("/taskAssignees", middlewares.RequiredAuth())
+	{
+		taskAssignees.GET("/:task_id", gintaskassignee.ListAssignee(db))
 	}
 
 	// Task
