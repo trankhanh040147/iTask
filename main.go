@@ -158,6 +158,7 @@ func main() {
 	{
 		taskAssignees.GET("/:task_id", gintaskassignee.ListAssignee(db))
 		taskAssignees.POST("", gintaskassignee.CreateAssignee(db))
+		taskAssignees.DELETE("", gintaskassignee.DeleteAssignee(db))
 	}
 
 	// Task
