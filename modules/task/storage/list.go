@@ -43,7 +43,6 @@ func (store *sqlStore) ListTask(
 	for _, value := range moreKeys {
 		db = db.Preload(value)
 	}
-
 	//db = db.Preload("Members").Preload("Members.AccountInfo")
 
 	//if cursor := strings.TrimSpace(paging.FakeCursor); cursor != "" {

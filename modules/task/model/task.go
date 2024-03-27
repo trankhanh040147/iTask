@@ -5,6 +5,7 @@ import (
 	"iTask/common"
 	userModel "iTask/modules/account/iomodel"
 	"iTask/modules/project/model"
+	taskAssigneesModel "iTask/modules/task_assignees/model"
 	"time"
 )
 
@@ -19,22 +20,23 @@ const (
 
 type Task struct {
 	common.SQLModel
-	Name          string                   `json:"name" gorm:"column:name"`
-	Description   string                   `json:"description" gorm:"column:description"`
-	Status        TaskStatus               `json:"status" gorm:"column:status"`
-	StatusValue   string                   `json:"-" gorm:"-"`
-	ProjectId     int                      `json:"-" gorm:"column:project_id"`
-	CreatedBy     int                      `json:"-" gorm:"column:created_by"`
-	ParentTask    int                      `json:"parent_task_id" gorm:"column:parent_task_id"`
-	Position      float64                  `json:"position" gorm:"column:position"`
-	Priority      TaskPriority             `json:"priority" gorm:"column:priority"`
-	PriorityValue string                   `json:"-" gorm:"-"`
-	Completed     bool                     `json:"-" gorm:"column:completed"`
-	DueDate       *time.Time               `json:"due_date" gorm:"column:due_date"`
-	StartedAt     *time.Time               `json:"started_at" gorm:"column:started_at"`
-	CompletedAt   *time.Time               `json:"completed_at" gorm:"column:completed_at"`
-	Owner         *userModel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
-	ProjectInfo   *model.SimpleProject     `json:"project_info" gorm:"foreignKey:ProjectId"`
+	Name          string                               `json:"name" gorm:"column:name"`
+	Description   string                               `json:"description" gorm:"column:description"`
+	Status        TaskStatus                           `json:"status" gorm:"column:status"`
+	StatusValue   string                               `json:"-" gorm:"-"`
+	ProjectId     int                                  `json:"-" gorm:"column:project_id"`
+	CreatedBy     int                                  `json:"-" gorm:"column:created_by"`
+	ParentTask    int                                  `json:"parent_task_id" gorm:"column:parent_task_id"`
+	Position      float64                              `json:"position" gorm:"column:position"`
+	Priority      TaskPriority                         `json:"priority" gorm:"column:priority"`
+	PriorityValue string                               `json:"-" gorm:"-"`
+	Completed     bool                                 `json:"-" gorm:"column:completed"`
+	DueDate       *time.Time                           `json:"due_date" gorm:"column:due_date"`
+	StartedAt     *time.Time                           `json:"started_at" gorm:"column:started_at"`
+	CompletedAt   *time.Time                           `json:"completed_at" gorm:"column:completed_at"`
+	ProjectInfo   *model.SimpleProject                 `json:"project_info" gorm:"foreignKey:ProjectId"`
+	Owner         *userModel.SimpleAccount             `json:"owner" gorm:"foreignKey:CreatedBy"`
+	Assignees     *[]taskAssigneesModel.SimpleAssignee `json:"assignees" gorm:"foreignKey:TaskId"`
 }
 
 func (Task) TableName() string {

@@ -30,7 +30,7 @@ func (biz *listTaskBiz) ListTask(ctx context.Context,
 ) ([](*model.Task), error) {
 	newCtx := context.WithValue(ctx, common.CurrentUser, biz.requester)
 
-	data, err := biz.repo.ListTask(newCtx, filter, paging, "Owner", "ProjectInfo")
+	data, err := biz.repo.ListTask(newCtx, filter, paging, "Owner", "ProjectInfo", "Assignees", "Assignees.UserInfo")
 
 	if err != nil {
 		return nil, common.ErrCannotListEntity(model.EntityName, err)
