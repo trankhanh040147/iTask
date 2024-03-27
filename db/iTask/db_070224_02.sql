@@ -15,7 +15,7 @@ CREATE TABLE `Users`
     `dob`               date,
     `profile_ava_url`   varchar(255),
     `profile_cover_url` varchar(255),
-    `is_email_verified` int DEFAULT 0,
+    `is_email_verified` int       DEFAULT 0,
     `bio`               varchar(255),
     `created_at`        timestamp DEFAULT (now()),
     `updated_at`        timestamp DEFAULT (now())
@@ -153,11 +153,12 @@ CREATE TABLE `Roles`
 
 CREATE TABLE `TaskAssigned`
 (
-    `id`            BIGINT PRIMARY KEY,
-    `task_id`       bigint,
-    `user_id`       bigint,
-    `assigned_date` timestamp DEFAULT (now())
+    `task_id`       bigint NOT NULL,
+    `user_id`       bigint NOT NULL,
+    `assigned_date` timestamp NULL DEFAULT (now()),
+    PRIMARY KEY (`user_id`, `task_id`)
 );
+
 
 CREATE TABLE `AuthTokens`
 (
@@ -251,10 +252,6 @@ ALTER TABLE
     MODIFY
     COLUMN `id` BIGINT AUTO_INCREMENT;
 
-ALTER TABLE
-    `TaskAssigned`
-    MODIFY
-    COLUMN `id` BIGINT AUTO_INCREMENT;
 
 ALTER TABLE
     `AuthTokens`
