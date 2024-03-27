@@ -10,7 +10,6 @@ const (
 )
 
 type TaskAssignee struct {
-	Id           int                    `json:"id" gorm:"column:id"`
 	TaskId       int                    `json:"task_id" gorm:"column:task_id"`
 	UserId       int                    `json:"-" gorm:"column:user_id"`
 	AssignedDate *time.Time             `json:"assigned_date" gorm:"column:assigned_date"`
@@ -23,8 +22,4 @@ func (TaskAssignee) TableName() string {
 
 func (TaskAssignee) GetEntityName() string {
 	return EntityName
-}
-
-func (a *TaskAssignee) GetId() int {
-	return a.Id
 }
