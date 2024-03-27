@@ -10,7 +10,7 @@ import (
 	"strconv"
 )
 
-func ListMembersByid(db *gorm.DB) func(ctx *gin.Context) {
+func ListMembersById(db *gorm.DB) func(ctx *gin.Context) {
 	return func(c *gin.Context) {
 		id, err := strconv.Atoi(c.Param("project_id"))
 
