@@ -24,7 +24,7 @@ func (store *sqlStore) GetProject(ctx context.Context, cond map[string]interface
 
 	if err := db.Where(cond).First(&data).Error; err != nil {
 		if errors.Is(gorm.ErrRecordNotFound, err) {
-			return nil, common.RecordNotFound
+			return nil, common.ErrEntityNotFound(model.EntityName)
 		}
 
 		return nil, common.ErrDB(err)

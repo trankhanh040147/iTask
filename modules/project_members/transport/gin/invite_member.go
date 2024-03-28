@@ -4,13 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	accountstorage "iTask/modules/account/storage"
+	projectStore "iTask/modules/project/storage"
 	"iTask/modules/project_members/biz"
 	"iTask/modules/project_members/model"
 	"iTask/modules/project_members/storage"
+	"iTask/worker"
 	"net/http"
 )
 
-func InviteMember(db *gorm.DB) func(ctx *gin.Context) {
+func InviteMember(db *gorm.DB, taskDistributor worker.TaskDistributor) func(ctx *gin.Context) {
 	return func(c *gin.Context) {
 		var data model.ProjectMemberInvitation
 
@@ -24,7 +26,8 @@ func InviteMember(db *gorm.DB) func(ctx *gin.Context) {
 		// dependency
 		store := storage.NewSQLStore(db)
 		accountSto := accountstorage.NewAccountStorage(db)
-		business := biz.NewInviteMemberBiz(store, accountSto)
+		projectSto := projectStore.NewSQLStore(db)
+		business := biz.NewInviteMemberBiz(store, accountSto, projectSto, taskDistributor)
 
 		if err := business.InviteMember(c, data.UserEmail, data.ProjectId); err != nil {
 			panic(err)
