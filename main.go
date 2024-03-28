@@ -151,7 +151,7 @@ func main() {
 	projectMembers := v1.Group("/projectMembers", middlewares.RequiredAuth())
 	{
 		//projectMembers.GET("/:project_id", ginprojectmembers.ListMembersById(db))
-		projectMembers.POST("/invitation", ginprojectmembers.InviteMember(db))
+		projectMembers.POST("/invitation", ginprojectmembers.InviteMember(db, taskDistributor))
 	}
 
 	// TaskAssignee
