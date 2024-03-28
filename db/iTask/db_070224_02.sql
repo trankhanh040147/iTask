@@ -130,11 +130,13 @@ CREATE TABLE `ProjectMembers`
     PRIMARY KEY (`project_id`, `user_id`)
 );
 
+DROP TABLE IF EXISTS `ProjectMemberInvited`;
 CREATE TABLE `ProjectMemberInvited`
 (
     `id`                      BIGINT PRIMARY KEY,
     `project_id`              bigint,
-    `user_account_invited_id` bigint
+    `email_verification_id` bigint,
+    `is_accepted`             bool DEFAULT false
 );
 
 CREATE TABLE `UserAccountInvited`
@@ -187,9 +189,12 @@ CREATE TABLE verify_emails
     email      varchar(255) NOT NULL,
     scret_code varchar(255) NOT NULL,
     type       int          NOT NULL,
+    is_used    bool         DEFAULT false,
     created_at timestamp DEFAULT (now()),
     expired_at timestamp    NOT NULL
-)
+);
+
+alter verify_emails add column is_used bool default false;
 
 -- auto increment
 ALTER TABLE
@@ -383,6 +388,9 @@ ALTER TABLE
     `TaskComments`
     ADD
         FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
+
+-- add column is_used to verify_emails
+alter table `verify_emails` add column is_used bool default false;
 
 -- CREATE INDEX
 -- MYSQL

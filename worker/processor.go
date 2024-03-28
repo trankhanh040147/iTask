@@ -5,6 +5,7 @@ import (
 	"iTask/common"
 	"iTask/constant"
 	"iTask/entities"
+	"iTask/modules/project/model"
 	"iTask/provider/mail"
 
 	"github.com/go-redis/redis/v8"
@@ -42,6 +43,7 @@ type BookingUseCase interface {
 type VerifyEmailsUseCase interface {
 	CreateVerifyEmails(ctx context.Context, email string) (*entities.VerifyEmail, error)
 	UpsertResetSetCodePassword(ctx context.Context, email string) (*entities.VerifyEmail, error)
+	CreateProjectInvitationEmail(ctx context.Context, email string, project *model.Project) (*entities.VerifyEmail, error)
 }
 
 type redisTaskProcessor struct {
@@ -80,6 +82,7 @@ func (processor *redisTaskProcessor) Start() error {
 
 	mux.HandleFunc(TaskSendConfirmBooking, processor.ProcessTaskSendConfirmBooking)
 	mux.HandleFunc(TaskSendVerifyEmail, processor.ProcessTaskSendVerifyEmail)
+	mux.HandleFunc(TaskSendInvitation, processor.ProcessTaskSendInvitation)
 	mux.HandleFunc(TaskSendResetCodePassword, processor.ProcessTaskSendVerifyResetCodePassword)
 	mux.HandleFunc(constant.TaskUpdateStatusBooking, processor.ProcessTaskUpdateStatusBooking)
 
