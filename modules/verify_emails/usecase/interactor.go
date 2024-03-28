@@ -3,6 +3,7 @@ package verifyemailsusecase
 import (
 	"context"
 	"iTask/entities"
+	"iTask/modules/project/model"
 )
 
 type verifyEmailsStorage interface {
@@ -15,6 +16,7 @@ type verifyEmailsStorage interface {
 type VerifyEmailsUseCase interface {
 	CreateVerifyEmails(ctx context.Context, email string) (*entities.VerifyEmail, error)
 	UpsertResetSetCodePassword(ctx context.Context, email string) (*entities.VerifyEmail, error)
+	CreateProjectInvitationEmail(ctx context.Context, email string, project *model.Project) (*entities.VerifyEmail, error)
 }
 
 type AccountStorage interface {
