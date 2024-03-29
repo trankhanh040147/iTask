@@ -140,6 +140,7 @@ func main() {
 	// Project
 	projects := v1.Group("/projects", middlewares.RequiredAuth())
 	{
+		projects.GET("/simple-list", ginproject.ListSimpleProjects(db))
 		projects.GET("", ginproject.ListProject(db))
 		projects.GET("/:id", ginproject.GetProject(db))
 		projects.POST("", ginproject.CreateProject(db))

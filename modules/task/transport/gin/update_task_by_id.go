@@ -42,6 +42,7 @@ func UpdateTask(db *gorm.DB) func(ctx *gin.Context) {
 			panic(err)
 		}
 
-		c.JSON(http.StatusOK, common.SimpleSuccessResponse(data))
+		c.JSON(http.StatusOK, common.SimpleSuccessResponse(true))
+		//c.JSON(http.StatusOK, common.SimpleSuccessResponse(data))
 	}
 }

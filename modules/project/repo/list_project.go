@@ -105,3 +105,43 @@ func (repo *listProjectRepo) ListProject(ctx context.Context,
 
 	return data, nil
 }
+
+func (repo *listProjectRepo) ListSimpleProjects(ctx context.Context, paging *common.Paging, moreKeys ...string,
+) ([]model.SimpleProject, error) {
+	newCtx := context.WithValue(ctx, common.CurrentUser, repo.requester)
+
+	// get project_ids of projects where Requester is a member
+	projectIds, err := repo.projectMemberStorage.GetProjectIdsByUserId(newCtx, repo.requester.GetUserId())
+
+	// !logging
+	//fmt.Println("<-----> projectIds: ", projectIds)
+
+	//data, err := repo.store.ListProject(newCtx, filter, paging, moreKeys...)
+	data, err := repo.store.ListProjectByProjectIds(newCtx, projectIds, nil, paging, moreKeys...)
+	if err != nil {
+		return nil, common.ErrCannotListEntity(model.EntityName, err)
+	}
+
+	if len(data) == 0 {
+		return nil, nil
+	}
+
+	ids := make([]int, len(data))
+	for index := range ids {
+		ids[index] = data[index].Id
+	}
+
+	result := make([]model.SimpleProject, len(data))
+	for index := range data {
+		result[index] = model.SimpleProject{
+			ID:          &data[index].Id,
+			Name:        &data[index].Name,
+			Description: &data[index].Description,
+			Thumbnail:   &data[index].Thumbnail,
+		}
+	}
+
+	return result, nil
+
+	//return data, nil
+}

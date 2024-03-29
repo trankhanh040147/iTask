@@ -13,6 +13,8 @@ type ListProjectRepo interface {
 		paging *common.Paging,
 		moreKeys ...string,
 	) ([]model.Project, error)
+	ListSimpleProjects(ctx context.Context, paging *common.Paging, moreKeys ...string,
+	) ([]model.SimpleProject, error)
 }
 
 type listProjectBiz struct {
@@ -33,6 +35,18 @@ func (biz *listProjectBiz) ListProject(ctx context.Context,
 	// get project_ids from project_members where user_id = requester.GetUserId()
 
 	data, err := biz.repo.ListProject(newCtx, filter, paging, "Owner")
+
+	if err != nil {
+		return nil, common.ErrCannotListEntity(model.EntityName, err)
+	}
+
+	return data, nil
+}
+
+func (biz *listProjectBiz) ListSimpleProject(ctx context.Context, paging *common.Paging) ([]model.SimpleProject, error) {
+	newCtx := context.WithValue(ctx, common.CurrentUser, biz.requester)
+
+	data, err := biz.repo.ListSimpleProjects(newCtx, paging)
 
 	if err != nil {
 		return nil, common.ErrCannotListEntity(model.EntityName, err)
