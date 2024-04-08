@@ -6,7 +6,7 @@ import (
 	"iTask/modules/task_comments/model"
 )
 
-func (s *SQLStore) ListComments(ctx context.Context, cond map[string]interface{}, paging common.Paging, moreKeys ...string) ([]model.TaskComments, error) {
+func (s *SQLStore) ListComments(ctx context.Context, cond map[string]interface{}, paging *common.Paging, moreKeys ...string) ([]model.TaskComments, error) {
 	if err := s.db.Where(cond).Count(&paging.Total).Error; err != nil {
 		return nil, common.ErrDB(err)
 	}
@@ -17,6 +17,7 @@ func (s *SQLStore) ListComments(ctx context.Context, cond map[string]interface{}
 
 	var result []model.TaskComments
 	if err := s.db.Select("*").
+		Where(cond).
 		Offset((paging.Page - 1) * paging.Limit).
 		Order("id").
 		Limit(paging.Limit).
