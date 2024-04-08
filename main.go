@@ -13,6 +13,7 @@ import (
 	gintag "iTask/modules/tag/transport"
 	gintask "iTask/modules/task/transport/gin"
 	gintaskassignee "iTask/modules/task_assignees/transport/gin"
+	gintaskcomments "iTask/modules/task_comments/transport/gin"
 	uploadhandler "iTask/modules/upload/handler"
 	uploadusecase "iTask/modules/upload/usecase"
 	verifyemailshanlder "iTask/modules/verify_emails/handler"
@@ -180,6 +181,12 @@ func main() {
 		//tags.GET("/:id", gintag.GetProject(db))
 		//tags.POST("", gintag.CreateProject(db))
 		//tags.POST("/:id", gintag.UpdateProject(db))
+	}
+
+	// TaskComments
+	comments := v1.Group("/comments", middlewares.RequiredAuth())
+	{
+		comments.GET("", gintaskcomments.ListTaskCommentsByTaskId(db))
 	}
 
 	// verify email
