@@ -133,10 +133,10 @@ CREATE TABLE `ProjectMembers`
 DROP TABLE IF EXISTS `ProjectMemberInvited`;
 CREATE TABLE `ProjectMemberInvited`
 (
-    `id`                      BIGINT PRIMARY KEY,
-    `project_id`              bigint,
+    `id`                    BIGINT PRIMARY KEY,
+    `project_id`            bigint,
     `email_verification_id` bigint,
-    `is_accepted`             bool DEFAULT false
+    `is_accepted`           bool DEFAULT false
 );
 
 CREATE TABLE `UserAccountInvited`
@@ -175,13 +175,28 @@ CREATE TABLE `TaskComments`
 (
     `id`                BIGINT PRIMARY KEY,
     `task_id`           bigint,
-    `parent_comment_id` bigint,
-    `created_by`        bigint,
-    `message`           varchar(255),
-    `pinned`            bool,
+    `parent_comment_id` bigint DEFAULT 0,
+    `created_by`        bigint NOT NULL,
+    `message`           varchar(2000),
+    `pinned`            bool DEFAULT 0,
     `created_at`        timestamp DEFAULT (now()),
     `updated_at`        timestamp DEFAULT (now())
 );
+
+-- CREATE TABLE `Comments`
+-- (
+--     `id`                BIGINT PRIMARY KEY,
+--     `task_id`           bigint,
+--     `project_id`        bigint,
+--     `type`              int, -- 0: project | 1: task
+--     `parent_comment_id` bigint,
+--     `created_by`        bigint,
+--     `message`           varchar(255),
+--     `pinned`            bool,
+--     `created_at`        timestamp DEFAULT (now()),
+--     `updated_at`        timestamp DEFAULT (now())
+-- );
+
 
 CREATE TABLE verify_emails
 (
@@ -189,12 +204,13 @@ CREATE TABLE verify_emails
     email      varchar(255) NOT NULL,
     scret_code varchar(255) NOT NULL,
     type       int          NOT NULL,
-    is_used    bool         DEFAULT false,
+    is_used    bool      DEFAULT false,
     created_at timestamp DEFAULT (now()),
     expired_at timestamp    NOT NULL
 );
 
-alter verify_emails add column is_used bool default false;
+alter
+verify_emails add column is_used bool default false;
 
 -- auto increment
 ALTER TABLE
@@ -390,7 +406,8 @@ ALTER TABLE
         FOREIGN KEY (`created_by`) REFERENCES `Users` (`id`);
 
 -- add column is_used to verify_emails
-alter table `verify_emails` add column is_used bool default false;
+alter table `verify_emails`
+    add column is_used bool default false;
 
 -- CREATE INDEX
 -- MYSQL
