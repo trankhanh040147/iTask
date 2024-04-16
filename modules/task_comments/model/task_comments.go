@@ -1,28 +1,24 @@
 package model
 
 import (
-	"errors"
 	"iTask/common"
-)
-
-var (
-	ErrCreatedByCannotBeEmpty = errors.New("Created by cannot be empty")
-	ErrMessageCannotBeEmpty   = errors.New("Message cannot be empty")
+	"iTask/modules/account/iomodel"
 )
 
 const (
 	EntityName = "TaskComments"
 )
 
-type TaskComments struct {
+type TaskComment struct {
 	common.SQLModel
-	TaskId          int    `json:"task_id" gorm:"column:task_id"`
-	CreatedBy       int    `json:"created_by" gorm:"column:created_by"`
-	ParentCommentId int    `json:"parent_comment_id" gorm:"column:parent_comment_id"`
-	IsPinned        bool   `json:"is_pinned" gorm:"column:pinned"`
-	Message         string `json:"message" gorm:"column:message"`
+	TaskId          int                    `json:"task_id" gorm:"column:task_id"`
+	CreatedBy       int                    `json:"-" gorm:"column:created_by"`
+	ParentCommentId int                    `json:"parent_comment_id" gorm:"column:parent_comment_id"`
+	IsPinned        bool                   `json:"is_pinned" gorm:"column:pinned"`
+	Message         string                 `json:"message" gorm:"column:message"`
+	Owner           *iomodel.SimpleAccount `json:"owner" gorm:"foreignKey:CreatedBy"`
 }
 
-func (TaskComments) TableName() string { return "TaskComments" }
+func (TaskComment) TableName() string { return "TaskComments" }
 
-func (a *TaskComments) GetCreatedBy() int { return a.CreatedBy }
+func (a *TaskComment) GetCreatedBy() int { return a.CreatedBy }

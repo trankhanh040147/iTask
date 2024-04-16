@@ -29,11 +29,10 @@ func CreateAssignee(db *gorm.DB) func(ctx *gin.Context) {
 		business := biz.NewCreateAssigneeBiz(store, requester)
 
 		// step 3: use db.Create to
-		if err := business.CreateNewAssignee(c.Request.Context(), &AssigneeData); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error": err.Error(),
-			})
-			return
+		err := business.CreateNewAssignee(c.Request.Context(), &AssigneeData)
+
+		if err != nil {
+			panic(err)
 		}
 
 		// step 4: print data of the inserted record

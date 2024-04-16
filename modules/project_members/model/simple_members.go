@@ -6,7 +6,7 @@ import (
 
 type SimpleMember struct {
 	ProjectId   int                    `json:"project_id" gorm:"column:project_id;"`
-	UserId      int                    `json:"user_id" gorm:"column:user_id;"`
+	UserId      int                    `json:"-" gorm:"column:user_id;"`
 	AccountInfo *iomodel.SimpleAccount `json:"account_info" gorm:"foreignKey:UserId"`
 }
 

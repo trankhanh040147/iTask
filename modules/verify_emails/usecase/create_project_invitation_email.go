@@ -2,6 +2,7 @@ package verifyemailsusecase
 
 import (
 	"context"
+	"fmt"
 	"iTask/common"
 	"iTask/constant"
 	"iTask/entities"
@@ -15,12 +16,13 @@ func (uc *verifyEmailsUseCase) CreateProjectInvitationEmail(ctx context.Context,
 	//code := "pid" + string(project)
 
 	// set expired time
-	expiredTime := utils.GetExpiredTime(constant.ExpiredTimeVerifyEmail)
+	expiredTime := utils.GetExpiredTime(constant.ExpiredTimeProjectInvitation)
 
-	// create verify email
+	// *create verify email as a record in table `verify_emails`
 	record := &entities.VerifyEmail{
 		Email:     email,
-		Type:      constant.TypeVerifyEmail,
+		Type:      constant.TypeProjectInvitation,
+		ProjectId: project.Id,
 		ScretCode: code,
 		ExpiredAt: &expiredTime,
 	}
@@ -29,7 +31,19 @@ func (uc *verifyEmailsUseCase) CreateProjectInvitationEmail(ctx context.Context,
 		return nil, common.ErrCannotCreateEntity("verify_emails", err)
 	}
 
+	//!logging
+	fmt.Printf("project_id: %d, mail_id:%d\n", project.Id, data.Id)
+
 	// todo: create record in ProjectMemberInvited
-	
+	//recordInvitation := projectMemberInvitedModel.ProjectMemberInvited{
+	//	ProjectId:          project.Id,
+	//	VerificationMailId: data.Id,
+	//}
+	//
+	//err = uc.projectMemberInvitedStorage.CreateProjectMemberInvited(ctx, &recordInvitation)
+	//if err != nil {
+	//	return nil, common.ErrCannotCreateEntity(projectMemberInvitedModel.EntityName, err)
+	//}
+
 	return data, nil
 }

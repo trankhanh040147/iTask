@@ -29,6 +29,11 @@ const (
 	StatusCompleted = 2
 )
 
+// status of verify_emails
+const (
+	VerifyEmailTypeProjectInvitation = 3
+)
+
 func (c Condition) BuildQuery() string {
 	return c.Field + " " + string(c.Operator)
 }

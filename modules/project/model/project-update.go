@@ -11,6 +11,7 @@ type ProjectUpdate struct {
 	Privacy     *string    `json:"privacy" gorm:"column:privacy"`
 	Deadline    *string    `json:"deadline" gorm:"column:deadline"`
 	StartedAt   *time.Time `json:"started_at" gorm:"column:started_at"`
+	CreatedBy   int        `json:"-" gorm:"column:created_by"`
 }
 
 func (ProjectUpdate) TableName() string { return Project{}.TableName() }

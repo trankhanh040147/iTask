@@ -14,6 +14,11 @@ const (
 	EntityName = "ProjectMember"
 )
 
+const (
+	RoleMember = 1
+	RoleOwner  = 2
+)
+
 type ProjectMember struct {
 	ProjectId int        `json:"project_id" gorm:"column:project_id"`
 	UserId    int        `json:"user_id" gorm:"column:user_id"`
@@ -31,10 +36,4 @@ func (a *ProjectMember) GetUserID() int {
 
 func (a *ProjectMember) GetProjectID() int {
 	return a.ProjectId
-}
-
-var MapProjectStatus map[int]string = map[int]string{
-	3: "Deleted",
-	2: "Completed",
-	1: "Incomplete",
 }

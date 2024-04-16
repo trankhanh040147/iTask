@@ -247,4 +247,12 @@ func ErrForbidden(err error) *AppError {
 	)
 }
 
+func ErrForeignKeyViolation(entity string) *AppError {
+	return NewCustomError(
+		nil,
+		fmt.Sprintf("The forgein keys in %s are not valid", strings.ToLower(entity)),
+		fmt.Sprintf("ErrForeignKeyViolation"),
+	)
+}
+
 var RecordNotFound = errors.New("record not found")

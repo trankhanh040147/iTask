@@ -4,6 +4,10 @@ import (
 	"iTask/common"
 )
 
+const (
+	EntityName = "Accounts"
+)
+
 type Account struct {
 	common.SQLModel
 	Username        string     `json:"username" gorm:"column:username"`
@@ -20,6 +24,7 @@ type Account struct {
 	Cover           string     `json:"profile_cover_url" gorm:"column:profile_cover_url"`
 	IsEmailVerified int        `json:"is_email_verified" gorm:"column:is_email_verified"`
 	Bio             string     `json:"bio" gorm:"column:bio"`
+	IsInvited       bool       `json:"is_invited"`
 }
 
 func (Account) TableName() string {

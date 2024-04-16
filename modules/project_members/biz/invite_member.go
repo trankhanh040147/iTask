@@ -23,6 +23,7 @@ type AccountStorage interface {
 
 type ProjectStorage interface {
 	GetProject(ctx context.Context, cond map[string]interface{}, moreKeys ...string) (*projectModel.Project, error)
+	UpdateProject(ctx context.Context, cond map[string]interface{}, dataUpdate *projectModel.ProjectUpdate) error
 }
 
 type inviteMemberBiz struct {

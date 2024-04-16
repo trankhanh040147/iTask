@@ -9,11 +9,13 @@ import (
 	accountusecase "iTask/modules/account/usecase"
 	"iTask/modules/middleware"
 	ginproject "iTask/modules/project/transport/gin"
+	storage2 "iTask/modules/project_member_invited/storage"
+	"iTask/modules/project_members/storage"
 	"iTask/modules/project_members/transport/gin"
 	gintag "iTask/modules/tag/transport"
 	gintask "iTask/modules/task/transport/gin"
 	gintaskassignee "iTask/modules/task_assignees/transport/gin"
-	gintaskcomments "iTask/modules/task_comments/transport/gin"
+	gintaskcomments "iTask/modules/task_comments/transport"
 	uploadhandler "iTask/modules/upload/handler"
 	uploadusecase "iTask/modules/upload/usecase"
 	verifyemailshanlder "iTask/modules/verify_emails/handler"
@@ -77,9 +79,14 @@ func main() {
 	accountSto := accountstorage.NewAccountStorage(db)
 	accountCache := cache.NewAuthUserCache(accountSto, cacheRedis)
 
+	// declare project member storage
+	projectMemberStore := storage.NewSQLStore(db)
+
+	projectMemberInvitedStore := storage2.NewSQLStore(db)
+
 	// declare verify email usecase
 	verifyEmailsSto := verifyemailsstorage.NewVerifyEmailsStorage(db)
-	verifyEmailsUseCase := verifyemailsusecase.NewVerifyEmailsUseCase(verifyEmailsSto, accountSto)
+	verifyEmailsUseCase := verifyemailsusecase.NewVerifyEmailsUseCase(verifyEmailsSto, accountSto, projectMemberInvitedStore, projectMemberStore)
 	verifyEmailsHdl := verifyemailshanlder.NewVerifyEmailsHandler(verifyEmailsUseCase)
 
 	accountUseCase := accountusecase.NewUserUseCase(cfg, accountSto, verifyEmailsUseCase, taskDistributor)
@@ -152,14 +159,18 @@ func main() {
 	// ProjectMembers
 	projectMembers := v1.Group("/projectMembers", middlewares.RequiredAuth())
 	{
-		//projectMembers.GET("/:project_id", ginprojectmembers.ListMembersById(db))
+		projectMembers.GET("/:project_id", ginprojectmembers.ListMembersById(db))
 		projectMembers.POST("/invitation", ginprojectmembers.InviteMember(db, taskDistributor))
+		projectMembers.GET("/invited-member", ginprojectmembers.FindUninvitedMember(db))
+		projectMembers.GET("/unassigned-members", ginprojectmembers.ListUnassignedMembers(db))
+		projectMembers.DELETE("", ginprojectmembers.DeleteMember(db))
+		projectMembers.POST("", ginprojectmembers.UpdateMemberRole(db))
 	}
 
 	// TaskAssignee
 	taskAssignees := v1.Group("/taskAssignees", middlewares.RequiredAuth())
 	{
-		taskAssignees.GET("/:task_id", gintaskassignee.ListAssignee(db))
+		taskAssignees.GET("", gintaskassignee.ListAssignee(db))
 		taskAssignees.POST("", gintaskassignee.CreateAssignee(db))
 		taskAssignees.DELETE("", gintaskassignee.DeleteAssignee(db))
 	}
@@ -183,10 +194,11 @@ func main() {
 		//tags.POST("/:id", gintag.UpdateProject(db))
 	}
 
-	// TaskComments
 	comments := v1.Group("/comments", middlewares.RequiredAuth())
 	{
 		comments.GET("", gintaskcomments.ListTaskCommentsByTaskId(db))
+		comments.POST("", gintaskcomments.CreateTaskComment(db))
+		comments.POST("/:id", gintaskcomments.UpdateComment(db))
 	}
 
 	// verify email
@@ -194,6 +206,9 @@ func main() {
 
 	// verify reset code password
 	v1.GET("/verify_reset_password", verifyEmailsHdl.CheckResetCodePasswordIsMatching())
+
+	// project member invitation
+	v1.GET("/project-invitation", verifyEmailsHdl.CheckProjectInvitation())
 
 	// upload file to s3
 	v1.POST("/upload", middlewares.RequiredAuth(), uploadHdl.UploadFile())

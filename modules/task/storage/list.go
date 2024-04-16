@@ -17,7 +17,7 @@ func (store *sqlStore) ListTask(
 
 	db := store.db.
 		Table(model.Task{}.TableName()).
-		Where("status <> ?", common.StatusDeleted)
+		Where("status <> ?", model.StatusDeleted)
 
 	// Get items of requester only
 	// requester := ctx.Value(common.CurrentUser).(common.Requester)

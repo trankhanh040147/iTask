@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	EntityName = "task_assignees"
+	EntityName = "TaskAssignees"
 )
 
 type TaskAssignee struct {

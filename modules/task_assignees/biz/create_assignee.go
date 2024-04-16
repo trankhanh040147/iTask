@@ -28,7 +28,8 @@ func (biz *createAssigneeBiz) CreateNewAssignee(ctx context.Context, data *model
 	}
 
 	if err := biz.store.CreateAssignee(ctx, data); err != nil {
-		return common.ErrCannotCreateEntity(model.EntityName, err)
+		//return common.ErrCannotCreateEntity(model.EntityName, err)
+		return err
 	}
 
 	return nil

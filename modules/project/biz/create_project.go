@@ -2,9 +2,9 @@ package biz
 
 import (
 	"context"
-	"fmt"
 	"iTask/common"
 	"iTask/modules/project/model"
+	projectMemberModel "iTask/modules/project_members/model"
 	projectTagModel "iTask/modules/project_tags/model"
 	tagModel "iTask/modules/tag/model"
 )
@@ -24,7 +24,7 @@ type TagStorage interface {
 }
 
 type ProjectMemberStorage interface {
-	CreateProjectMember(ctx context.Context, projectId int, userId int) error
+	CreateProjectMember(ctx context.Context, data *projectMemberModel.ProjectMemberCreation) error
 }
 
 type createProjectBiz struct {
@@ -46,11 +46,6 @@ func NewCreateProjectBiz(store CreateProjectStorage, projectTagStorage ProjectTa
 }
 
 func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.ProjectCreation) error {
-	//if err := data.Validate(); err != nil {
-	//	return common.ErrValidation(err)
-	//}
-
-	// todo: testing CreateBy
 	data.CreatedBy = biz.requester.GetUserId()
 
 	if err := biz.store.CreateProject(ctx, data); err != nil {
@@ -62,7 +57,7 @@ func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.P
 		return common.ErrCannotCreateEntity(tagModel.EntityName, err)
 	}
 
-	//// get tags id
+	// get tags id
 	TagIds, err := biz.tagStorage.GetTagIdsByNames(ctx, data.Tags)
 	if err != nil {
 		return common.ErrCannotCreateEntity(tagModel.EntityName, err)
@@ -74,10 +69,15 @@ func (biz *createProjectBiz) CreateNewProject(ctx context.Context, data *model.P
 	}
 
 	// !logging
-	fmt.Printf("<____________> Project w/ id %d has been created by user w/ id %d\n", data.Id, data.CreatedBy)
+	//fmt.Printf("<____________> Project w/ id %d has been created by user w/ id %d\n", data.Id, data.CreatedBy)
 
-	// todo: add project_members
-	if err := biz.projectMemberStorage.CreateProjectMember(ctx, data.Id, data.CreatedBy); err != nil {
+	// *add project_members
+	dataMember := projectMemberModel.ProjectMemberCreation{
+		ProjectId: data.Id,
+		UserId:    data.CreatedBy,
+		Role:      projectMemberModel.RoleOwner,
+	}
+	if err := biz.projectMemberStorage.CreateProjectMember(ctx, &dataMember); err != nil {
 		return common.ErrCannotCreateEntity("project_members", err)
 	}
 	// todo: implement: worker(redis) | pubsub...

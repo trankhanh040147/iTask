@@ -14,7 +14,7 @@ import (
 
 const (
 	TaskSendInvitation = "task:send_project_invitation"
-	UrlInvitation      = constant.URL_HOST_EC2 + "/project/invitation"
+	UrlInvitation      = constant.URL_HOST_EC2 + "/project-invitation"
 )
 
 type PayLoadSendInvitationEmail struct {

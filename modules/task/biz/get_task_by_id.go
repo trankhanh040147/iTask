@@ -19,7 +19,7 @@ func NewGetTaskBiz(store GetTaskStorage) *getTaskBiz {
 }
 
 func (biz *getTaskBiz) GetTaskById(ctx context.Context, id int) (*model.Task, error) {
-	data, err := biz.store.GetTask(ctx, map[string]interface{}{"id": id}, "Owner")
+	data, err := biz.store.GetTask(ctx, map[string]interface{}{"id": id}, "Owner", "ProjectInfo", "Assignees", "Assignees.UserInfo")
 
 	if err != nil {
 		return nil, common.ErrCannotGetEntity(model.EntityName, err)

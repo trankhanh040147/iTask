@@ -4,6 +4,7 @@ import (
 	"context"
 	"iTask/common"
 	"iTask/modules/task_assignees/model"
+	"log"
 )
 
 func (s *sqlStore) ListAssignee(ctx context.Context, filter *model.Filter, moreKeys ...string) ([]model.TaskAssignee, error) {
@@ -14,6 +15,8 @@ func (s *sqlStore) ListAssignee(ctx context.Context, filter *model.Filter, moreK
 	for key := range moreKeys {
 		db = db.Preload(moreKeys[key])
 	}
+
+	log.Println("---->filter", filter)
 
 	if filter != nil {
 		if filter.TaskID != 0 {
