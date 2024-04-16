@@ -58,3 +58,4 @@ jobs:
            sudo docker rm -vf $(docker ps -aq)
            sudo docker rmi -f $(docker images -aq)
            sudo docker run --name AppBE -d -p 8080:8080 654654541268.dkr.ecr.ap-southeast-1.amazonaws.com/itask:latest
+#fetch
