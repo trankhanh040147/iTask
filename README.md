@@ -34,5 +34,3 @@ Sau khi cài đặt Docker, tiếp tục cài đặt Docker Compose theo hướn
    ```
    - Ứng dụng sẽ chạy dưới port 8080 ở localhost, và đường dẫn export của API ra ngoài là http://localhost:8080/api/v1/
 
-## Kiến Trúc Hệ Thống 
-![Alt text](image.png)
